@@ -22,10 +22,3 @@ val minSdkVer by extra(24)
 val targetSdkVer by extra(34)
 val buildToolsVer by extra("34.0.0")
 
-val localProperties = Properties()
-localProperties.load(file("local.properties").inputStream())
-val officialBuild by extra(localProperties.getProperty("officialBuild", "false") == "true")
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
