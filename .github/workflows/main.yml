@@ -40,14 +40,14 @@ jobs:
           echo fileDir=`pwd`/key.jks >> local.properties
           keytool -genkey -dname "cn=A, ou=D, o=G, l=P, st=M, c=I" -keystore key.jks -storepass password -alias alias -keyalg RSA -keysize 4096 -validity 10000
           
-      - name: Cache gradle
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: ${{ runner.os }}-gradle-
+#      - name: Cache gradle
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+#          restore-keys: ${{ runner.os }}-gradle-
 
       - name: Gradle prebuild
         run: |
