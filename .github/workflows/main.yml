@@ -58,18 +58,18 @@ jobs:
 #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
 #          restore-keys: ${{ runner.os }}-gradle-
 
-      - name: Gradle prebuild
-        run: |
-          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-          ./gradlew prebuild
+#      - name: Gradle prebuild
+#        run: |
+#          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
+#          ./gradlew prebuild
           
-      # Run Tests Build
-      - name: Run gradle tests
-        run: ./gradlew test
+#      # Run Tests Build
+#      - name: Run gradle tests
+#        run: ./gradlew test
 
       # Run Build Project
       - name: Build gradle project
-        run: ./gradlew build
+        run: ./gradlew clean build
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
