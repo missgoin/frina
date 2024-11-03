@@ -15,7 +15,7 @@ lineAwesomeAndroid = "1.1.1"
 fontAwesome = "1.0.0"
 navigationCompose = "2.8.2"
 gson = "2.11.0"
-hiddenapibypass = "4.3.3"
+hiddenapibypass = "4.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
