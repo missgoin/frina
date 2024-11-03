@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.noobexon.xposedfakelocation"
+    namespace = "frena.id"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.noobexon.xposedfakelocation"
+        applicationId = "frena.id"
         minSdk = 30
         targetSdk = 34
         versionCode = 1

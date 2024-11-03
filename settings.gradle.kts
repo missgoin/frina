@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "XposedFakeLocation"
+rootProject.name = "frena"
 include(":app")
