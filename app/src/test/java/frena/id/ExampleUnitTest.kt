@@ -1,4 +1,4 @@
-package com.noobexon.xposedfakelocation
+package frena.id
 
 import org.junit.Test
 
