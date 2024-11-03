@@ -22,14 +22,6 @@ val minSdkVer by extra(24)
 val targetSdkVer by extra(34)
 val buildToolsVer by extra("34.0.0")
 
-val appVerName by extra("3.2")
-val configVerCode by extra(90)
-val serviceVerCode by extra(98)
-val minBackupVerCode by extra(65)
-
-val androidSourceCompatibility = JavaVersion.VERSION_18
-val androidTargetCompatibility = JavaVersion.VERSION_18
-
 val localProperties = Properties()
 localProperties.load(file("local.properties").inputStream())
 val officialBuild by extra(localProperties.getProperty("officialBuild", "false") == "true")
