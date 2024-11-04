@@ -29,7 +29,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '18'
-          cache: 'gradle'
           
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
