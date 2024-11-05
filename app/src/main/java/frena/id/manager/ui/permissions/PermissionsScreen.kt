@@ -73,7 +73,7 @@ fun PermissionsScreen(navController: NavController, permissionsViewModel: Permis
                     PermanentlyDeniedScreen(context)
                 } else {
                     PermissionRequestScreen {
-                        permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                        permissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                     }
                 }
             }

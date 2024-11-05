@@ -23,7 +23,7 @@ class PermissionsViewModel : ViewModel() {
     fun checkPermissions(context: Context) {
         val fineLocationGranted = ContextCompat.checkSelfPermission(
             context,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
         _hasPermissions.value = fineLocationGranted
@@ -35,7 +35,7 @@ class PermissionsViewModel : ViewModel() {
     }
 
     fun checkIfPermanentlyDenied(activity: Activity) {
-        val shouldShowRationale = activity.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+        val shouldShowRationale = activity.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
         _permanentlyDenied.value = !shouldShowRationale
     }
 }
