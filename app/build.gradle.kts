@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "frena.id"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "frena.id"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "0.0.3"
 
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
@@ -66,6 +66,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    compileOnly("de.robv.android.xposed:api:82:sources")
     compileOnly("de.robv.android.xposed:api:82")
 }
