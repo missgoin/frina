@@ -26,7 +26,7 @@ import kotlin.math.sqrt
 object LocationUtil {
     private const val TAG = "[LocationUtil]"
 
-    private const val DEBUG: Boolean = false
+    private const val DEBUG: Boolean = true
 
     private val random: Random = Random()
 
