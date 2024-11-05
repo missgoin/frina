@@ -87,7 +87,7 @@ fun AboutContent() {
 @Composable
 fun AppTitle() {
     Text(
-        text = "frena",
+        text = "f.Rina",
         style = MaterialTheme.typography.headlineSmall.copy(
             fontWeight = FontWeight.Bold
         ),
@@ -99,7 +99,7 @@ fun AppTitle() {
 fun AppDescription() {
     Text(
         text = """
-            frena is an app designed to allow users to mock their location for testing or entertainment purposes. 
+            f.Rina is an app designed to allow users to mock their location for testing or entertainment purposes. 
             
             Use it responsibly, and make sure to comply with all applicable local regulations when using location services. 
             
