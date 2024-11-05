@@ -2,7 +2,6 @@
 package frena.id.xposed.hooks
 
 import android.location.Location
-import android.location.LocationRequest
 import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.XC_MethodHook
@@ -13,19 +12,10 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 class LocationApiHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[LocationApiHooks]"
 
-    fun initHooks() {
-        request()
+    fun initHooks() { 
         hookLocationAPI()
         XposedBridge.log("$tag ok")
-    }
-    
-    private fun request() {
-        LocationRequest localLocationRequest = LocationRequest.create();
-        localLocationRequest.setInterval(UPDATE_INTERVAL_IN_SECONDS);
-        localLocationRequest.setFastestInterval(FASTEST_INTERVAL_IN_SECONDS);
-        localLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        localLocationRequest.setSmallestDisplacement(0.0F);    
-    }
+    }   
 
     private fun hookLocationAPI() {
         hookLocation(appLpparam.classLoader)

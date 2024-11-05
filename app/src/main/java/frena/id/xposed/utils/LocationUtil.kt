@@ -3,7 +3,6 @@ package frena.id.xposed.utils
 
 import android.location.Location
 import android.location.LocationManager
-import android.location.LocationRequest
 import android.os.Build
 import frena.id.data.DEFAULT_ACCURACY
 import frena.id.data.DEFAULT_ALTITUDE
@@ -39,23 +38,7 @@ object LocationUtil {
     var meanSeaLevel: Double = 0.0
     var meanSeaLevelAccuracy: Float = 0F
     var speed: Float = 0F
-    var speedAccuracy: Float = 0F
-        
-    public static final int UPDATE_INTERVAL_IN_SECONDS = 10;
-    public static final int FASTEST_INTERVAL_IN_SECONDS = 5;
-    private static final int MILLISECONDS_PER_SECOND = 1;
-    private static final long UPDATE_INTERVAL = MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
-    private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
-    private static final long FASTEST_INTERVAL = MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
-    
-    fun request() {
-        LocationRequest localLocationRequest = LocationRequest.create();
-        localLocationRequest.setInterval(UPDATE_INTERVAL_IN_SECONDS);
-        localLocationRequest.setFastestInterval(FASTEST_INTERVAL_IN_SECONDS);
-        localLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        localLocationRequest.setSmallestDisplacement(0.0F);    
-    }
-
+    var speedAccuracy: Float = 0F        
 
     @Synchronized
     fun createFakeLocation(originalLocation: Location? = null, provider: String = LocationManager.GPS_PROVIDER): Location {
