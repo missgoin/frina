@@ -114,17 +114,17 @@ fun SettingsScreen(
             step = 0.1f
         ),
         // Custom Speed Accuracy
-        FloatSettingData(
-            title = "Custom Speed Accuracy",
-            useValueState = settingsViewModel.useSpeedAccuracy.collectAsState(),
-            valueState = settingsViewModel.speedAccuracy.collectAsState(),
-            setUseValue = settingsViewModel::setUseSpeedAccuracy,
-            setValue = settingsViewModel::setSpeedAccuracy,
-            label = "Speed Accuracy (m/s)",
-            minValue = 0f,
-            maxValue = 100f,
-            step = 1f
-        )
+//        FloatSettingData(
+//            title = "Custom Speed Accuracy",
+//            useValueState = settingsViewModel.useSpeedAccuracy.collectAsState(),
+//            valueState = settingsViewModel.speedAccuracy.collectAsState(),
+//            setUseValue = settingsViewModel::setUseSpeedAccuracy,
+//            setValue = settingsViewModel::setSpeedAccuracy,
+//            label = "Speed Accuracy (m/s)",
+//             minValue = 0f,
+//              maxValue = 100f,
+//            step = 1f
+//        )
     )
 
     Scaffold(

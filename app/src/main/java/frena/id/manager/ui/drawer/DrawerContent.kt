@@ -33,37 +33,37 @@ fun DrawerContent(
                 .padding(16.dp)
         ) {
             Text(
-                text = "frena",
+                text = "FRINA module",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(12.dp)
             )
-            DrawerItem(
-                icon = LineAwesomeIcons.InfoCircleSolid,
-                label = "About",
-                onClick = {
-                    navController.navigate(Screen.About.route)
-                    onCloseDrawer()
-                }
-            )
-            DrawerItem(
-                icon = LineAwesomeIcons.Telegram,
-                label = "Telegram",
-                onClick = { Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show() }
-            )
-            DrawerItem(
-                icon = LineAwesomeIcons.Discord,
-                label = "Discord",
-                onClick = { Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show() }
-            )
-            DrawerItem(
-                icon = LineAwesomeIcons.Github,
-                label = "Github",
-                onClick = {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/fredslbn/frena"))
-                    context.startActivity(intent)
-                    onCloseDrawer()
-                }
-            )
+//            DrawerItem(
+//                icon = LineAwesomeIcons.InfoCircleSolid,
+//                label = "About",
+//                onClick = {
+//                    navController.navigate(Screen.About.route)
+//                    onCloseDrawer()
+//               }
+//            )
+//            DrawerItem(
+//                icon = LineAwesomeIcons.Telegram,
+//                label = "Telegram",
+//                onClick = { Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show() }
+//            )
+//            DrawerItem(
+//                icon = LineAwesomeIcons.Discord,
+//                label = "Discord",
+//                onClick = { Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show() }
+//            )
+//            DrawerItem(
+//                icon = LineAwesomeIcons.Github,
+//                label = "Github",
+//                onClick = {
+//                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/fredslbn/frena"))
+//                    context.startActivity(intent)
+//                    onCloseDrawer()
+//                }
+//            )
             DrawerItem(
                 icon = Icons.Default.Settings,
                 label = "Settings",
