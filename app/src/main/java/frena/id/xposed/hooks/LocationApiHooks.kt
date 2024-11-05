@@ -2,6 +2,7 @@
 package frena.id.xposed.hooks
 
 import android.location.Location
+import android.location.LocationRequest
 import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.XC_MethodHook
@@ -13,8 +14,17 @@ class LocationApiHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[LocationApiHooks]"
 
     fun initHooks() {
+        request()
         hookLocationAPI()
-        XposedBridge.log("$tag Instantiated hooks successfully")
+        XposedBridge.log("$tag ok")
+    }
+    
+    private fun request() {
+        LocationRequest localLocationRequest = LocationRequest.create();
+        localLocationRequest.setInterval(UPDATE_INTERVAL_IN_SECONDS);
+        localLocationRequest.setFastestInterval(FASTEST_INTERVAL_IN_SECONDS);
+        localLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        localLocationRequest.setSmallestDisplacement(0.0F);    
     }
 
     private fun hookLocationAPI() {
@@ -68,21 +78,20 @@ class LocationApiHooks(val appLpparam: LoadPackageParam) {
 
                     })
 
-            XposedHelpers.findAndHookMethod(
-                locationClass,
-                "getAltitude",
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
-                        XposedBridge.log("$tag Leaving method getAltitude()")
-                        XposedBridge.log("\t Original altitude: ${param.result as Double}")
-                        if (PreferencesUtil.getUseAltitude() == true) {
-                            param.result =  LocationUtil.altitude
-                            XposedBridge.log("\t Modified to: ${LocationUtil.altitude}")
-                        }
-                    }
-
-                })
+//            XposedHelpers.findAndHookMethod(
+//                locationClass,
+//                "getAltitude",
+//                object : XC_MethodHook() {
+//                    override fun afterHookedMethod(param: MethodHookParam) {
+//                        LocationUtil.updateLocation()
+//                        XposedBridge.log("$tag Leaving method getAltitude()")
+//                        XposedBridge.log("\t Original altitude: ${param.result as Double}")
+//                        if (PreferencesUtil.getUseAltitude() == true) {
+//                            param.result =  LocationUtil.altitude
+//                            XposedBridge.log("\t Modified to: ${LocationUtil.altitude}")
+//                        }
+//                    }
+//                })
 
             XposedHelpers.findAndHookMethod(
                 locationClass,
@@ -99,77 +108,77 @@ class LocationApiHooks(val appLpparam: LoadPackageParam) {
                     }
                 })
 
-            XposedHelpers.findAndHookMethod(
-                locationClass,
-                "getSpeed",
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
-                        XposedBridge.log("$tag Leaving method getSpeed()")
-                        XposedBridge.log("\tOriginal speed: ${param.result as Float}")
-                        if (PreferencesUtil.getUseSpeed() == true) {
-                            param.result = LocationUtil.speed
-                            XposedBridge.log("\tModified to: ${LocationUtil.speed}")
-                        }
-                    }
-                })
+//            XposedHelpers.findAndHookMethod(
+//                locationClass,
+//                "getSpeed",
+//                object : XC_MethodHook() {
+//                    override fun afterHookedMethod(param: MethodHookParam) {
+//                        LocationUtil.updateLocation()
+//                        XposedBridge.log("$tag Leaving method getSpeed()")
+//                        XposedBridge.log("\tOriginal speed: ${param.result as Float}")
+//                        if (PreferencesUtil.getUseSpeed() == true) {
+//                            param.result = LocationUtil.speed
+//                            XposedBridge.log("\tModified to: ${LocationUtil.speed}")
+//                        }
+//                    }
+//                })
 
-            XposedHelpers.findAndHookMethod(
-                locationClass,
-                "getSpeedAccuracyMetersPerSecond",
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
-                        XposedBridge.log("$tag Leaving method getSpeedAccuracyMetersPerSecond()")
-                        XposedBridge.log("\tOriginal speed accuracy: ${param.result as Float}")
-                        if (PreferencesUtil.getUseSpeedAccuracy() == true) {
-                            param.result = LocationUtil.speedAccuracy
-                            XposedBridge.log("\tModified to: ${LocationUtil.speedAccuracy}")
-                        }
-                    }
-                })
+//            XposedHelpers.findAndHookMethod(
+//                locationClass,
+//                "getSpeedAccuracyMetersPerSecond",
+//                object : XC_MethodHook() {
+//                    override fun afterHookedMethod(param: MethodHookParam) {
+//                        LocationUtil.updateLocation()
+//                        XposedBridge.log("$tag Leaving method getSpeedAccuracyMetersPerSecond()")
+//                        XposedBridge.log("\tOriginal speed accuracy: ${param.result as Float}")
+//                        if (PreferencesUtil.getUseSpeedAccuracy() == true) {
+//                            param.result = LocationUtil.speedAccuracy
+//                            XposedBridge.log("\tModified to: ${LocationUtil.speedAccuracy}")
+//                        }
+//                    }
+//                })
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                XposedHelpers.findAndHookMethod(
-                    locationClass,
-                    "getMslAltitudeMeters",
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            LocationUtil.updateLocation()
-                            XposedBridge.log("$tag Leaving method getMslAltitudeMeters()")
-                            val originalMslAltitude = param.result as? Double
-                            XposedBridge.log("\tOriginal MSL altitude: $originalMslAltitude")
-                            if (PreferencesUtil.getUseMeanSeaLevel() == true) {
-                                param.result = LocationUtil.meanSeaLevel
-                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevel}")
-                            }
-                        }
-                    })
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+//               XposedHelpers.findAndHookMethod(
+//                    locationClass,
+//                    "getMslAltitudeMeters",
+//                    object : XC_MethodHook() {
+//                        override fun afterHookedMethod(param: MethodHookParam) {
+//                            LocationUtil.updateLocation()
+//                            XposedBridge.log("$tag Leaving method getMslAltitudeMeters()")
+//                            val originalMslAltitude = param.result as? Double
+//                            XposedBridge.log("\tOriginal MSL altitude: $originalMslAltitude")
+//                            if (PreferencesUtil.getUseMeanSeaLevel() == true) {
+/!                                param.result = LocationUtil.meanSeaLevel
+//                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevel}")
+//                            }
+//                        }
+//                    })
 
                 // Hook getMslAltitudeAccuracyMeters()
-                XposedHelpers.findAndHookMethod(
-                    locationClass,
-                    "getMslAltitudeAccuracyMeters",
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            LocationUtil.updateLocation()
-                            XposedBridge.log("$tag Leaving method getMslAltitudeAccuracyMeters()")
-                            val originalMslAltitudeAccuracy = param.result as? Float
-                            XposedBridge.log("\tOriginal MSL altitude accuracy: $originalMslAltitudeAccuracy")
-                            if (PreferencesUtil.getUseMeanSeaLevelAccuracy() == true) {
-                                param.result = LocationUtil.meanSeaLevelAccuracy
-                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevelAccuracy}")
-                            }
-                        }
-                    })
-            } else {
-                XposedBridge.log("$tag getMslAltitudeMeters() and getMslAltitudeAccuracyMeters() not available on this API level")
-            }
+//                XposedHelpers.findAndHookMethod(
+//                    locationClass,
+//                    "getMslAltitudeAccuracyMeters",
+//                    object : XC_MethodHook() {
+//                        override fun afterHookedMethod(param: MethodHookParam) {
+//                            LocationUtil.updateLocation()
+//                            XposedBridge.log("$tag Leaving method getMslAltitudeAccuracyMeters()")
+//                            val originalMslAltitudeAccuracy = param.result as? Float
+//                            XposedBridge.log("\tOriginal MSL altitude accuracy: $originalMslAltitudeAccuracy")
+//                            if (PreferencesUtil.getUseMeanSeaLevelAccuracy() == true) {
+//                                param.result = LocationUtil.meanSeaLevelAccuracy
+//                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevelAccuracy}")
+//                            }
+//                        }
+//                    })
+//            } else {
+//                XposedBridge.log("$tag getMslAltitudeMeters() and getMslAltitudeAccuracyMeters() not available on this API level")
+//            }
 
-        } catch (e: Exception) {
-            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
-        }
-    }
+//        } catch (e: Exception) {
+//            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
+//        }
+//    }
 
     private fun hookLocationManager(classLoader: ClassLoader) {
         try {
