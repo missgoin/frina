@@ -47,7 +47,7 @@ class MainHook : IXposedHookLoadPackage {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     context = (param.args[0] as Application).applicationContext.also {
                         XposedBridge.log("$tag Target App's context has been acquired successfully.")
-                        Toast.makeText(it, "FreNa sedang aktif!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
                     }
                     locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
                 }

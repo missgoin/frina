@@ -38,7 +38,7 @@ object LocationUtil {
     var meanSeaLevel: Double = 0.0
     var meanSeaLevelAccuracy: Float = 0F
     var speed: Float = 0F
-    var speedAccuracy: Float = 0F        
+    var speedAccuracy: Float = 0F
 
     @Synchronized
     fun createFakeLocation(originalLocation: Location? = null, provider: String = LocationManager.GPS_PROVIDER): Location {
