@@ -139,7 +139,7 @@ class LocationApiHooks(val appLpparam: LoadPackageParam) {
 //                            val originalMslAltitude = param.result as? Double
 //                            XposedBridge.log("\tOriginal MSL altitude: $originalMslAltitude")
 //                            if (PreferencesUtil.getUseMeanSeaLevel() == true) {
-/!                                param.result = LocationUtil.meanSeaLevel
+//                                param.result = LocationUtil.meanSeaLevel
 //                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevel}")
 //                            }
 //                        }
