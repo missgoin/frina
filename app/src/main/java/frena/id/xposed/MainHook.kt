@@ -34,6 +34,11 @@ class MainHook : IXposedHookLoadPackage {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
 
+        // Hook also system services persistently for gopartner, grab, and shopee
+        if (lpparam.packageName == "com.gojek.driver", "com.grabtaxi.driver2", "net.aleksandre.android.whereami", "com.shopee.foody.driver.id") {
+            systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
+        }
+
         initHookingLogic(lpparam)
     }
 
