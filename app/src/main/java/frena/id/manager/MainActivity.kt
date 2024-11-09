@@ -1,5 +1,10 @@
 package frena.id.manager
 
+import android.app.Notification
+import android.content.Context
+import android.content.Intent
+import frena.id.xposed.utils.NotificationsChannel
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -54,6 +59,25 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    
+    // for notification service
+    private fun showStartNotification(address: String){
+        notificationsChannel.showNotification(this){
+            it.setSmallIcon(R.drawable.ic_stop)
+            it.setContentTitle(getString(R.string.location_set))
+            it.setContentText(address)
+            it.setAutoCancel(true)
+            it.setCategory(Notification.CATEGORY_EVENT)
+            it.priority = NotificationCompat.PRIORITY_HIGH
+        }
+
+    }
+
+    private fun cancelNotification(){
+        notificationsChannel.cancelAllNotifications(this)
+    }
+    
+    
 }
 
 @Composable
