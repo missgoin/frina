@@ -16,8 +16,8 @@ class OnResumeHooks(val appLpparam: LoadPackageParam) {
     private val target2 = "com.grabtaxi.driver2"
     private val target3 = "com.shopeefood.driver.id"
     
-    if (lpparam.packageName != target1 || lpparam.packageName != target2) {
-            return
+    if (lpparam.packageName == "com.gojek.partner" || lpparam.packageName != "com.grabtaxi.driver2") {
+        return
     }
 
     fun initHooks() {
@@ -32,7 +32,7 @@ class OnResumeHooks(val appLpparam: LoadPackageParam) {
     private fun hookresume(classLoader: ClassLoader) {
         try {
             XposedHelpers.findAndHookMethod(
-               "onResume",
+               appActivityClass, "onResume",
                class : XC_MethodHook() {
                @Throws(Throwable::class)
                   override fun beforeHookedMethod(param: MethodHookParam) {
