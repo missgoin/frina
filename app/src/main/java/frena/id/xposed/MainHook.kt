@@ -7,6 +7,7 @@ import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
+import frena.id.xposed.hooks.OnResumeHooks
 import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
@@ -20,9 +21,8 @@ class MainHook : IXposedHookLoadPackage {
     lateinit var context: Context
 
     private var locationApiHooks: LocationApiHooks? = null
-    private var systemServicesHooks: SystemServicesHooks? = null
-    
-    private val target1 = "com.gojek.partner"
+    private var systemServicesHooks: SystemServicesHooks? = null       
+//    private var onResumeHooks: OnResumeHooks? = null       
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         // Avoid hooking own app to prevent recursion
@@ -35,8 +35,12 @@ class MainHook : IXposedHookLoadPackage {
         if (lpparam.packageName == "android") {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
+        
+        OnResumeHooks(lpparam)
 
         initHookingLogic(lpparam)
+        
+        
     }
 
     private fun initHookingLogic(lpparam: LoadPackageParam) {
