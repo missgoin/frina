@@ -21,6 +21,8 @@ class MainHook : IXposedHookLoadPackage {
 
     private var locationApiHooks: LocationApiHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null
+    
+    private val target1 = "com.gojek.partner"
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         // Avoid hooking own app to prevent recursion

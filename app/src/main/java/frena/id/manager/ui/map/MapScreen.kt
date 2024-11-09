@@ -61,7 +61,7 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 TopAppBar(
-                    title = { Text("frena") },
+                    title = { Text("f.Rina") },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -128,9 +128,9 @@ fun MapScreen(
                         if (isFabClickable) {
                             mapViewModel.togglePlaying()
                             if (mapViewModel.isPlaying.value) {
-                                Toast.makeText(context, "Fake Location Set", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(context, "Unset Fake Location", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
                             }
                         }
                     },

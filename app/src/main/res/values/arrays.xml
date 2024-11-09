@@ -1,5 +1,6 @@
 <resources>
     <string-array name="xposedscope" >
-        <item>frena.id</item>
+        <item>android</item>
+        <item>net.aleksandre.android.whereami</item>
     </string-array>
 </resources>
