@@ -9,30 +9,25 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
-class OnResumeHooks(val appLpparam: LoadPackageParam) {
+class OnResumeHooks: IXposedHookLoadPackage {
     private val tag = "[f.Rina resume]"
     
     private val target1 = "com.gojek.partner"
     private val target2 = "com.grabtaxi.driver2"
     private val target3 = "com.shopeefood.driver.id"
     
-    if (lpparam.packageName == "com.gojek.partner" || lpparam.packageName != "com.grabtaxi.driver2") {
-        return
+    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+        if (lpparam.packageName != "com.gojek.partner" || lpparam.packageName != "com.grabtaxi.driver2") 
+           return
+           
+        hookresume(lpparam)
     }
-
-    fun initHooks() {
-        hookonresume()
-        XposedBridge.log("$tag successfully")
-    }
-
-    private fun hookonresume() {
-        hookresume(appLpparam.classLoader)
-    }
+    
     
     private fun hookresume(classLoader: ClassLoader) {
         try {
             XposedHelpers.findAndHookMethod(
-               appActivityClass, "onResume",
+               ActivityClass, "onResume",
                class : XC_MethodHook() {
                @Throws(Throwable::class)
                   override fun beforeHookedMethod(param: MethodHookParam) {
@@ -44,7 +39,7 @@ class OnResumeHooks(val appLpparam: LoadPackageParam) {
         } catch (e: Exception) {
             XposedBridge.log("$tag error")
             XposedBridge.log(e)
-        }           
+        }          
     }
                  
                         
