@@ -62,7 +62,7 @@ class MainHook : IXposedHookLoadPackage {
     
     
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackagePram) {
-        if (lpparam.packageName != "com.gojek.gopartner") return
+        if (lpparam.packageName == "com.gojek.gopartner") {
  
         hookgojek(lpparam)
     }
