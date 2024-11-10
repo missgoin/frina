@@ -22,7 +22,7 @@ class MainHook : IXposedHookLoadPackage {
 
     private var locationApiHooks: LocationApiHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null       
-//    private var onResumeHooks: OnResumeHooks? = null       
+    private var onResumeHooks: OnResumeHooks? = null       
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         // Avoid hooking own app to prevent recursion
@@ -36,7 +36,10 @@ class MainHook : IXposedHookLoadPackage {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
         
-        OnResumeHooks(lpparam)
+        // Hook Gopartner
+        if (lpparam.packageName == "com.gojek.driver") {
+            onResumeHooks = OnResumeHooks(lpparam).also { it.initHooks() }
+        }        
 
         initHookingLogic(lpparam)
         
