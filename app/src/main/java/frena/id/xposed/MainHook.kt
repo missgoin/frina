@@ -37,7 +37,7 @@ class MainHook : IXposedHookLoadPackage {
         }
         
         // Hook Gopartner
-        if (lpparam.packageName == "com.gojek.driver") {
+        if (lpparam.packageName == "com.gojek.partner") {
             onResumeHooks = OnResumeHooks(lpparam).also { it.initHooks() }
         }        
 

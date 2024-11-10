@@ -30,7 +30,7 @@ class OnResumeHooks(val appLpparam: LoadPackageParam) {
     private fun hookresume(classLoader: ClassLoader) {
         try {
             XposedHelpers.findAndHookMethod(
-               ActivityClass, "onResume",
+               Activity::class.java, "onResume",
                class : XC_MethodHook() {
                @Throws(Throwable::class)
                   override fun beforeHookedMethod(param: MethodHookParam) {
