@@ -63,27 +63,12 @@ class MainHook : IXposedHookLoadPackage {
     
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackagePram) {
         if (lpparam.packageName == "com.gojek.gopartner") {
- 
-        hookgojek(lpparam)
+        //resumehooks(lpparam)
+            onResumeHooks = OnResumeHooks(lpparam)
+        }
+    
     }
 
-    private fun hookgojek(lpparam: XC_LoadPackage.LoadPackageParam) {
-        XposedHelpers.findAndHookMethod(
-            "android.app.Instrumentation",
-            lpparam.classLoader,
-            "callApplicationOnCreate",
-            Application::class.java,
-            object : XC_MethodHook() {
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    context = (param.args[0] as Application).applicationContext.also {
-                        XposedBridge.log("$tag: successfully")
-                        //Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
-                    }
-                    onResumeHooks = OnResumeHooks(lpparam).also { it.initHooks() }
-                }
-            }
-        )
-    }
     
     
     

@@ -16,7 +16,7 @@ class OnResumeHooks(val appLpparam: LoadPackageParam) {
     private val target2 = "com.grabtaxi.driver2"
     private val target3 = "com.shopeefood.driver.id"
     
-    fun initHooks() {
+    fun resumehooks() {
         hookonresume()
         XposedBridge.log("$tag successfully")
     }
