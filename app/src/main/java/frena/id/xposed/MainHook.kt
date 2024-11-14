@@ -44,18 +44,9 @@ class MainHook : IXposedHookLoadPackage {
         )
         
         
-        val appActivityClass = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader)
-        XposedBridge.hookAllMethods(appActivityClass, "onStart", object : XC_MethodHook() {
-            override fun beforeHookedMethod(param: MethodHookParam) {
-                super.beforeHookedMethod(param)
-                Log.d(TAG, "onStart")
-                val currActivity = param.thisObject as Activity
-                    checkversion(currActivity)                
-            }
-        })
+
         
-        
-        fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+        fun handleLoadPackage(lpparam: LoadPackageParam) {
             
             CheckVersion(lpparam)
             
@@ -83,11 +74,11 @@ class MainHook : IXposedHookLoadPackage {
                 }
         }
         
-        fun CheckVersion (lpparam: XC_LoadPackage.LoadPackageParam) {
+        fun CheckVersion (lpparam: LoadPackageParam) {
             checkVersion(lpparam)
         }
         
-        fun checkVersion(lpparam: XC_LoadPackage.LoadPackageParam) {
+        fun checkVersion(lpparam: LoadPackageParam) {
             if (lpparam.packageName == "com.gojek.partner" || lpparam.packageName == "com.grabtaxi.driver2") {
                 XposedHelpers.findAndHookMethod(Activity::class.java, "onResume", i1())
             }
