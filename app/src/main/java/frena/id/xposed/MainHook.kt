@@ -5,9 +5,9 @@ import android.app.Application
 import android.content.Context
 import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
+import frena.id.xposed.hooks.FakeGPS
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
-import frena.id.xposed.hooks.OnResumeHooks
 import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
@@ -61,13 +61,6 @@ class MainHook : IXposedHookLoadPackage {
     
     
     
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackagePram) {
-        if (lpparam.packageName == "com.gojek.gopartner") {
-        //resumehooks(lpparam)
-            onResumeHooks = OnResumeHooks(lpparam)
-        }
-    
-    }
 
     
     
