@@ -7,7 +7,6 @@ import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
-import frena.id.xposed.hooks.OnResumeHooks
 import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
@@ -15,7 +14,7 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
-class FakeGPS : IXposedHookLoadPackage, IXposedHookZygoteInit {
+class FakeGPS : IXposedHookLoadPackage {
 
     val tag = "[f.Rina]"
     
