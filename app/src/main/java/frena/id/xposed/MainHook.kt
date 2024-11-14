@@ -22,7 +22,7 @@ class MainHook : IXposedHookLoadPackage {
 
     private val targetPackageName1 = "com.gojek.partner"
 
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+    override fun handleLoadPackage(lpparam: LoadPackageParam) {
 
         if (lpparam.packageName != targetPackageName1) {
             return
