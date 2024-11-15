@@ -43,12 +43,14 @@ class MainHook : IXposedHookLoadPackage {
             }
         )
         
+        CheckVersion(lpparam)
+    
+    }
+        
         
 
         
-        fun handleLoadPackage(lpparam: LoadPackageParam) {
-            
-            CheckVersion(lpparam)
+        fun CheckVersion(lpparam: LoadPackageParam) {
             
                 val gop = a(lpparam, "com.gojek.partner") as Int
                 val gra = a(lpparam, "com.grabtaxi.driver2") as Int
@@ -72,34 +74,32 @@ class MainHook : IXposedHookLoadPackage {
                         log(stringBuilder)
                     }
                 }
-        }
-        
-        fun CheckVersion (lpparam: LoadPackageParam) {
-            checkVersion(lpparam)
-        }
-        
-        fun checkVersion(lpparam: LoadPackageParam) {
-            if (lpparam.packageName == "com.gojek.partner" || lpparam.packageName == "com.grabtaxi.driver2") {
-                XposedHelpers.findAndHookMethod(Activity::class.java, "onResume", i1())
-            }
-        }
+                                            
+            
+                if (lpparam.packageName == "com.gojek.partner" || lpparam.packageName == "com.grabtaxi.driver2") {
+                    XposedHelpers.findAndHookMethod(Activity::class.java, "onResume", i1())
+                }
+            
         
             class i1 : XC_MethodHook() {
             @Throws(Throwable::class)
                 override fun beforeHookedMethod(param: MethodHookParam) {
-                XposedBridge.log("$tag: target On Resume")
+                    XposedBridge.log("$tag: target On Resume")
                 }
             }
+            
+        }
+        
+        
 
 
 
 
-
-
-    }
 
 
 }
+    
+
 
 
 
