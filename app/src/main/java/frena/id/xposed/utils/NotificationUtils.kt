@@ -79,16 +79,17 @@ class NotificationUtils(context:Context) {
 
 
 
-        val sampleIntent = Intent(mContext, MainActivity::class.java)
-        sampleIntent.action = Intent.ACTION_MAIN
-        sampleIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-        sampleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        val sampleIntent = Intent(mContext, MainActivity::class.java)
+//        sampleIntent.action = Intent.ACTION_MAIN
+//        sampleIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+//        sampleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
 //        val sampleIntent = Intent(mContext, MainActivity::class.java).apply {
 //            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //
 //        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(mContext, 0, sampleIntent, 0)
+
+//        val pendingIntent: PendingIntent = PendingIntent.getActivity(mContext, 0, sampleIntent, 0)
         
         /***
          * Notice that the NotificationCompat.Builder constructor requires that you provide a channel ID.
