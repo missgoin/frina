@@ -102,7 +102,17 @@ class NotificationUtils(context:Context) {
          * This is required for compatibility with Android 8.0 (API level 26) and higher,
          * but is ignored by older versions.
          */
-
+        notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_loc_notification)
+            .setContentTitle("Timer Clock")
+            .setContentText("00:00:00")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .addAction(
+                R.drawable.ic_baseline_timer_24,
+                "Stop Timer",
+                servicePendingIntent
+            )
     }
 
 }
