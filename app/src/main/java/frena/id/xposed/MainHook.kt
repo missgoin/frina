@@ -16,19 +16,20 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
 class MainHook : IXposedHookLoadPackage {
 
-    val tag = "[f.Rina]"
-    
+    val tag = "[f.Rina]"    
     lateinit var context: Context
 
-    private val targetPackageName1 = "com.gojek.partner"
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
-
-        if (lpparam.packageName != targetPackageName1) {
-            return
-        }
-
-        XposedHelpers.findAndHookMethod(
+        if (lpparam != null) {
+            when (lpparam.packageName) {
+                
+                "com.gojek.partner" -> {
+                    XposedBridge.log("$tag: Finding method")
+                    
+                    try {
+                    
+          XposedHelpers.findAndHookMethod(
             "android.app.Instrumentation",
             lpparam.classLoader,
             "callApplicationOnCreate",
@@ -41,65 +42,27 @@ class MainHook : IXposedHookLoadPackage {
                     }
                 }
             }
-        )
-        
-        CheckVersion(lpparam)
-    
-    }
-        
-        
-
-        
-        fun CheckVersion(lpparam: LoadPackageParam) {
-            
-                val gop = a(lpparam, "com.gojek.partner") as Int
-                val gra = a(lpparam, "com.grabtaxi.driver2") as Int
-                val sho = a(lpparam, "com.shopee.foody.driver.id") as Int
-                    
-                    versioncodegop = gop
-                    versioncodegra = gra
-                    versioncodesho = sho
-                    
-                when {
-                    gop != 0 -> {
-                        val stringBuilder = "version code GoPartner: $versioncodegop"
-                        log(stringBuilder)
-                    }
-                    gra != 0 -> {
-                        val stringBuilder = "version code Grab Driver: $versioncodegra"
-                        log(stringBuilder)
-                    }
-                    sho != 0 -> {
-                        val stringBuilder = "version code Shopefood Driver: $versioncodesho"
-                        log(stringBuilder)
+          )
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck with exceptions: $e")
                     }
                 }
-                                            
             
-                if (lpparam.packageName == "com.gojek.partner" || lpparam.packageName == "com.grabtaxi.driver2") {
-                    XposedHelpers.findAndHookMethod(Activity::class.java, "onResume", i1())
-                }
-            
-        
-            class i1 : XC_MethodHook() {
-            @Throws(Throwable::class)
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    XposedBridge.log("$tag: target On Resume")
-                }
             }
-            
+
+
+
+
         }
-        
-        
-
-
-
-
+    }
 
 
 }
-    
 
+
+
+        
+        
 
 
 
