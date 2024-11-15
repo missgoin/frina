@@ -10,6 +10,7 @@ import frena.id.service.Constants.EXTRA_TIMER
 import frena.id.service.Constants.timeSeconds
 import frena.id.service.GeneralCalculations
 import frena.id.service.Constants
+import frena.id.xposed.utils.NotificationUtils
 import java.util.*
 
 class TimerForegroundService : Service() {
