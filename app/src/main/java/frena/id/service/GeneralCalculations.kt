@@ -1,4 +1,4 @@
-package com.orbitalsonic.forgroundservicewithnotification
+package frena.id.service
 
 object GeneralCalculations {
 
