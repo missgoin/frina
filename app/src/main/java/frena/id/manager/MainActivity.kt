@@ -4,7 +4,8 @@ import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.Manifest
-import frena.id.service.NotificationService
+import frena.id.service.NotificationUtils
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import android.annotation.SuppressLint
 import android.os.Bundle

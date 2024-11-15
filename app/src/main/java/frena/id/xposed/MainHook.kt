@@ -1,6 +1,12 @@
 // MainHook.kt
 package frena.id.xposed
 
+import android.app.Notification
+import android.content.Intent
+import android.Manifest
+import frena.id.service.NotificationUtils
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+
 import android.app.Application
 import android.content.Context
 import android.widget.Toast
@@ -8,7 +14,7 @@ import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
 import frena.id.xposed.utils.PreferencesUtil
-import frena.id.xposed.utils.NotificationUtil
+import frena.id.xposed.utils.NotificationUtils
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
