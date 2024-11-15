@@ -81,7 +81,7 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug 
-        run: ./gradlew assembleDebug clean
+        run: ./gradlew assembleDebug
 
       # Create APK Release
 #      - name: Build apk release
