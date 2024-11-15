@@ -54,7 +54,7 @@
             android:value="true" />
             
         <service
-            android:name="frena.id.service.NotificationService"
+            android:name="frena.id.service.TimerForegroundService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote"
