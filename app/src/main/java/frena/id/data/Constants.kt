@@ -53,6 +53,7 @@ const val KEY_SPEED_ACCURACY = "speed_accuracy"
  
  // gojek
 const val DEFAULT_GOJEK_BYPASS_REG = false
+const val DEFAULT_GOBYPASSREG = false
 const val DEFAULT_GOJEK_BYPASS_ACE = false
 const val DEFAULT_GOJEK_AUTOKILL = true
 const val DEFAULT_GOJEK_TS = false 

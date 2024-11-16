@@ -10,6 +10,7 @@ import frena.id.xposed.hooks.SystemServicesHooks
 import frena.id.xposed.hooks.GojekBypassReg
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.NotificationUtils
+import frena.id.xposed.utils.GojekUtil
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge

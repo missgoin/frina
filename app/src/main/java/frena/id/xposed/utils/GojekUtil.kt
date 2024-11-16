@@ -3,6 +3,7 @@ package frena.id.xposed.utils
 
 import android.os.Build
 import frena.id.data.DEFAULT_GOJEK_BYPASS_REG
+import frena.id.data.DEFAULT_GOBYPASSREG
 import frena.id.data.DEFAULT_GOJEK_BYPASS_ACE
 import de.robv.android.xposed.XposedBridge
 
@@ -10,7 +11,7 @@ object GojekUtil {
     private const val TAG = "[GojekUtil]"
 
     @Synchronized
-    fun bypassreguler() {
+    fun gojekbypassreguler() {
         try {
             PreferencesUtil.getGojekBypassReg()?.let {
 
