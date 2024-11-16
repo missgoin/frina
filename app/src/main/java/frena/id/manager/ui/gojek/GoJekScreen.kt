@@ -31,15 +31,8 @@ fun GoJekScreen(
     val gojek = listOf<GoJekData>(
         // Bypass Reguler
         DoubleGoJekData(
-            title = "Bypass Suspen Reguler"
-        ),
-        // Bypass Aceng
-        DoubleGoJekData(
-            title = "Bypass Autobid Aceng"
-        ),
-        // Custom Vertical Accuracy
-        DoubleGoJekData(
-            title = "Autokill"
+            title = "Bypass Suspen Reguler",
+            useValueState = gojekViewModel.useGojekBypassReg.collectAsState()
         )
 
     )
