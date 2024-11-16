@@ -18,7 +18,7 @@ object GojekUtil {
 
 
                  if (PreferencesUtil.getGojekBypassReg() == true) {
-                     GojekBypassReg = PreferencesUtil.GojekBypassReg() ?: DEFAULT_GOJEK_BYPASS_REG
+                     PreferencesUtil.GojekBypassReg() ?: DEFAULT_GOJEK_BYPASS_REG
                 }
 
 

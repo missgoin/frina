@@ -40,7 +40,12 @@ fun AppNavGraph(
         composable(route = Screen.GoJek.route) {
             GoJekScreen(navController = navController)
         }
-        
+        composable(route = Screen.Grab.route) {
+            GrabScreen(navController = navController)
+        }
+        composable(route = Screen.Shopee.route) {
+            ShopeeScreen(navController = navController)
+        }
         
     }
 }
