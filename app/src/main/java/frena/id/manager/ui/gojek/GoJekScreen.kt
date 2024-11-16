@@ -77,13 +77,13 @@ fun GoJekScreen(
                     .padding(16.dp)
                     .verticalScroll(scrollState)
             ) {
-                gojek.forEach { setting ->
-                    when (setting) {
+                gojek.forEach { gojek ->
+                    when (gojek) {
                         is DoubleGoJekData -> {
-                            DoubleGoJekComposable(setting)
+                            DoubleGoJekComposable(gojek)
                         }
                         is FloatSettingData -> {
-                            FloatSettingComposable(setting)
+                            FloatSettingComposable(gojek)
                         }
                     }
                 }
@@ -214,35 +214,16 @@ private fun <T : Number> SettingItem(
 sealed class GoJekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
-    abstract val setUseValue: (Boolean) -> Unit
-    abstract val label: String
-    abstract val minValue: Float
-    abstract val maxValue: Float
-    abstract val step: Float
 }
 
 data class DoubleGoJekData(
     override val title: String,
-    override val useValueState: State<Boolean>,
-    val valueState: State<Double>,
-    override val setUseValue: (Boolean) -> Unit,
-    val setValue: (Double) -> Unit,
-    override val label: String,
-    override val minValue: Float,
-    override val maxValue: Float,
-    override val step: Float
+    override val useValueState: State<Boolean>
 ) : GoJekData()
 
 data class FloatSettingData(
     override val title: String,
-    override val useValueState: State<Boolean>,
-    val valueState: State<Float>,
-    override val setUseValue: (Boolean) -> Unit,
-    val setValue: (Float) -> Unit,
-    override val label: String,
-    override val minValue: Float,
-    override val maxValue: Float,
-    override val step: Float
+    override val useValueState: State<Boolean>
 ) : GoJekData()
 
 @Composable
@@ -251,14 +232,7 @@ fun DoubleGoJekComposable(
 ) {
     DoubleSettingItem(
         title = setting.title,
-        useValue = setting.useValueState.value,
-        onUseValueChange = setting.setUseValue,
-        value = setting.valueState.value,
-        onValueChange = setting.setValue,
-        label = setting.label,
-        minValue = setting.minValue,
-        maxValue = setting.maxValue,
-        step = setting.step
+        useValue = setting.useValueState.value
     )
 }
 
@@ -268,13 +242,6 @@ fun FloatSettingComposable(
 ) {
     FloatSettingItem(
         title = setting.title,
-        useValue = setting.useValueState.value,
-        onUseValueChange = setting.setUseValue,
-        value = setting.valueState.value,
-        onValueChange = setting.setValue,
-        label = setting.label,
-        minValue = setting.minValue,
-        maxValue = setting.maxValue,
-        step = setting.step
+        useValue = setting.useValueState.value
     )
 }

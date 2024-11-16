@@ -7,8 +7,8 @@ sealed class Screen(val route: String) {
     object Permissions : Screen("permissions")
     object Settings : Screen("settings")
     object GoJek : Screen("gojek")
-    object Grab : Screen("grab")
-    object Shopee : Screen("shopee")
+//    object Grab : Screen("grab")
+//    object Shopee : Screen("shopee")
 }
 
 
