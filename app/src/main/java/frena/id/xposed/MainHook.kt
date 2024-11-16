@@ -55,12 +55,12 @@ class MainHook : IXposedHookLoadPackage {
                 "com.gojek.partner" -> {
                     XposedBridge.log("$tag: Finding bypass")                 
             
-                    try {
-                      
-                                                                  
+                    try {                                                                                       
                         gojekBypassReg = GojekBypassReg(lpparam)
                       
-                    }
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck with exceptions: $e")
+                      }
                       
                 }
             
