@@ -30,19 +30,19 @@ fun GoJekScreen(
 
     val gojek = listOf<GoJekData>(
         // Bypass Reguler
-        GoJekData(
+        DoubleGoJekData(
             title = "Bypass Suspen Reguler",
             useValueState = gojekViewModel.useRandomize.collectAsState(),
             valueState = gojekViewModel.randomizeRadius.collectAsState()
         ),
         // Bypass Aceng
-        GoJekData(
+        DoubleGoJekData(
             title = "Bypass Autobid Aceng",
             useValueState = gojekViewModel.useRandomize.collectAsState(),
             valueState = gojekViewModel.randomizeRadius.collectAsState()
         ),
         // Custom Vertical Accuracy
-        GoJekData(
+        DoubleGoJekData(
             title = "Autokill",
             useValueState = gojekViewModel.useRandomize.collectAsState(),
             valueState = gojekViewModel.randomizeRadius.collectAsState()
@@ -83,10 +83,10 @@ fun GoJekScreen(
                     .padding(16.dp)
                     .verticalScroll(scrollState)
             ) {
-                settings.forEach { setting ->
+                gojek.forEach { setting ->
                     when (setting) {
-                        is DoubleSettingData -> {
-                            DoubleSettingComposable(setting)
+                        is DoubleGoJekData -> {
+                            DoubleGoJekComposable(setting)
                         }
                         is FloatSettingData -> {
                             FloatSettingComposable(setting)
@@ -252,7 +252,7 @@ data class FloatSettingData(
 ) : GoJekData()
 
 @Composable
-fun DoubleSettingComposable(
+fun DoubleGoJekComposable(
     setting: DoubleGoJekData
 ) {
     DoubleSettingItem(
