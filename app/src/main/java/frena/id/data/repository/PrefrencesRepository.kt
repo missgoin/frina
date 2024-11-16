@@ -36,16 +36,16 @@ class PreferencesRepository(context: Context) {
         return sharedPrefs.getBoolean(KEY_USE_GOJEK_BYPASS_REG, DEFAULT_USE_GOJEK_BYPASS_REG)
     }
 
-    fun saveGoBypassReg(GoBypassReg: Boolean) {
-        sharedPrefs.edit()
-            .putBoolean(KEY_GOBYPASSREG, GoBypassReg)
-            .apply()
-        Log.d(tag, "Saved GoBypassReg: $GoBypassReg")
-    }
+//    fun saveGoBypassReg(GoBypassReg: Boolean) {
+//        sharedPrefs.edit()
+//            .putBoolean(KEY_GOBYPASSREG, GoBypassReg)
+//            .apply()
+//        Log.d(tag, "Saved GoBypassReg: $GoBypassReg")
+//    }
 
-    fun getGoBypassReg(): Boolean {
-        return sharedPrefs.getBoolean(KEY_GOBYPASSREG, DEFAULT_GOBYPASSREG)
-    }
+//    fun getGoBypassReg(): Boolean {
+//        return sharedPrefs.getBoolean(KEY_GOBYPASSREG, DEFAULT_GOBYPASSREG)
+//  }
 
 
     // Is Playing

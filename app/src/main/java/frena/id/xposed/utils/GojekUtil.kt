@@ -3,7 +3,7 @@ package frena.id.xposed.utils
 
 import android.os.Build
 import frena.id.data.DEFAULT_USE_GOJEK_BYPASS_REG
-import frena.id.data.DEFAULT_GOBYPASSREG
+//import frena.id.data.DEFAULT_GOBYPASSREG
 import frena.id.data.DEFAULT_USE_GOJEK_BYPASS_ACE
 import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.XposedBridge
@@ -18,8 +18,9 @@ object GojekUtil {
 
 
                  if (PreferencesUtil.getGojekBypassReg() == true) {
-                     gobypassreg = PreferencesUtil.GojekBypassReg() ?: DEFAULT_GOBYPASSREG
-                }
+                     gojekbypassreguler = PreferencesUtil.GojekBypassReg() ?: DEFAULT_USE_GOJEK_BYPASS_REG
+                } else {
+                  }
 
 
             // } 
