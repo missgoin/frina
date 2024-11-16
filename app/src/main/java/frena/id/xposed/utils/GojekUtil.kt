@@ -5,6 +5,7 @@ import android.os.Build
 import frena.id.data.DEFAULT_GOJEK_BYPASS_REG
 import frena.id.data.DEFAULT_GOBYPASSREG
 import frena.id.data.DEFAULT_GOJEK_BYPASS_ACE
+import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.XposedBridge
 
 object GojekUtil {
@@ -17,11 +18,11 @@ object GojekUtil {
 
 
                  if (PreferencesUtil.getGojekBypassReg() == true) {
-                     gobypassreg = PreferencesUtil.gobypassreg() ?: DEFAULT_GOBYPASSREG
+                     GojekBypassReg = PreferencesUtil.GojekBypassReg() ?: DEFAULT_GOJEK_BYPASS_REG
                 }
 
 
-            } ?: XposedBridge.log("$TAG Last clicked location is null")
+            } ?: XposedBridge.log("$TAG bypass activated")
         } catch (e: Exception) {
             XposedBridge.log("$TAG Error - ${e.message}")
         }

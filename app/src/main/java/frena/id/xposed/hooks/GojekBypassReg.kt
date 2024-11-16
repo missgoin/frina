@@ -26,13 +26,12 @@ class GojekBypassReg(val appLpparam: LoadPackageParam) {
         
                         XposedHelpers.findAndHookMethod(
                             gojekbypassregulerClass,
-                            lpparam.classLoader,
                             "dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2",
                             "valueOf"::class.java,
                             String::class.java,
                             object : XC_MethodHook() {
                                 override fun afterHookedMethod(param: MethodHookParam) {
-                                    (param.thisObject as Activity).finish()
+                                    return
                                     XposedBridge.log("$tag: success")
                                 }
                             }
