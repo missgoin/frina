@@ -38,8 +38,8 @@ fun SettingsScreen(
             setValue = settingsViewModel::setRandomizeRadius,
             label = "Randomization Radius (m)",
             minValue = 0f,
-            maxValue = 50f,
-            step = 0.1f
+            maxValue = 5f,
+            step = 0.01f
         ),
         // Custom Horizontal Accuracy
         DoubleSettingData(

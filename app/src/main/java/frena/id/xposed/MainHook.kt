@@ -7,6 +7,7 @@ import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
+import frena.id.xposed.hooks.GojekBypassReg
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.NotificationUtils
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -19,6 +20,7 @@ class MainHook : IXposedHookLoadPackage {
 
     val tag = "[f.Rina]"    
     lateinit var context: Context
+    private var gojekBypassReg: GojekBypassReg? = null
 
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
@@ -26,28 +28,43 @@ class MainHook : IXposedHookLoadPackage {
             when (lpparam.packageName) {
                 
                 "com.gojek.partner" -> {
-                    XposedBridge.log("$tag: Finding method")
-                    
+                    XposedBridge.log("$tag: Finding method")                 
+            
                     try {
-                    
-          XposedHelpers.findAndHookMethod(
-            "android.app.Instrumentation",
-            lpparam.classLoader,
-            "callApplicationOnCreate",
-            Application::class.java,
-            object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    context = (param.args[0] as Application).applicationContext.also {
-                        XposedBridge.log("$tag: loaded")
-                    
-                    }
-                }
-            }
-          )
+                        
+                        XposedHelpers.findAndHookMethod(
+                            "android.app.Instrumentation",
+                            lpparam.classLoader,
+                            "callApplicationOnCreate",
+                            Application::class.java,
+                            object : XC_MethodHook() {
+                                override fun beforeHookedMethod(param: MethodHookParam) {
+                                    context = (param.args[0] as Application).applicationContext.also {
+                                        XposedBridge.log("$tag: loaded")
+                                    }
+                                }
+                            }
+                        )
                     } catch (e: Exception) {
                         XposedBridge.log("$tag: fuck with exceptions: $e")
-                    }
+                      }
                 }
+                
+                            
+                "com.gojek.partner" -> {
+                    XposedBridge.log("$tag: Finding bypass")                 
+            
+                    try {
+                      
+                                                                  
+                        gojekBypassReg = GojekBypassReg(lpparam)
+                      
+                    }
+                      
+                }
+            
+            
+            
             
             }
 
@@ -55,8 +72,8 @@ class MainHook : IXposedHookLoadPackage {
 
 
         }
+        
     }
-
 
 }
 

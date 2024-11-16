@@ -36,5 +36,11 @@ fun AppNavGraph(
         composable(route = Screen.Settings.route) {
             SettingsScreen(navController = navController)
         }
+        
+        composable(route = Screen.Go-Jek.route) {
+            Go-JekScreen(navController = navController)
+        }
+        
+        
     }
 }

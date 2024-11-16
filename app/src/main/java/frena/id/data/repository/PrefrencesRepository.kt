@@ -21,6 +21,23 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
+    
+    
+    
+    // gojek bypass reguler
+    fun saveGojekBypassReg(GojekBypassReg: Boolean) {
+        sharedPrefs.edit()
+            .putBoolean(KEY_GOJEK_BYPASS_REG, GojekBypassReg)
+            .apply()
+        Log.d(tag, "Saved GojekBypassReg: $GojekBypassReg")
+    }
+
+    fun getGojekBypassReg(): Boolean {
+        return sharedPrefs.getBoolean(KEY_GOJEK_BYPASS_REG, DEFAULT_GOJEK_BYPASS_REG)
+    }
+
+
+
 
     // Is Playing
     fun saveIsPlaying(isPlaying: Boolean) {

@@ -14,6 +14,16 @@ object PreferencesUtil {
         makeWorldReadable()
         reload()
     }
+    
+    // gojek
+    fun getGojekBypassReg(): Boolean? {
+        return getPreference<Boolean>(KEY_GOJEK_BYPASS_REG)
+    }
+    
+    fun getGoBypassReg(): Boolean? {
+        return getPreference<Boolean>(KEY_GOBYPASSREG)
+    }
+    
 
     fun getIsPlaying(): Boolean? {
         return getPreference<Boolean>(KEY_IS_PLAYING)
