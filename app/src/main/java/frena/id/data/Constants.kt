@@ -8,16 +8,16 @@ const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 // KEYS
 
 // gojek
-const val KEY_GOJEK_BYPASS_REG = "go_bypass_reg"
+const val KEY_USE_GOJEK_BYPASS_REG = "use_gobypassreg"
 const val KEY_GOBYPASSREG  = "gobypassreg"
 
-const val KEY_GOJEK_BYPASS_ACE = "go_bypass_ace"
+const val KEY_USE_GOJEK_BYPASS_ACE = "use_gobypassace"
 const val KEY_GOBYPASSACE  = "gobypassace"
 
-const val KEY_GOJEK_AUTOKILL = "go_autokill"
+const val KEY_USE_GOJEK_AUTOKILL = "use_goautokill"
 const val KEY_GOAUTOKILL  = "goautokill"
 
-const val KEY_GOJEK_TS = "go_ts"
+const val KEY_USE_GOJEK_TS = "use_gots"
 const val KEY_GOTS  = "gots"
 
 
@@ -52,11 +52,11 @@ const val KEY_SPEED_ACCURACY = "speed_accuracy"
  // DEFAULT VALUES
  
  // gojek
-const val DEFAULT_GOJEK_BYPASS_REG = false
+const val DEFAULT_USE_GOJEK_BYPASS_REG = false
 const val DEFAULT_GOBYPASSREG = false
-const val DEFAULT_GOJEK_BYPASS_ACE = false
-const val DEFAULT_GOJEK_AUTOKILL = true
-const val DEFAULT_GOJEK_TS = false 
+const val DEFAULT_USE_GOJEK_BYPASS_ACE = false
+const val DEFAULT_USE_GOJEK_AUTOKILL = true
+const val DEFAULT_USE_GOJEK_TS = false 
  
 const val DEFAULT_USE_ACCURACY = false
 const val DEFAULT_ACCURACY = 0.0
