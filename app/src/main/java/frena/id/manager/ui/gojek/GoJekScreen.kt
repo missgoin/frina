@@ -32,20 +32,20 @@ fun GoJekScreen(
         // Bypass Reguler
         GoJekData(
             title = "Bypass Suspen Reguler",
-            useValueState = settingsViewModel.useRandomize.collectAsState(),
-            valueState = settingsViewModel.randomizeRadius.collectAsState()
+            useValueState = gojekViewModel.useRandomize.collectAsState(),
+            valueState = gojekViewModel.randomizeRadius.collectAsState()
         ),
         // Bypass Aceng
         GoJekData(
             title = "Bypass Autobid Aceng",
-            useValueState = settingsViewModel.useRandomize.collectAsState(),
-            valueState = settingsViewModel.randomizeRadius.collectAsState()
+            useValueState = gojekViewModel.useRandomize.collectAsState(),
+            valueState = gojekViewModel.randomizeRadius.collectAsState()
         ),
         // Custom Vertical Accuracy
         GoJekData(
             title = "Autokill",
-            useValueState = settingsViewModel.useRandomize.collectAsState(),
-            valueState = settingsViewModel.randomizeRadius.collectAsState()
+            useValueState = gojekViewModel.useRandomize.collectAsState(),
+            valueState = gojekViewModel.randomizeRadius.collectAsState()
         )
 
     )
@@ -227,7 +227,7 @@ sealed class GoJekData {
     abstract val step: Float
 }
 
-data class DoubleSettingData(
+data class DoubleGoJekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Double>,
@@ -237,7 +237,7 @@ data class DoubleSettingData(
     override val minValue: Float,
     override val maxValue: Float,
     override val step: Float
-) : SettingData()
+) : GoJekData()
 
 data class FloatSettingData(
     override val title: String,
@@ -249,11 +249,11 @@ data class FloatSettingData(
     override val minValue: Float,
     override val maxValue: Float,
     override val step: Float
-) : SettingData()
+) : GoJekData()
 
 @Composable
 fun DoubleSettingComposable(
-    setting: DoubleSettingData
+    setting: DoubleGoJekData
 ) {
     DoubleSettingItem(
         title = setting.title,
