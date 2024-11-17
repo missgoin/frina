@@ -17,7 +17,7 @@ class GojekBypassReg(val appLpparam: LoadPackageParam) {
 
 
     private fun GojekBypassReg(classLoader: ClassLoader) {
-        val gojekbypassregulerClass = XposedHelpers.findClass("android.app.Activity", classLoader)
+        val GojekBypassRegClass = XposedHelpers.findClass("android.app.Activity", classLoader)
 
     
         try {
@@ -25,14 +25,19 @@ class GojekBypassReg(val appLpparam: LoadPackageParam) {
 
         
                         XposedHelpers.findAndHookMethod(
-                            gojekbypassregulerClass,
+                            GojekBypassRegClass,
                             "dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2",
                             "valueOf"::class.java,
                             String::class.java,
                             object : XC_MethodHook() {
                                 override fun afterHookedMethod(param: MethodHookParam) {
-                                    return
-                                    XposedBridge.log("$tag: success")
+                                    GojekUtil.gojekbypassreguler()
+                                    XposedBridge.log("$tag: finding method")
+                                    if (PreferencesUtil.getGojekBypassReg() == true) {
+                                        param.result = true
+                                        XposedBridge.log("$tag: success")
+                                    }
+                                    
                                 }
                             }
                         )

@@ -10,7 +10,7 @@ import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.manager.ui.permissions.PermissionsScreen
 import frena.id.manager.ui.settings.SettingsScreen
-import frena.id.manager.ui.settings.GoJekScreen
+//import frena.id.manager.ui.settings.GoJekScreen
 
 @Composable
 fun AppNavGraph(
@@ -38,9 +38,9 @@ fun AppNavGraph(
             SettingsScreen(navController = navController)
         }
         
-        composable(route = Screen.GoJek.route) {
-            GoJekScreen(navController = navController)
-        }
+//        composable(route = Screen.GoJek.route) {
+//            GoJekScreen(navController = navController)
+//        }
 //        composable(route = Screen.Grab.route) {
 //            GrabScreen(navController = navController)
 //        }

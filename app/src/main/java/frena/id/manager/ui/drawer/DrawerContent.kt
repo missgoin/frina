@@ -72,30 +72,15 @@ fun DrawerContent(
                     onCloseDrawer()
                 }
             )
-            DrawerItem(
-                icon = LineAwesomeIcons.InfoCircleSolid,
-                label = "Gojek",
-                onClick = {
-                    navController.navigate(Screen.GoJek.route)
-                    onCloseDrawer()
-                }
-            )
-            DrawerItem(
-                icon = LineAwesomeIcons.InfoCircleSolid,
-                label = "Grab",
-                onClick = {
-                    navController.navigate(Screen.Grab.route)
-                    onCloseDrawer()
-                }
-            )
-            DrawerItem(
-                icon = LineAwesomeIcons.InfoCircleSolid,
-                label = "Shopee",
-                onClick = {
-                    navController.navigate(Screen.Shopee.route)
-                    onCloseDrawer()
-                }
-            )
+//            DrawerItem(
+//                icon = LineAwesomeIcons.InfoCircleSolid,
+//                label = "GoJek",
+//                onClick = {
+//                    navController.navigate(Screen.GoJek.route)
+//                    onCloseDrawer()
+//                }
+//            )
+
         }
     }
 }

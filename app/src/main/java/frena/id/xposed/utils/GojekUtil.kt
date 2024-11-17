@@ -13,20 +13,18 @@ object GojekUtil {
 
     @Synchronized
     fun gojekbypassreguler() {
+    
         try {
-           // PreferencesUtil.getGojekBypassReg()?.let {
+        
+            PreferencesUtil.getGojekBypassReg()?.let {
 
+                if (PreferencesUtil.getGojekBypassReg() == true) {
+                     use_gobypassreg = PreferencesUtil.getGojekBypassReg() ?: DEFAULT_USE_GOJEK_BYPASS_REG
+                }
 
-                 if (PreferencesUtil.getGojekBypassReg() == true) {
-                     gojekbypassreguler = PreferencesUtil.GojekBypassReg() ?: DEFAULT_USE_GOJEK_BYPASS_REG
-                } else {
-                  }
-
-
-            // } 
-            ?: XposedBridge.log("$TAG bypass activated")
+            } ?: XposedBridge.log("$TAG: bypass activated")
         } catch (e: Exception) {
-            XposedBridge.log("$TAG Error - ${e.message}")
+            XposedBridge.log("$TAG: Error - ${e.message}")
         }
     }
 

@@ -41,7 +41,7 @@ class MainHook : IXposedHookLoadPackage {
                             object : XC_MethodHook() {
                                 override fun beforeHookedMethod(param: MethodHookParam) {
                                     context = (param.args[0] as Application).applicationContext.also {
-                                        XposedBridge.log("$tag: loaded")
+                                        XposedBridge.log("$tag: target loaded")
                                     }
                                 }
                             }
@@ -53,7 +53,7 @@ class MainHook : IXposedHookLoadPackage {
                 
                             
                 "com.gojek.partner" -> {
-                    XposedBridge.log("$tag: Finding bypass")                 
+                    XposedBridge.log("$tag: trying bypass")                 
             
                     try {                                                                                       
                         gojekBypassReg = GojekBypassReg(lpparam)
