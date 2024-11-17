@@ -52,7 +52,7 @@ const val KEY_SPEED_ACCURACY = "speed_accuracy"
  // DEFAULT VALUES
  
  // gojek
-const val DEFAULT_USE_GOJEK_BYPASS_REG = false
+const val DEFAULT_USE_GOJEK_BYPASS_REG = true
 //const val DEFAULT_GOBYPASSREG = false
 const val DEFAULT_USE_GOJEK_BYPASS_ACE = false
 const val DEFAULT_USE_GOJEK_AUTOKILL = true
@@ -64,8 +64,8 @@ const val DEFAULT_ACCURACY = 0.0
 const val DEFAULT_USE_ALTITUDE = false
 const val DEFAULT_ALTITUDE = 0.0
 
-const val DEFAULT_USE_RANDOMIZE = false
-const val DEFAULT_RANDOMIZE_RADIUS = 0.0
+const val DEFAULT_USE_RANDOMIZE = true
+const val DEFAULT_RANDOMIZE_RADIUS = 0.05
 
 const val DEFAULT_USE_VERTICAL_ACCURACY = false
 const val DEFAULT_VERTICAL_ACCURACY = 0.0f
