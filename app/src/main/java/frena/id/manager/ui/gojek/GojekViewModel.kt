@@ -17,15 +17,15 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
     private val _useGojekBypassReg = MutableStateFlow(DEFAULT_USE_GOJEK_BYPASS_REG)
     val useGojekBypassReg: StateFlow<Boolean> get() = _useGojekBypassReg
 
-    private val _gojekBypassReg = MutableStateFlow(DEFAULT_ACCURACY)
-    val gojekBypassReg: StateFlow<Double> get() = _gojekBypassReg
+    private val _goBypassReg = MutableStateFlow(DEFAULT_GOJEK_BYPASS_REG)
+    val goBypassReg: StateFlow<Double> get() = _goBypassReg
 
 
 
     init {
         viewModelScope.launch {
             _useGojekBypassReg.value = preferencesRepository.getUseGojekBypassReg()
-            _gojekBypassReg.value = preferencesRepository.getGojekBypassReg()
+            _goBypassReg.value = preferencesRepository.getGoBypassReg()
             
         }
     }
@@ -36,9 +36,9 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
         preferencesRepository.saveUseGojekBypassReg(value)
     }
     
-    fun setGojekBypassReg(value: Boolean) {
-        _gojekBypassReg.value = value
-        preferencesRepository.saveGojekBypassReg(value)
+    fun setGoBypassReg(value: Boolean) {
+        _goBypassReg.value = value
+        preferencesRepository.saveGoBypassReg(value)
     }    
 
 

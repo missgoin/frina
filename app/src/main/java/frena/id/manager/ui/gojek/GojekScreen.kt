@@ -33,9 +33,9 @@ fun GojekScreen(
         DoubleGojekData(
             title = "Gojek Bypass Reguler",
             useValueState = gojekViewModel.useGojekBypassReg.collectAsState(),
-            valueState = gojekViewModel.gojekBypassReg.collectAsState(),
+            valueState = gojekViewModel.goBypassReg.collectAsState(),
             setUseValue = gojekViewModel::setUseGojekBypassReg,
-            setValue = gojekViewModel::setGojekBypassReg
+            setValue = gojekViewModel::setGoBypassReg
             
         )
         // Gojek bypass reguler
