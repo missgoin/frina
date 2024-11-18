@@ -47,43 +47,33 @@ class MainHook : IXposedHookLoadPackage {
         if (lpparam != null) {
             when (lpparam.packageName) {
                 
-                "com.gojek.partner" -> {
-                    XposedBridge.log("$tag: Finding method")                 
-            
+                "com.gojek.partner" -> {                                      
+                    
                     try {
-                        
                         XposedHelpers.findAndHookMethod(
                             "android.app.Instrumentation",
                             lpparam.classLoader,
                             "callApplicationOnCreate",
                             Application::class.java,
                             object : XC_MethodHook() {
-                                override fun beforeHookedMethod(param: MethodHookParam) {
+                                override fun afterHookedMethod(param: MethodHookParam) {
                                     context = (param.args[0] as Application).applicationContext.also {
-                                        XposedBridge.log("$tag: target loaded")
+                                    XposedBridge.log("$tag target location loaded.")
+                                    Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
                                     }
+                                locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
                                 }
                             }
                         )
-                    } catch (e: Exception) {
-                        XposedBridge.log("$tag: fuck with exceptions: $e")
-                      }
-            //    }
-                
-                            
-            //    "com.gojek.partner" -> {
-            //        XposedBridge.log("$tag: trying bypass")                 
-            
-                    try {
-                        //PreferencesUtil.getGojekBypassReg() == true                        
-                        //GojekBypassReg().gojekbypassreg(lpparam)
-                        gojekApiHooks = GojekApiHooks(lpparam).also { it.initHooks() }
-                      
+                                      
                     } catch (e: Exception) {
                         XposedBridge.log("$tag: fuck exceptions: $e")
                       }
+
                       
                 }
+                
+                
                 
                 "net.aleksandre.android.whereami" -> {                
                     
@@ -96,7 +86,7 @@ class MainHook : IXposedHookLoadPackage {
                             object : XC_MethodHook() {
                                 override fun afterHookedMethod(param: MethodHookParam) {
                                     context = (param.args[0] as Application).applicationContext.also {
-                                    XposedBridge.log("$tag Target App's context has been acquired successfully.")
+                                    XposedBridge.log("$tag Target acquired successfully.")
                                     Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
                                     }
                                 locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
@@ -117,14 +107,61 @@ class MainHook : IXposedHookLoadPackage {
     
         }
 
-    
-    
-    
-
-
-
 
     }
+
+
+
+    override fun handleLoadPackage(lpparam: LoadPackageParam) {
+        if (lpparam != null) {
+            when (lpparam.packageName) {
+                
+                "com.gojek.partner" -> {
+                    XposedBridge.log("$tag: Finding method")                 
+            
+                    try {
+                        
+                        XposedHelpers.findAndHookMethod(
+                            "android.app.Instrumentation",
+                            lpparam.classLoader,
+                            "callApplicationOnCreate",
+                            Application::class.java,
+                            object : XC_MethodHook() {
+                                override fun beforeHookedMethod(param: MethodHookParam) {
+                                    context = (param.args[0] as Application).applicationContext.also {
+                                        XposedBridge.log("$tag: target initialized")
+                                    }
+                                }
+                            }
+                        )
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck with exceptions: $e")
+                      }
+            
+            
+                    try {
+                        //PreferencesUtil.getGojekBypassReg() == true                        
+                        //GojekBypassReg().gojekbypassreg(lpparam)
+                        gojekApiHooks = GojekApiHooks(lpparam).also { it.initHooks() }
+                      
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck exceptions: $e")
+                      }
+                      
+                }
+                
+            
+            }
+
+
+        }
+        
+    }
+
+
+
+
+
 
 
 }
