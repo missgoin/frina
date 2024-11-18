@@ -111,7 +111,7 @@ fun GojekScreen(
 fun DoubleGojekItem(
     title: String,
     useValue: Boolean,
-    onUseValueChange: (Boolean) -> Unit,
+    onUseValueChange: (Boolean),
     value: Boolean,
     onValueChange: (Boolean)    
 ) {
@@ -128,7 +128,7 @@ fun DoubleGojekItem(
 fun FloatGojekItem(
     title: String,
     useValue: Boolean,
-    onUseValueChange: (Boolean) -> Unit,
+    onUseValueChange: (Boolean),
     value: Boolean,
     onValueChange: (Boolean)
 ) {
@@ -145,7 +145,7 @@ fun FloatGojekItem(
 private fun GojekItem(
     title: String,
     useValue: Boolean,
-    onUseValueChange: (Boolean) -> Unit,
+    onUseValueChange: (Boolean),
     value: (Boolean),
     onValueChange: (Boolean)
 ) {
