@@ -12,18 +12,13 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
 class GojekBypassReg(val appLpparam: LoadPackageParam) {
-    private val tag = "[Gobreg]"
+    private val tag = "[Gobyreg]"
 
-
-
-    private fun GojekBypassReg(classLoader: ClassLoader) {
-        val GojekBypassRegClass = XposedHelpers.findClass("android.app.Activity", classLoader)
-
+    private fun gojekbypassreg(classLoader: ClassLoader) {
+        val GojekBypassRegClass = XposedHelpers.findClass("com.gojek.gopartner", classLoader)
     
         try {
-        
-
-        
+                        
                         XposedHelpers.findAndHookMethod(
                             GojekBypassRegClass,
                             "dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2",
@@ -32,7 +27,7 @@ class GojekBypassReg(val appLpparam: LoadPackageParam) {
                             object : XC_MethodHook() {
                                 override fun afterHookedMethod(param: MethodHookParam) {
                                     GojekUtil.gojekbypassreguler()
-                                    XposedBridge.log("$tag: finding method")
+                                    XposedBridge.log("$tag: finding bypass")
                                     if (PreferencesUtil.getGojekBypassReg() == true) {
                                         param.result = true
                                         XposedBridge.log("$tag: success")
@@ -40,11 +35,8 @@ class GojekBypassReg(val appLpparam: LoadPackageParam) {
                                     
                                 }
                             }
-                        )
-                                
+                        )                                        
         
-        
-
         } catch (e: Exception) {
             XposedBridge.log("$tag: error")
             XposedBridge.log(e)

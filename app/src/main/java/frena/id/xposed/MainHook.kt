@@ -21,8 +21,10 @@ class MainHook : IXposedHookLoadPackage {
 
     val tag = "[f.Rina]"    
     lateinit var context: Context
+    
     private var gojekBypassReg: GojekBypassReg? = null
-
+    private var locationApiHooks: LocationApiHooks? = null
+    private var systemServicesHooks: SystemServicesHooks? = null
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         if (lpparam != null) {
@@ -56,18 +58,44 @@ class MainHook : IXposedHookLoadPackage {
             //        XposedBridge.log("$tag: trying bypass")                 
             
                     try {
-                        PreferencesUtil.getGojekBypassReg() == true
-                        XposedBridge.log("$tag: trying bypass")
-                        gojekBypassReg = GojekBypassReg(lpparam)
+                        //PreferencesUtil.getGojekBypassReg() == true                        
+                        GojekBypassReg().gojekbypassreg(lpparam)
                       
                     } catch (e: Exception) {
-                        XposedBridge.log("$tag: fuck with exceptions: $e")
+                        XposedBridge.log("$tag: fuck exceptions: $e")
                       }
                       
                 }
+                
+                "net.aleksandre.android.whereami" -> {
+                
+                    if (lpparam.packageName == "android") {
+                        systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
+                    }
+                    
+                    try {
+                        XposedHelpers.findAndHookMethod(
+            "android.app.Instrumentation",
+            lpparam.classLoader,
+            "callApplicationOnCreate",
+            Application::class.java,
+            object : XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    context = (param.args[0] as Application).applicationContext.also {
+                        XposedBridge.log("$tag Target App's context has been acquired successfully.")
+                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
+                    }
+                    locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
+                }
+            }
+        )
+                    
+                    
+                    }
             
-            
-            
+                }
+                
+                
             
             }
 
