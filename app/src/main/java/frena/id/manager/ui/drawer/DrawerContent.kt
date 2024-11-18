@@ -72,14 +72,14 @@ fun DrawerContent(
                     onCloseDrawer()
                 }
             )
-//            DrawerItem(
-//                icon = LineAwesomeIcons.InfoCircleSolid,
-//                label = "GoJek",
-//                onClick = {
-//                    navController.navigate(Screen.GoJek.route)
-//                    onCloseDrawer()
-//                }
-//            )
+            DrawerItem(
+                icon = LineAwesomeIcons.InfoCircleSolid,
+                label = "Gojek",
+                onClick = {
+                    navController.navigate(Screen.Gojek.route)
+                    onCloseDrawer()
+                }
+            )
 
         }
     }
