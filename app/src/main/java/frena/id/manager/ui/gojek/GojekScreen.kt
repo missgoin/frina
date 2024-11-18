@@ -32,14 +32,8 @@ fun GojekScreen(
         // Gojek bypass reguler
         DoubleGojekData(
             title = "Gojek Bypass Reguler",
-            useValueState = gojekViewModel.useSpeed.collectAsState(),
-            valueState = gojekViewModel.speed.collectAsState(),
-            setUseValue = gojekViewModel::setUseSpeed,
-            setValue = gojekViewModel::setSpeed,
-            label = "Bypass Reguler",
-            minValue = 0f,
-            maxValue = 30f,
-            step = 0.1f
+            useValueState = gojekViewModel.useSpeed.collectAsState()
+
         )
         // Gojek bypass reguler
 //        FloatGojekData(
@@ -113,70 +107,29 @@ fun GojekScreen(
 @Composable
 fun DoubleGojekItem(
     title: String,
-    useValue: Boolean,
-    onUseValueChange: (Boolean) -> Unit,
-    value: Double,
-    onValueChange: (Double) -> Unit,
-    label: String,
-    minValue: Float,
-    maxValue: Float,
-    step: Float
+    useValue: Boolean
 ) {
     GojekItem(
         title = title,
-        useValue = useValue,
-        onUseValueChange = onUseValueChange,
-        value = value,
-        onValueChange = onValueChange,
-        label = label,
-        minValue = minValue,
-        maxValue = maxValue,
-        step = step,
-        valueFormatter = { "%.2f".format(it) },
-        parseValue = { it.toDouble() }
+        useValue = useValue
     )
 }
 
 @Composable
 fun FloatGojekItem(
     title: String,
-    useValue: Boolean,
-    onUseValueChange: (Boolean) -> Unit,
-    value: Float,
-    onValueChange: (Float) -> Unit,
-    label: String,
-    minValue: Float,
-    maxValue: Float,
-    step: Float
+    useValue: Boolean
 ) {
     GojekItem(
         title = title,
-        useValue = useValue,
-        onUseValueChange = onUseValueChange,
-        value = value,
-        onValueChange = onValueChange,
-        label = label,
-        minValue = minValue,
-        maxValue = maxValue,
-        step = step,
-        valueFormatter = { "%.2f".format(it) },
-        parseValue = { it }
+        useValue = useValue
     )
 }
 
 @Composable
 private fun <T : Number> GojekItem(
     title: String,
-    useValue: Boolean,
-    onUseValueChange: (Boolean) -> Unit,
-    value: T,
-    onValueChange: (T) -> Unit,
-    label: String,
-    minValue: Float,
-    maxValue: Float,
-    step: Float,
-    valueFormatter: (T) -> String,
-    parseValue: (Float) -> T
+    useValue: Boolean
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -232,35 +185,16 @@ private fun <T : Number> GojekItem(
 sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
-    abstract val setUseValue: (Boolean) -> Unit
-    abstract val label: String
-    abstract val minValue: Float
-    abstract val maxValue: Float
-    abstract val step: Float
 }
 
 data class DoubleGojekData(
     override val title: String,
-    override val useValueState: State<Boolean>,
-    val valueState: State<Double>,
-    override val setUseValue: (Boolean) -> Unit,
-    val setValue: (Double) -> Unit,
-    override val label: String,
-    override val minValue: Float,
-    override val maxValue: Float,
-    override val step: Float
+    override val useValueState: State<Boolean>
 ) : GojekData()
 
 data class FloatGojekData(
     override val title: String,
-    override val useValueState: State<Boolean>,
-    val valueState: State<Float>,
-    override val setUseValue: (Boolean) -> Unit,
-    val setValue: (Float) -> Unit,
-    override val label: String,
-    override val minValue: Float,
-    override val maxValue: Float,
-    override val step: Float
+    override val useValueState: State<Boolean>
 ) : GojekData()
 
 @Composable
@@ -269,14 +203,7 @@ fun DoubleGojekComposable(
 ) {
     DoubleGojekItem(
         title = gojek.title,
-        useValue = gojek.useValueState.value,
-        onUseValueChange = gojek.setUseValue,
-        value = gojek.valueState.value,
-        onValueChange = gojek.setValue,
-        label = gojek.label,
-        minValue = gojek.minValue,
-        maxValue = gojek.maxValue,
-        step = gojek.step
+        useValue = gojek.useValueState.value
     )
 }
 
@@ -286,13 +213,6 @@ fun FloatGojekComposable(
 ) {
     FloatGojekItem(
         title = gojek.title,
-        useValue = gojek.useValueState.value,
-        onUseValueChange = gojek.setUseValue,
-        value = gojek.valueState.value,
-        onValueChange = gojek.setValue,
-        label = gojek.label,
-        minValue = gojek.minValue,
-        maxValue = gojek.maxValue,
-        step = gojek.step
+        useValue = gojek.useValueState.value
     )
 }
