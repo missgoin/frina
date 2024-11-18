@@ -60,17 +60,19 @@ class MainHook : IXposedHookLoadPackage {
                       
                     } catch (e: Exception) {
                         XposedBridge.log("$tag: fuck exceptions: $e")
-                      }
-                      
-                }
-                
-            
+                      }                      
+                }                            
             }
-
-
-        }    
+        }
     
     
+
+
+        initHookingLogic(lpparam)
+    }
+    
+    private fun initHookingLogic(lpparam: LoadPackageParam) {
+
          // Avoid hooking own app to prevent recursion
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
 
@@ -82,15 +84,11 @@ class MainHook : IXposedHookLoadPackage {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
 
-        initHookingLogic(lpparam)
-    }
-    
-    private fun initHookingLogic(lpparam: LoadPackageParam) {
     
         if (lpparam != null) {
             when (lpparam.packageName) {
                 
-                "com.gojek.partner" -> {                                      
+                "com.gojek.partner" -> {
                     
                     try {
                         XposedHelpers.findAndHookMethod(
