@@ -27,8 +27,7 @@ class MainHook : IXposedHookLoadPackage {
     private var systemServicesHooks: SystemServicesHooks? = null
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
-    
-    
+        
         if (lpparam != null) {
             when (lpparam.packageName) {
                 
@@ -64,9 +63,7 @@ class MainHook : IXposedHookLoadPackage {
                 }                            
             }
         }
-    
-    
-
+        
 
         initHookingLogic(lpparam)
     }
@@ -84,69 +81,21 @@ class MainHook : IXposedHookLoadPackage {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
 
-    
-        if (lpparam != null) {
-            when (lpparam.packageName) {
-                
-                "com.gojek.partner" -> {
-                    
-                    try {
-                        XposedHelpers.findAndHookMethod(
-                            "android.app.Instrumentation",
-                            lpparam.classLoader,
-                            "callApplicationOnCreate",
-                            Application::class.java,
-                            object : XC_MethodHook() {
-                                override fun afterHookedMethod(param: MethodHookParam) {
-                                    context = (param.args[0] as Application).applicationContext.also {
-                                    XposedBridge.log("$tag target location loaded.")
-                                    Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
-                                    }
-                                locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
-                                }
-                            }
-                        )
-                                      
-                    } catch (e: Exception) {
-                        XposedBridge.log("$tag: fuck exceptions: $e")
-                      }
-
-                      
+        XposedHelpers.findAndHookMethod(
+            "android.app.Instrumentation",
+            lpparam.classLoader,
+            "callApplicationOnCreate",
+            Application::class.java,
+            object : XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    context = (param.args[0] as Application).applicationContext.also {
+                        XposedBridge.log("$tag Target App's context has been acquired successfully.")
+                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
+                    }
+                    locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
                 }
-                
-                
-                
-                "net.aleksandre.android.whereami" -> {                
-                    
-                    try {
-                        XposedHelpers.findAndHookMethod(
-                            "android.app.Instrumentation",
-                            lpparam.classLoader,
-                            "callApplicationOnCreate",
-                            Application::class.java,
-                            object : XC_MethodHook() {
-                                override fun afterHookedMethod(param: MethodHookParam) {
-                                    context = (param.args[0] as Application).applicationContext.also {
-                                    XposedBridge.log("$tag Target acquired successfully.")
-                                    Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
-                                    }
-                                locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
-                                }
-                            }
-                        )
-                                      
-                    } catch (e: Exception) {
-                        XposedBridge.log("$tag: fuck exceptions: $e")
-                      }
-            
-                }
-                
-                
-            
             }
-    
-    
-        }
+        )
 
 
     }
