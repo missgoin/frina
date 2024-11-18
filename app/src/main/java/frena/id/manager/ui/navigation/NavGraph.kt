@@ -10,7 +10,7 @@ import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.manager.ui.permissions.PermissionsScreen
 import frena.id.manager.ui.settings.SettingsScreen
-import frena.id.manager.ui.settings.GojekScreen
+import frena.id.manager.ui.gojek.GojekScreen
 
 @Composable
 fun AppNavGraph(
