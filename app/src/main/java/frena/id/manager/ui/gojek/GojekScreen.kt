@@ -161,10 +161,10 @@ private fun GojekItem(
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.weight(1f))
-            Switch(
-                checked = true,
-                onCheckedChange = true
-            )
+//            Switch(
+//                checked = true,
+//                onCheckedChange = true
+//            )
         }
 
     }
@@ -174,14 +174,14 @@ private fun GojekItem(
 sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
-    abstract val setUseValue: (Boolean) -> Unit
+    abstract val setUseValue: (Boolean),
 }
 
 data class DoubleGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Boolean>,
-    override val setUseValue: (Boolean) -> Unit,
+    override val setUseValue: (Boolean),
     val setValue: (Boolean)
 ) : GojekData()
 
@@ -189,7 +189,7 @@ data class FloatGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Boolean>,
-    override val setUseValue: (Boolean) -> Unit,
+    override val setUseValue: (Boolean),
     val setValue: (Boolean)
 ) : GojekData()
 
