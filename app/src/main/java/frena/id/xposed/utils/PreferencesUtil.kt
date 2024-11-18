@@ -16,7 +16,7 @@ object PreferencesUtil {
     }
     
     // gojek
-    fun getGojekBypassReg(): Boolean? {
+    fun getUseGojekBypassReg(): Boolean? {
         return getPreference<Boolean>(KEY_USE_GOJEK_BYPASS_REG)
     }
     

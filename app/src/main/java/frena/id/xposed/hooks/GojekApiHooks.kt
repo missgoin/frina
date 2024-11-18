@@ -37,7 +37,7 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
                                 override fun afterHookedMethod(param: MethodHookParam) {
                                     GojekUtil.gojekbypassreguler()
                                     XposedBridge.log("$tag: finding bypass")
-                                    if (PreferencesUtil.getGojekBypassReg() == true) {
+                                    if (PreferencesUtil.getUseGojekBypassReg() == true) {
                                         param.result = true
                                         XposedBridge.log("$tag: success")
                                     }

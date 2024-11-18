@@ -19,10 +19,18 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _speed = MutableStateFlow(DEFAULT_SPEED)
     val speed: StateFlow<Float> get() = _speed
+    
+    
+    private val _useGojekBypassReg = MutableStateFlow(DEFAULT_USE_GOJEK_BYPASS_REG)
+    val useGojekBypassReg: StateFlow<Boolean> get() = _useGojekBypassReg
+
+
 
 
     init {
         viewModelScope.launch {
+
+            _useGojekBypassReg.value = preferencesRepository.getUseGojekBypassReg()
 
             _useSpeed.value = preferencesRepository.getUseSpeed()
             _speed.value = preferencesRepository.getSpeed()
@@ -31,6 +39,10 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
+    fun setUseGojekBypassReg(value: Boolean) {
+        _useGojekBypassReg.value = value
+        preferencesRepository.saveUseGojekBypassReg(value)
+    }
 
     fun setUseSpeed(value: Boolean) {
         _useSpeed.value = value
