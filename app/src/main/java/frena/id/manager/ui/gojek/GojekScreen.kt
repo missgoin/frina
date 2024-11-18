@@ -126,6 +126,38 @@ fun FloatGojekItem(
     )
 }
 
+@Composable
+private fun <T : Number> GojekItem(
+    title: String,
+    useValue: Boolean
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Switch(
+                checked = useValue,
+                onCheckedChange = onUseValueChange
+            )
+        }
+
+        if (useValue) {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            var sliderValue by remember { mutableFloatStateOf(value.toFloat()) }
+
+        }
+    }
+}
+
 
 sealed class GojekData {
     abstract val title: String
