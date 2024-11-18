@@ -18,7 +18,7 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
     val useGojekBypassReg: StateFlow<Boolean> get() = _useGojekBypassReg
 
     private val _goBypassReg = MutableStateFlow(DEFAULT_GOJEK_BYPASS_REG)
-    val goBypassReg: StateFlow<Double> get() = _goBypassReg
+    val goBypassReg: StateFlow<Boolean> get() = _goBypassReg
 
 
 
