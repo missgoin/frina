@@ -107,29 +107,34 @@ fun GojekScreen(
 @Composable
 fun DoubleGojekItem(
     title: String,
-    useValue: Boolean
+    useValue: Boolean,
+    onUseValueChange: Boolean
 ) {
     GojekItem(
         title = title,
-        useValue = useValue
+        useValue = useValue,
+        onUseValueChange = onUseValueChange
     )
 }
 
 @Composable
 fun FloatGojekItem(
     title: String,
-    useValue: Boolean
+    useValue: Boolean,
+    onUseValueChange: Boolean
 ) {
     GojekItem(
         title = title,
-        useValue = useValue
+        useValue = useValue,
+        onUseValueChange = onUseValueChange
     )
 }
 
 @Composable
 private fun GojekItem(
     title: String,
-    useValue: Boolean
+    useValue: Boolean,
+    onUseValueChange: Boolean
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -143,12 +148,11 @@ private fun GojekItem(
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.weight(1f))
-//            Switch(
-//                checked = useValue,
-//                onCheckedChange = useValue
-//            )
+            Switch(
+                checked = useValue,
+                onCheckedChange = onUseValueChange
+            )
         }
-
 
     }
 }
@@ -157,16 +161,19 @@ private fun GojekItem(
 sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
+    abstract val setUseValue: State<Boolean>
 }
 
 data class DoubleGojekData(
     override val title: String,
-    override val useValueState: State<Boolean>
+    override val useValueState: State<Boolean>,
+    override val setUseValue: State<Boolean>
 ) : GojekData()
 
 data class FloatGojekData(
     override val title: String,
-    override val useValueState: State<Boolean>
+    override val useValueState: State<Boolean>,
+    override val setUseValue: State<Boolean>
 ) : GojekData()
 
 @Composable
@@ -175,7 +182,8 @@ fun DoubleGojekComposable(
 ) {
     DoubleGojekItem(
         title = gojek.title,
-        useValue = gojek.useValueState.value
+        useValue = gojek.useValueState.value,
+        onUseValueChange = setting.setUseValue
     )
 }
 
@@ -185,6 +193,7 @@ fun FloatGojekComposable(
 ) {
     FloatGojekItem(
         title = gojek.title,
-        useValue = gojek.useValueState.value
+        useValue = gojek.useValueState.value,
+        onUseValueChange = setting.setUseValue
     )
 }
