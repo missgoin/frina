@@ -145,7 +145,7 @@ private fun GojekItem(
             Spacer(modifier = Modifier.weight(1f))
             Switch(
                 checked = useValue
-                
+                oncheckedchange = onusevaluechange
             )
         }
 
@@ -160,14 +160,12 @@ sealed class GojekData {
 
 data class DoubleGojekData(
     override val title: String,
-    override val useValueState: State<Boolean>,
-    override val valueState: State<Boolean>
+    override val useValueState: State<Boolean>
 ) : GojekData()
 
 data class FloatGojekData(
     override val title: String,
-    override val useValueState: State<Boolean>,
-    override val valueState: State<Boolean>
+    override val useValueState: State<Boolean>
 ) : GojekData()
 
 @Composable
@@ -177,7 +175,7 @@ fun DoubleGojekComposable(
     DoubleGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        value = gojek.valueState.value
+        onusevaluechange = gojek.useValueState.value
     )
 }
 
@@ -188,6 +186,6 @@ fun FloatGojekComposable(
     FloatGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        value = gojek.valueState.value
+        onusevaluechange = gojek.useValueState.value
     )
 }
