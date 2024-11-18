@@ -59,7 +59,8 @@ class MainHook : IXposedHookLoadPackage {
             
                     try {
                         //PreferencesUtil.getGojekBypassReg() == true                        
-                        GojekBypassReg().gojekbypassreg(lpparam)
+                        //GojekBypassReg().gojekbypassreg(lpparam)
+                        gojekBypassReg = GojekBypassReg(lpparam).also { it.initHooks() }
                       
                     } catch (e: Exception) {
                         XposedBridge.log("$tag: fuck exceptions: $e")
@@ -91,7 +92,9 @@ class MainHook : IXposedHookLoadPackage {
         )
                     
                     
-                    }
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck exceptions: $e")
+                      }
             
                 }
                 
