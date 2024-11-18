@@ -32,8 +32,8 @@ fun GojekScreen(
         // Gojek bypass reguler
         DoubleGojekData(
             title = "Gojek Bypass Reguler",
-            useValueState = gojekViewModel.useGojekBypassReg.collectAsState()
-
+            useValueState = gojekViewModel.useGojekBypassReg.collectAsState(),
+            valueState = gojekViewModel.useGojekBypassReg.collectAsState()
         )
         // Gojek bypass reguler
 //        FloatGojekData(
@@ -107,34 +107,29 @@ fun GojekScreen(
 @Composable
 fun DoubleGojekItem(
     title: String,
-    useValue: Boolean,
-    onUseValueChange: Boolean
+    useValue: Boolean
 ) {
     GojekItem(
         title = title,
-        useValue = useValue,
-        onUseValueChange = onUseValueChange
+        useValue = useValue
     )
 }
 
 @Composable
 fun FloatGojekItem(
     title: String,
-    useValue: Boolean,
-    onUseValueChange: Boolean
+    useValue: Boolean
 ) {
     GojekItem(
         title = title,
-        useValue = useValue,
-        onUseValueChange = onUseValueChange
+        useValue = useValue
     )
 }
 
 @Composable
 private fun GojekItem(
     title: String,
-    useValue: Boolean,
-    onUseValueChange: Boolean
+    useValue: Boolean
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -149,8 +144,8 @@ private fun GojekItem(
             )
             Spacer(modifier = Modifier.weight(1f))
             Switch(
-                checked = useValue,
-                onCheckedChange = onUseValueChange
+                checked = useValue
+                
             )
         }
 
@@ -161,19 +156,18 @@ private fun GojekItem(
 sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
-    abstract val setUseValue: State<Boolean>
 }
 
 data class DoubleGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
-    override val setUseValue: State<Boolean>
+    override val valueState: State<Boolean>
 ) : GojekData()
 
 data class FloatGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
-    override val setUseValue: State<Boolean>
+    override val valueState: State<Boolean>
 ) : GojekData()
 
 @Composable
@@ -183,7 +177,7 @@ fun DoubleGojekComposable(
     DoubleGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        onUseValueChange = gojek.useValueState.value
+        value = gojek.valueState.value
     )
 }
 
@@ -194,6 +188,6 @@ fun FloatGojekComposable(
     FloatGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        onUseValueChange = gojek.useValueState.value
+        value = gojek.valueState.value
     )
 }
