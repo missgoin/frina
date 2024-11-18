@@ -28,6 +28,49 @@ class MainHook : IXposedHookLoadPackage {
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
     
+    
+        if (lpparam != null) {
+            when (lpparam.packageName) {
+                
+                "com.gojek.partner" -> {
+                    XposedBridge.log("$tag: Finding method")                 
+            
+                    try {                    
+                        XposedHelpers.findAndHookMethod(
+                            "android.app.Instrumentation",
+                            lpparam.classLoader,
+                            "callApplicationOnCreate",
+                            Application::class.java,
+                            object : XC_MethodHook() {
+                                override fun beforeHookedMethod(param: MethodHookParam) {
+                                    context = (param.args[0] as Application).applicationContext.also {
+                                        XposedBridge.log("$tag: target initialized")
+                                    }
+                                }
+                            }
+                        )
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck with exceptions: $e")
+                      }
+                        
+                    try {
+                        //PreferencesUtil.getGojekBypassReg() == true                        
+                        //GojekBypassReg().gojekbypassreg(lpparam)
+                        gojekApiHooks = GojekApiHooks(lpparam).also { it.initHooks() }
+                      
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: fuck exceptions: $e")
+                      }
+                      
+                }
+                
+            
+            }
+
+
+        }    
+    
+    
          // Avoid hooking own app to prevent recursion
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
 
@@ -109,55 +152,6 @@ class MainHook : IXposedHookLoadPackage {
 
 
     }
-
-
-
-    override fun handleLoadPackage(lpparam: LoadPackageParam) {
-        if (lpparam != null) {
-            when (lpparam.packageName) {
-                
-                "com.gojek.partner" -> {
-                    XposedBridge.log("$tag: Finding method")                 
-            
-                    try {
-                        
-                        XposedHelpers.findAndHookMethod(
-                            "android.app.Instrumentation",
-                            lpparam.classLoader,
-                            "callApplicationOnCreate",
-                            Application::class.java,
-                            object : XC_MethodHook() {
-                                override fun beforeHookedMethod(param: MethodHookParam) {
-                                    context = (param.args[0] as Application).applicationContext.also {
-                                        XposedBridge.log("$tag: target initialized")
-                                    }
-                                }
-                            }
-                        )
-                    } catch (e: Exception) {
-                        XposedBridge.log("$tag: fuck with exceptions: $e")
-                      }
-            
-            
-                    try {
-                        //PreferencesUtil.getGojekBypassReg() == true                        
-                        //GojekBypassReg().gojekbypassreg(lpparam)
-                        gojekApiHooks = GojekApiHooks(lpparam).also { it.initHooks() }
-                      
-                    } catch (e: Exception) {
-                        XposedBridge.log("$tag: fuck exceptions: $e")
-                      }
-                      
-                }
-                
-            
-            }
-
-
-        }
-        
-    }
-
 
 
 
