@@ -8,8 +8,8 @@ const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 // KEYS
 
 // gojek
-const val KEY_USE_GOJEK_BYPASS_REG = "use_gojekbypassreg"
-const val KEY_GOJEK_BYPASS_REG = "gojekbypassreg"
+const val KEY_USE_GOJEK_BYPASS_REG = "use_gobypassreg"
+const val KEY_GOJEK_BYPASS_REG = "gobypassreg"
 
 const val KEY_USE_GOJEK_BYPASS_ACE = "use_gobypassace"
 //const val KEY_GOBYPASSACE  = "gobypassace"
