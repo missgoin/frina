@@ -1,5 +1,5 @@
-//SettingsScreen.kt
-package frena.id.manager.ui.settings
+//GojekScreen.kt
+package frena.id.manager.ui.gojek
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,117 +21,112 @@ import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(
+fun GojekScreen(
     navController: NavController,
-    settingsViewModel: SettingsViewModel = viewModel ()
+    gojekViewModel: GojekViewModel = viewModel ()
 ) {
     val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
 
-    val settings = listOf<SettingData>(
+    val gojek = listOf<GojekData>(
         // Randomize Nearby Location
-        DoubleSettingData(
+        DoubleGojekData(
             title = "Randomize Nearby Location",
-            useValueState = settingsViewModel.useRandomize.collectAsState(),
-            valueState = settingsViewModel.randomizeRadius.collectAsState(),
-            setUseValue = settingsViewModel::setUseRandomize,
-            setValue = settingsViewModel::setRandomizeRadius,
+            useValueState = gojekViewModel.useRandomize.collectAsState(),
+            valueState = gojekViewModel.randomizeRadius.collectAsState(),
+            setUseValue = gojekViewModel::setUseRandomize,
+            setValue = gojekViewModel::setRandomizeRadius,
             label = "Randomization Radius (m)",
             minValue = 0f,
             maxValue = 5f,
             step = 0.01f
         ),
         // Custom Horizontal Accuracy
-        DoubleSettingData(
+        DoubleGojekData(
             title = "Custom Horizontal Accuracy",
-            useValueState = settingsViewModel.useAccuracy.collectAsState(),
-            valueState = settingsViewModel.accuracy.collectAsState(),
-            setUseValue = settingsViewModel::setUseAccuracy,
-            setValue = settingsViewModel::setAccuracy,
+            useValueState = gojekViewModel.useAccuracy.collectAsState(),
+            valueState = gojekViewModel.accuracy.collectAsState(),
+            setUseValue = gojekViewModel::setUseAccuracy,
+            setValue = gojekViewModel::setAccuracy,
             label = "Horizontal Accuracy (m)",
             minValue = 0f,
             maxValue = 100f,
             step = 1f
         ),
         // Custom Vertical Accuracy
-        FloatSettingData(
+        FloatGojekData(
             title = "Custom Vertical Accuracy",
-            useValueState = settingsViewModel.useVerticalAccuracy.collectAsState(),
-            valueState = settingsViewModel.verticalAccuracy.collectAsState(),
-            setUseValue = settingsViewModel::setUseVerticalAccuracy,
-            setValue = settingsViewModel::setVerticalAccuracy,
+            useValueState = gojekViewModel.useVerticalAccuracy.collectAsState(),
+            valueState = gojekViewModel.verticalAccuracy.collectAsState(),
+            setUseValue = gojekViewModel::setUseVerticalAccuracy,
+            setValue = gojekViewModel::setVerticalAccuracy,
             label = "Vertical Accuracy (m)",
             minValue = 0f,
             maxValue = 100f,
             step = 1f
         ),
         // Custom Altitude
-        DoubleSettingData(
+        DoubleGojekData(
             title = "Custom Altitude",
-            useValueState = settingsViewModel.useAltitude.collectAsState(),
-            valueState = settingsViewModel.altitude.collectAsState(),
-            setUseValue = settingsViewModel::setUseAltitude,
-            setValue = settingsViewModel::setAltitude,
+            useValueState = gojekViewModel.useAltitude.collectAsState(),
+            valueState = gojekViewModel.altitude.collectAsState(),
+            setUseValue = gojekViewModel::setUseAltitude,
+            setValue = gojekViewModel::setAltitude,
             label = "Altitude (m)",
             minValue = 0f,
             maxValue = 2000f,
             step = 0.5f
         ),
         // Custom MSL
-        DoubleSettingData(
+        DoubleGojekData(
             title = "Custom MSL",
-            useValueState = settingsViewModel.useMeanSeaLevel.collectAsState(),
-            valueState = settingsViewModel.meanSeaLevel.collectAsState(),
-            setUseValue = settingsViewModel::setUseMeanSeaLevel,
-            setValue = settingsViewModel::setMeanSeaLevel,
+            useValueState = gojekViewModel.useMeanSeaLevel.collectAsState(),
+            valueState = gojekViewModel.meanSeaLevel.collectAsState(),
+            setUseValue = gojekViewModel::setUseMeanSeaLevel,
+            setValue = gojekViewModel::setMeanSeaLevel,
             label = "MSL (m)",
             minValue = -400f,
             maxValue = 2000f,
             step = 0.5f
         ),
         // Custom MSL Accuracy
-        FloatSettingData(
+        FloatGojekData(
             title = "Custom MSL Accuracy",
-            useValueState = settingsViewModel.useMeanSeaLevelAccuracy.collectAsState(),
-            valueState = settingsViewModel.meanSeaLevelAccuracy.collectAsState(),
-            setUseValue = settingsViewModel::setUseMeanSeaLevelAccuracy,
-            setValue = settingsViewModel::setMeanSeaLevelAccuracy,
+            useValueState = gojekViewModel.useMeanSeaLevelAccuracy.collectAsState(),
+            valueState = gojekViewModel.meanSeaLevelAccuracy.collectAsState(),
+            setUseValue = gojekViewModel::setUseMeanSeaLevelAccuracy,
+            setValue = gojekViewModel::setMeanSeaLevelAccuracy,
             label = "MSL Accuracy (m)",
             minValue = 0f,
             maxValue = 100f,
             step = 1f
         ),
         // Custom Speed
-        FloatSettingData(
+        FloatGojekData(
             title = "Custom Speed",
-            useValueState = settingsViewModel.useSpeed.collectAsState(),
-            valueState = settingsViewModel.speed.collectAsState(),
-            setUseValue = settingsViewModel::setUseSpeed,
-            setValue = settingsViewModel::setSpeed,
+            useValueState = gojekViewModel.useSpeed.collectAsState(),
+            valueState = gojekViewModel.speed.collectAsState(),
+            setUseValue = gojekViewModel::setUseSpeed,
+            setValue = gojekViewModel::setSpeed,
             label = "Speed (m/s)",
             minValue = 0f,
             maxValue = 30f,
             step = 0.1f
-        ),
+        )
         // Gojek bypass reguler
-        FloatSettingData(
-            title = "Gojek Bypass Reguler",
-            useValueState = settingsViewModel.useSpeed.collectAsState(),
-            valueState = settingsViewModel.speed.collectAsState(),
-            setUseValue = settingsViewModel::setUseSpeed,
-            setValue = settingsViewModel::setSpeed,
-            label = "Speed (m/s)",
-            minValue = 0f,
-            maxValue = 30f,
-            step = 0.1f
-        ),
+//        FloatGojekData(
+//            title = "Gojek Bypass Reguler",
+//            useValueState = gojekViewModel.useSpeed.collectAsState(),
+//            valueState = gojekViewModel.speed.collectAsState(),
+//            setUseValue = gojekViewModel::setUseSpeed
+//        ),
         // Custom Speed Accuracy
-//        FloatSettingData(
+//        FloatGojekData(
 //            title = "Custom Speed Accuracy",
-//            useValueState = settingsViewModel.useSpeedAccuracy.collectAsState(),
-//            valueState = settingsViewModel.speedAccuracy.collectAsState(),
-//            setUseValue = settingsViewModel::setUseSpeedAccuracy,
-//            setValue = settingsViewModel::setSpeedAccuracy,
+//            useValueState = gojekViewModel.useSpeedAccuracy.collectAsState(),
+//            valueState = gojekViewModel.speedAccuracy.collectAsState(),
+//            setUseValue = gojekViewModel::setUseSpeedAccuracy,
+//            setValue = gojekViewModel::setSpeedAccuracy,
 //            label = "Speed Accuracy (m/s)",
 //             minValue = 0f,
 //              maxValue = 100f,
@@ -142,7 +137,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text("GOJEK") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -172,13 +167,13 @@ fun SettingsScreen(
                     .padding(16.dp)
                     .verticalScroll(scrollState)
             ) {
-                settings.forEach { setting ->
-                    when (setting) {
-                        is DoubleSettingData -> {
-                            DoubleSettingComposable(setting)
+                gojek.forEach { gojek ->
+                    when (gojek) {
+                        is DoubleGojekData -> {
+                            DoubleGojekComposable(gojek)
                         }
-                        is FloatSettingData -> {
-                            FloatSettingComposable(setting)
+                        is FloatGojekData -> {
+                            FloatGojekComposable(gojek)
                         }
                     }
                 }
@@ -188,7 +183,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun DoubleSettingItem(
+fun DoubleGojekItem(
     title: String,
     useValue: Boolean,
     onUseValueChange: (Boolean) -> Unit,
@@ -199,7 +194,7 @@ fun DoubleSettingItem(
     maxValue: Float,
     step: Float
 ) {
-    SettingItem(
+    GojekItem(
         title = title,
         useValue = useValue,
         onUseValueChange = onUseValueChange,
@@ -215,7 +210,7 @@ fun DoubleSettingItem(
 }
 
 @Composable
-fun FloatSettingItem(
+fun FloatGojekItem(
     title: String,
     useValue: Boolean,
     onUseValueChange: (Boolean) -> Unit,
@@ -226,7 +221,7 @@ fun FloatSettingItem(
     maxValue: Float,
     step: Float
 ) {
-    SettingItem(
+    GojekItem(
         title = title,
         useValue = useValue,
         onUseValueChange = onUseValueChange,
@@ -242,7 +237,7 @@ fun FloatSettingItem(
 }
 
 @Composable
-private fun <T : Number> SettingItem(
+private fun <T : Number> GojekItem(
     title: String,
     useValue: Boolean,
     onUseValueChange: (Boolean) -> Unit,
@@ -306,7 +301,7 @@ private fun <T : Number> SettingItem(
     }
 }
 
-sealed class SettingData {
+sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
     abstract val setUseValue: (Boolean) -> Unit
@@ -316,7 +311,7 @@ sealed class SettingData {
     abstract val step: Float
 }
 
-data class DoubleSettingData(
+data class DoubleGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Double>,
@@ -326,9 +321,9 @@ data class DoubleSettingData(
     override val minValue: Float,
     override val maxValue: Float,
     override val step: Float
-) : SettingData()
+) : GojekData()
 
-data class FloatSettingData(
+data class FloatGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Float>,
@@ -338,38 +333,38 @@ data class FloatSettingData(
     override val minValue: Float,
     override val maxValue: Float,
     override val step: Float
-) : SettingData()
+) : GojekData()
 
 @Composable
-fun DoubleSettingComposable(
-    setting: DoubleSettingData
+fun DoubleGojekComposable(
+    gojek: DoubleGojekData
 ) {
-    DoubleSettingItem(
-        title = setting.title,
-        useValue = setting.useValueState.value,
-        onUseValueChange = setting.setUseValue,
-        value = setting.valueState.value,
-        onValueChange = setting.setValue,
-        label = setting.label,
-        minValue = setting.minValue,
-        maxValue = setting.maxValue,
-        step = setting.step
+    DoubleGojekItem(
+        title = gojek.title,
+        useValue = gojek.useValueState.value,
+        onUseValueChange = gojek.setUseValue,
+        value = gojek.valueState.value,
+        onValueChange = gojek.setValue,
+        label = gojek.label,
+        minValue = gojek.minValue,
+        maxValue = gojek.maxValue,
+        step = gojek.step
     )
 }
 
 @Composable
-fun FloatSettingComposable(
-    setting: FloatSettingData
+fun FloatGojekComposable(
+    gojek: FloatGojekData
 ) {
-    FloatSettingItem(
-        title = setting.title,
-        useValue = setting.useValueState.value,
-        onUseValueChange = setting.setUseValue,
-        value = setting.valueState.value,
-        onValueChange = setting.setValue,
-        label = setting.label,
-        minValue = setting.minValue,
-        maxValue = setting.maxValue,
-        step = setting.step
+    FloatGojekItem(
+        title = gojek.title,
+        useValue = gojek.useValueState.value,
+        onUseValueChange = gojek.setUseValue,
+        value = gojek.valueState.value,
+        onValueChange = gojek.setValue,
+        label = gojek.label,
+        minValue = gojek.minValue,
+        maxValue = gojek.maxValue,
+        step = gojek.step
     )
 }
