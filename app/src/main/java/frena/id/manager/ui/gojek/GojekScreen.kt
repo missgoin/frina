@@ -108,79 +108,14 @@ fun GojekScreen(
 fun DoubleGojekItem(
     title: String,
     useValue: Boolean
-) {
-    GojekItem(
-        title = title,
-        useValue = useValue
-    )
-}
+)
 
 @Composable
 fun FloatGojekItem(
     title: String,
     useValue: Boolean
-) {
-    GojekItem(
-        title = title,
-        useValue = useValue
-    )
-}
+)
 
-@Composable
-private fun <T : Number> GojekItem(
-    title: String,
-    useValue: Boolean
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Switch(
-                checked = useValue,
-                onCheckedChange = onUseValueChange
-            )
-        }
-
-        if (useValue) {
-            Spacer(modifier = Modifier.height(8.dp))
-
-            var sliderValue by remember { mutableFloatStateOf(value.toFloat()) }
-
-            LaunchedEffect(value) {
-                if (sliderValue != value.toFloat()) {
-                    sliderValue = value.toFloat()
-                }
-            }
-
-            Text(
-                text = "$label: ${valueFormatter(parseValue(sliderValue))}",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-
-            Slider(
-                value = sliderValue,
-                onValueChange = { newValue ->
-                    sliderValue = newValue
-                },
-                onValueChangeFinished = {
-                    onValueChange(parseValue(sliderValue))
-                },
-                valueRange = minValue..maxValue,
-                steps = ((maxValue - minValue) / step).toInt() - 1,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    }
-}
 
 sealed class GojekData {
     abstract val title: String
