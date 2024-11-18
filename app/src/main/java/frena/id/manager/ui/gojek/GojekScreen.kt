@@ -108,13 +108,23 @@ fun GojekScreen(
 fun DoubleGojekItem(
     title: String,
     useValue: Boolean
-)
+) {
+    GojekItem(
+        title = title,
+        useValue = useValue
+    )
+}
 
 @Composable
 fun FloatGojekItem(
     title: String,
     useValue: Boolean
-)
+) {
+    GojekItem(
+        title = title,
+        useValue = useValue
+    )
+}
 
 
 sealed class GojekData {
