@@ -29,7 +29,7 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
         try {
             XposedHelpers.findAndHookMethod(
             GojekBypassRegClass,
-            "dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2",
+            "dark.BaseDeepLinkDelegate$allDeepLinkEntries$2",
             "valueOf"::class.java,
             String::class.java,
                 object : XC_MethodHook() {
