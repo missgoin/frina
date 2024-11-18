@@ -183,7 +183,7 @@ fun DoubleGojekComposable(
     DoubleGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        onUseValueChange = setting.setUseValue
+        onUseValueChange = gojek.useValueState.value
     )
 }
 
@@ -194,6 +194,6 @@ fun FloatGojekComposable(
     FloatGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        onUseValueChange = setting.setUseValue
+        onUseValueChange = gojek.useValueState.value
     )
 }
