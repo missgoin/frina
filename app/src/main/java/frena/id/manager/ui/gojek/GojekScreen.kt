@@ -127,7 +127,7 @@ fun FloatGojekItem(
 }
 
 @Composable
-private fun <T : Number> GojekItem(
+private fun GojekItem(
     title: String,
     useValue: Boolean
 ) {
@@ -144,17 +144,11 @@ private fun <T : Number> GojekItem(
             )
             Spacer(modifier = Modifier.weight(1f))
             Switch(
-                checked = useValue,
-                onCheckedChange = onUseValueChange
+                checked = useValue              
             )
         }
 
-        if (useValue) {
-            Spacer(modifier = Modifier.height(8.dp))
 
-            var sliderValue by remember { mutableFloatStateOf(value.toFloat()) }
-
-        }
     }
 }
 
