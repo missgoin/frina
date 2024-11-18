@@ -143,10 +143,10 @@ private fun GojekItem(
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.weight(1f))
-            Switch(
-                checked = useValue,
-                onCheckedChange = useValue
-            )
+//            Switch(
+//                checked = useValue,
+//                onCheckedChange = useValue
+//            )
         }
 
 
