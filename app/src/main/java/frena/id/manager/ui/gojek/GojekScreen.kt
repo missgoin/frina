@@ -144,7 +144,8 @@ private fun GojekItem(
             )
             Spacer(modifier = Modifier.weight(1f))
             Switch(
-                checked = useValue              
+                checked = useValue,
+                onCheckedChange = useValue
             )
         }
 
