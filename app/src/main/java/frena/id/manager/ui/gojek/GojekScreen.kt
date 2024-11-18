@@ -174,7 +174,7 @@ private fun GojekItem(
 sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
-    abstract val setUseValue: (Boolean),
+    abstract val setUseValue: (Boolean)
 }
 
 data class DoubleGojekData(
@@ -200,7 +200,7 @@ fun DoubleGojekComposable(
     DoubleGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        onUseValueChange = gojek.setUseValue,
+        onUseValueChange = true,
         value = gojek.valueState.value,
         onValueChange = gojek.setValue        
     )
@@ -213,7 +213,7 @@ fun FloatGojekComposable(
     FloatGojekItem(
         title = gojek.title,
         useValue = gojek.useValueState.value,
-        onUseValueChange = gojek.setUseValue,
+        onUseValueChange = true,
         value = gojek.valueState.value,
         onValueChange = gojek.setValue
     )
