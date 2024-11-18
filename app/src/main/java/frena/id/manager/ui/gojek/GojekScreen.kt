@@ -111,7 +111,7 @@ fun GojekScreen(
 fun DoubleGojekItem(
     title: String,
     useValue: Boolean,
-    onUseValueChange: (Boolean),
+    onUseValueChange: (Boolean) -> Unit,
     value: Boolean,
     onValueChange: (Boolean)    
 ) {
@@ -128,7 +128,7 @@ fun DoubleGojekItem(
 fun FloatGojekItem(
     title: String,
     useValue: Boolean,
-    onUseValueChange: (Boolean),
+    onUseValueChange: (Boolean) -> Unit,
     value: Boolean,
     onValueChange: (Boolean)
 ) {
@@ -145,7 +145,7 @@ fun FloatGojekItem(
 private fun GojekItem(
     title: String,
     useValue: Boolean,
-    onUseValueChange: (Boolean),
+    onUseValueChange: (Boolean) -> Unit,
     value: (Boolean),
     onValueChange: (Boolean)
 ) {
@@ -174,14 +174,14 @@ private fun GojekItem(
 sealed class GojekData {
     abstract val title: String
     abstract val useValueState: State<Boolean>
-    abstract val setUseValue: (Boolean)
+    abstract val setUseValue: (Boolean) -> Unit
 }
 
 data class DoubleGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Boolean>,
-    override val setUseValue: (Boolean),
+    override val setUseValue: (Boolean) -> Unit,
     val setValue: (Boolean)
 ) : GojekData()
 
@@ -189,7 +189,7 @@ data class FloatGojekData(
     override val title: String,
     override val useValueState: State<Boolean>,
     val valueState: State<Boolean>,
-    override val setUseValue: (Boolean),
+    override val setUseValue: (Boolean) -> Unit,
     val setValue: (Boolean)
 ) : GojekData()
 
