@@ -112,19 +112,7 @@ fun SettingsScreen(
             minValue = 0f,
             maxValue = 30f,
             step = 0.1f
-        ),
-        // Gojek bypass reguler
-        FloatSettingData(
-            title = "Gojek Bypass Reguler",
-            useValueState = settingsViewModel.useSpeed.collectAsState(),
-            valueState = settingsViewModel.speed.collectAsState(),
-            setUseValue = settingsViewModel::setUseSpeed,
-            setValue = settingsViewModel::setSpeed,
-            label = "Speed (m/s)",
-            minValue = 0f,
-            maxValue = 30f,
-            step = 0.1f
-        ),
+        )
         // Custom Speed Accuracy
 //        FloatSettingData(
 //            title = "Custom Speed Accuracy",

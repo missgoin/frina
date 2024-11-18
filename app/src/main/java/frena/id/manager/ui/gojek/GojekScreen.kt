@@ -29,86 +29,14 @@ fun GojekScreen(
     val scrollState = rememberScrollState()
 
     val gojek = listOf<GojekData>(
-        // Randomize Nearby Location
+        // Gojek bypass reguler
         DoubleGojekData(
-            title = "Randomize Nearby Location",
-            useValueState = gojekViewModel.useRandomize.collectAsState(),
-            valueState = gojekViewModel.randomizeRadius.collectAsState(),
-            setUseValue = gojekViewModel::setUseRandomize,
-            setValue = gojekViewModel::setRandomizeRadius,
-            label = "Randomization Radius (m)",
-            minValue = 0f,
-            maxValue = 5f,
-            step = 0.01f
-        ),
-        // Custom Horizontal Accuracy
-        DoubleGojekData(
-            title = "Custom Horizontal Accuracy",
-            useValueState = gojekViewModel.useAccuracy.collectAsState(),
-            valueState = gojekViewModel.accuracy.collectAsState(),
-            setUseValue = gojekViewModel::setUseAccuracy,
-            setValue = gojekViewModel::setAccuracy,
-            label = "Horizontal Accuracy (m)",
-            minValue = 0f,
-            maxValue = 100f,
-            step = 1f
-        ),
-        // Custom Vertical Accuracy
-        FloatGojekData(
-            title = "Custom Vertical Accuracy",
-            useValueState = gojekViewModel.useVerticalAccuracy.collectAsState(),
-            valueState = gojekViewModel.verticalAccuracy.collectAsState(),
-            setUseValue = gojekViewModel::setUseVerticalAccuracy,
-            setValue = gojekViewModel::setVerticalAccuracy,
-            label = "Vertical Accuracy (m)",
-            minValue = 0f,
-            maxValue = 100f,
-            step = 1f
-        ),
-        // Custom Altitude
-        DoubleGojekData(
-            title = "Custom Altitude",
-            useValueState = gojekViewModel.useAltitude.collectAsState(),
-            valueState = gojekViewModel.altitude.collectAsState(),
-            setUseValue = gojekViewModel::setUseAltitude,
-            setValue = gojekViewModel::setAltitude,
-            label = "Altitude (m)",
-            minValue = 0f,
-            maxValue = 2000f,
-            step = 0.5f
-        ),
-        // Custom MSL
-        DoubleGojekData(
-            title = "Custom MSL",
-            useValueState = gojekViewModel.useMeanSeaLevel.collectAsState(),
-            valueState = gojekViewModel.meanSeaLevel.collectAsState(),
-            setUseValue = gojekViewModel::setUseMeanSeaLevel,
-            setValue = gojekViewModel::setMeanSeaLevel,
-            label = "MSL (m)",
-            minValue = -400f,
-            maxValue = 2000f,
-            step = 0.5f
-        ),
-        // Custom MSL Accuracy
-        FloatGojekData(
-            title = "Custom MSL Accuracy",
-            useValueState = gojekViewModel.useMeanSeaLevelAccuracy.collectAsState(),
-            valueState = gojekViewModel.meanSeaLevelAccuracy.collectAsState(),
-            setUseValue = gojekViewModel::setUseMeanSeaLevelAccuracy,
-            setValue = gojekViewModel::setMeanSeaLevelAccuracy,
-            label = "MSL Accuracy (m)",
-            minValue = 0f,
-            maxValue = 100f,
-            step = 1f
-        ),
-        // Custom Speed
-        FloatGojekData(
-            title = "Custom Speed",
+            title = "Gojek Bypass Reguler",
             useValueState = gojekViewModel.useSpeed.collectAsState(),
             valueState = gojekViewModel.speed.collectAsState(),
             setUseValue = gojekViewModel::setUseSpeed,
             setValue = gojekViewModel::setSpeed,
-            label = "Speed (m/s)",
+            label = "Bypass Reguler",
             minValue = 0f,
             maxValue = 30f,
             step = 0.1f

@@ -7,7 +7,7 @@ import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
-import frena.id.xposed.hooks.GojekBypassReg
+import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.NotificationUtils
 import frena.id.xposed.utils.GojekUtil
@@ -22,7 +22,7 @@ class MainHook : IXposedHookLoadPackage {
     val tag = "[f.Rina]"    
     lateinit var context: Context
     
-    private var gojekBypassReg: GojekBypassReg? = null
+    private var gojekApiHooks: GojekApiHooks? = null
     private var locationApiHooks: LocationApiHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null
 
@@ -60,7 +60,7 @@ class MainHook : IXposedHookLoadPackage {
                     try {
                         //PreferencesUtil.getGojekBypassReg() == true                        
                         //GojekBypassReg().gojekbypassreg(lpparam)
-                        gojekBypassReg = GojekBypassReg(lpparam).also { it.initHooks() }
+                        gojekApiHooks = GojekApiHooks(lpparam).also { it.initHooks() }
                       
                     } catch (e: Exception) {
                         XposedBridge.log("$tag: fuck exceptions: $e")

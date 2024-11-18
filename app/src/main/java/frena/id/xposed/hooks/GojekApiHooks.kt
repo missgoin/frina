@@ -11,15 +11,19 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
-class GojekBypassReg(val appLpparam: LoadPackageParam) {
-    private val tag = "[Gobyreg]"
+class GojekApiHooks(val appLpparam: LoadPackageParam) {
+    private val tag = "[GoAPI]"
     
     fun initHooks() {
-        gojekbypassreg()
-        XposedBridge.log("$tag Instantiated bypass")
+        gojekAPI()
+        XposedBridge.log("$tag instantiated bypass")
+    }
+    
+    private fun gojekAPI() {
+        hookBypassReguler(appLpparam.classLoader)
     }
 
-    private fun gojekbypassreg(classLoader: ClassLoader) {
+    private fun hookBypassReguler(classLoader: ClassLoader) {
         val GojekBypassRegClass = XposedHelpers.findClass("com.gojek.gopartner", classLoader)
     
         try {
