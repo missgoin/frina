@@ -25,11 +25,11 @@ class PreferencesRepository(context: Context) {
     
     
     // gojek bypass reguler
-    fun saveUseGojekBypassReg(GojekBypassReg: Boolean) {
+    fun saveUseGojekBypassReg(useGojekBypassReg: Boolean) {
         sharedPrefs.edit()
-            .putBoolean(KEY_USE_GOJEK_BYPASS_REG, UseGojekBypassReg)
+            .putBoolean(KEY_USE_GOJEK_BYPASS_REG, useGojekBypassReg)
             .apply()
-        Log.d(tag, "Saved GojekBypassReg: $GojekBypassReg")
+        Log.d(tag, "Saved UseGojekBypassReg: $useGojekBypassReg")
     }
 
     fun getUseGojekBypassReg(): Boolean {
