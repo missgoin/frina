@@ -24,7 +24,7 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
     }
 
     private fun hookBypassReguler(classLoader: ClassLoader) {
-        val GojekBypassRegClass = XposedHelpers.findClass("android.app.Activity", classLoader)
+        val GojekBypassRegClass = XposedHelpers.findClass("com.gojek.partner", classLoader)
     
         try {
             XposedHelpers.findAndHookMethod(
