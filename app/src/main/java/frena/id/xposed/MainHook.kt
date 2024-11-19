@@ -35,14 +35,14 @@ class MainHook : IXposedHookLoadPackage {
             when (lpparam.packageName) {
                 
                 "com.gojek.partner" -> {
-                    XposedBridge.log("$tag: Finding method")                 
+                    XposedBridge.log("$tag: finding ...")                 
             
                     try {
-                        val gojekClass = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader)
                         XposedHelpers.findAndHookMethod(
-                            gojekClass,
-                            "onCreate", 
-                            Bundle::class.java,
+                            "android.app.Instrumentation",
+                            lpparam.classLoader,
+                            "callApplicationOnCreate",
+                            Application::class.java,
                             object : XC_MethodHook() {
                                 override fun beforeHookedMethod(param: MethodHookParam) {                                    
                                     XposedBridge.log("$tag: target initialized")                                    
@@ -87,6 +87,7 @@ class MainHook : IXposedHookLoadPackage {
             Application::class.java,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
+                    super.afterHookedMethod(param)
                     context = (param.args[0] as Application).applicationContext.also {
                         XposedBridge.log("$tag Target App's context has been acquired successfully.")
                         Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()

@@ -39,10 +39,11 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
                         //param.result = true
                         return true
                         XposedBridge.log("$tag: success")
+                        } else {
+                            return
                         }
                     }
-                }
-            )
+                })
         
         } catch (e: Exception) {
             XposedBridge.log("$tag: error")
