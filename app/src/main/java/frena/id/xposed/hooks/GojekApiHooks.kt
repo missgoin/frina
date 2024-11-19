@@ -23,7 +23,7 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
         hookBypassReguler(appLpparam.classLoader)
     }
 
-    private fun hookBypassReguler(classLoader: ClassLoader) {
+    private fun hookBypassReguler(appLpparam.classLoader) {
     
         if (lpparam != null) {
             when (lpparam.packageName) {
