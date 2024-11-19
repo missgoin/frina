@@ -38,7 +38,7 @@ class MainHook : IXposedHookLoadPackage {
                     XposedBridge.log("$tag: Finding method")                 
             
                     try {
-                        val gojekClass = XposedHelpers.findClass("com.gojek.partner.MainActivity", lpparam.classLoader)
+                        val gojekClass = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader)
                         XposedHelpers.findAndHookMethod(
                             gojekClass,
                             "onCreate", 
