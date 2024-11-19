@@ -40,9 +40,8 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
                         return true
                         XposedBridge.log("$tag: success")
                         }
-                    } catch (e: Exception) {
-                        XposedBridge.log("$tag Error hooking system services")
-                        XposedBridge.log(e)
+                    } else {
+                        return false
                       }
                 })
         
