@@ -7,7 +7,7 @@ import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
-import frena.id.xposed.hooks.GojekApiHooks
+//import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.NotificationUtils
 import frena.id.xposed.utils.GojekUtil
@@ -22,7 +22,7 @@ import java.lang.Exception
 class MainHook : IXposedHookLoadPackage {
 
     val tag = "[FR.ina]"    
-//    lateinit var context: Context
+
     
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
@@ -36,6 +36,8 @@ class MainHook : IXposedHookLoadPackage {
     //private var gojekApiHooks: GojekApiHooks? = null
     private var locationApiHooks: LocationApiHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null
+    
+    lateinit var context: Context
 
     private fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
 
@@ -46,7 +48,7 @@ class MainHook : IXposedHookLoadPackage {
         if (lpparam.packageName == "android") {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
-
+        
 
         XposedHelpers.findAndHookMethod(
             "android.app.Instrumentation",
