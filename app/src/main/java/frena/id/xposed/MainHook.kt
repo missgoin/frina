@@ -28,7 +28,7 @@ class MainHook : IXposedHookLoadPackage {
     private var locationApiHooks: LocationApiHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null
 
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam?) {
+    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         // Avoid hooking own app to prevent recursion
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
@@ -38,7 +38,7 @@ class MainHook : IXposedHookLoadPackage {
         initHooking(lpparam)
     }
     
-    private fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam?) {
+    private fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         // If not playing or null, do not proceed with hooking
         if (PreferencesUtil.getIsPlaying() != true) return
