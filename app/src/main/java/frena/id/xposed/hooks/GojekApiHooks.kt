@@ -5,25 +5,27 @@ import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 
 import android.os.Build
+import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
-class GojekApiHooks(val appLpparam: LoadPackageParam) {
+class GojekApiHooks(XC_LoadPackage.LoadPackageParam) {
     private val tag = "[GoAPI]"
     
     fun initHooks() {
-        gojekAPI()
+        hookBypassReguler(lpparam)
+     //   gojekAPI()
         XposedBridge.log("$tag instantiated bypass")
     }
     
-    private fun gojekAPI() {
-        hookBypassReguler(appLpparam.classLoader)
-    }
+//    private fun gojekAPI() {
+//        hookBypassReguler(appLpparam.classLoader)
+//    }
 
-    private fun hookBypassReguler(appLpparam.classLoader) {
+    private fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
     
         if (lpparam != null) {
             when (lpparam.packageName) {
