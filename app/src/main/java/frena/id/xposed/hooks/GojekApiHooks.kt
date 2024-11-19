@@ -24,9 +24,16 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
     }
 
     private fun hookBypassReguler(classLoader: ClassLoader) {
-       val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("com.gojek.partner.dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", classLoader)
-                    
-        try {
+    
+        if (lpparam != null) {
+            when (lpparam.packageName) {
+                
+                "com.gojek.partner" -> {
+                    XposedBridge.log("$tag: finding ...")                 
+            
+                    try {
+                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", classLoader)
+
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
                 "valueOf",
@@ -47,6 +54,21 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
             XposedBridge.log("$tag: error")
             XposedBridge.log(e)
           }
+                        
+                    
+                    
+                    
+                    
+                }
+            }
+        }
+    
+    
+    
+    
+    
+                           
+        
     
     
     }

@@ -29,11 +29,7 @@ class MainHook : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
 
          // Avoid hooking own app to prevent recursion
-        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
-        
-        // If not playing or null, do not proceed with hooking
-        if (PreferencesUtil.getIsPlaying() != true) return
-
+        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return        
         
         if (lpparam != null) {
             when (lpparam.packageName) {
@@ -91,7 +87,7 @@ class MainHook : IXposedHookLoadPackage {
 
 
         // If not playing or null, do not proceed with hooking
-//        if (PreferencesUtil.getIsPlaying() != true) return
+        if (PreferencesUtil.getIsPlaying() != true) return
 
         // Hook system services if user asked for system wide hooks
         if (lpparam.packageName == "android") {
