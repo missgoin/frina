@@ -47,6 +47,20 @@ class MainHook : IXposedHookLoadPackage {
                                 override fun beforeHookedMethod(param: MethodHookParam) {                                    
                                     XposedBridge.log("$tag: target initialized")                                    
                                 }
+                                
+                                
+                            // If not playing or null, do not proceed with hooking
+                            if (PreferencesUtil.getIsPlaying() != true) return
+
+                                override fun afterHookedMethod(param: MethodHookParam) {
+                                    //super.afterHookedMethod(param)
+                                    context = (param.args[0] as Application).applicationContext.also {
+                                        XposedBridge.log("$tag Target App's context has been acquired successfully.")
+                                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
+                                    }
+                                    locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
+                                }
+                                
                             }
                         )
                     } catch (e: Exception) {
@@ -60,8 +74,11 @@ class MainHook : IXposedHookLoadPackage {
                       
                     } catch (e: Exception) {
                         XposedBridge.log("$tag: fuck exceptions: $e")
-                      }                      
-                }                            
+                      }
+                    
+                    
+                    
+                }
             }
         }
         
@@ -87,7 +104,6 @@ class MainHook : IXposedHookLoadPackage {
             Application::class.java,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    super.afterHookedMethod(param)
                     context = (param.args[0] as Application).applicationContext.also {
                         XposedBridge.log("$tag Target App's context has been acquired successfully.")
                         Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
