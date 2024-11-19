@@ -12,7 +12,7 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
-class GojekApiHooks(XC_LoadPackage.LoadPackageParam) {
+class GojekApiHooks(lpparam: XC_LoadPackage.LoadPackageParam) {
     private val tag = "[GoAPI]"
     
     fun initHooks() {
