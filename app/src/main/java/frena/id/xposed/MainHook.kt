@@ -27,6 +27,9 @@ class MainHook : IXposedHookLoadPackage {
     private var systemServicesHooks: SystemServicesHooks? = null
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
+
+         // Avoid hooking own app to prevent recursion
+        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
         if (lpparam != null) {
             when (lpparam.packageName) {
@@ -34,17 +37,15 @@ class MainHook : IXposedHookLoadPackage {
                 "com.gojek.partner" -> {
                     XposedBridge.log("$tag: Finding method")                 
             
-                    try {                    
+                    try {
+                        val gojekClass = XposedHelpers.findClass("com.gojek.partner.MainActivity", lpparam.classLoader)
                         XposedHelpers.findAndHookMethod(
-                            "android.app.Instrumentation",
-                            lpparam.classLoader,
-                            "callApplicationOnCreate",
-                            Application::class.java,
+                            gojekClass,
+                            "onCreate", 
+                            Bundle::class.java,
                             object : XC_MethodHook() {
-                                override fun beforeHookedMethod(param: MethodHookParam) {
-                                    context = (param.args[0] as Application).applicationContext.also {
-                                        XposedBridge.log("$tag: target initialized")
-                                    }
+                                override fun beforeHookedMethod(param: MethodHookParam) {                                    
+                                    XposedBridge.log("$tag: target initialized")                                    
                                 }
                             }
                         )
@@ -70,8 +71,6 @@ class MainHook : IXposedHookLoadPackage {
     
     private fun initHookingLogic(lpparam: LoadPackageParam) {
 
-         // Avoid hooking own app to prevent recursion
-        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
 
         // If not playing or null, do not proceed with hooking
         if (PreferencesUtil.getIsPlaying() != true) return
