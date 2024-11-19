@@ -5,14 +5,14 @@ import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 
 import android.os.Build
-import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
+import java.lang.Exception
 
-class GojekApiHooks(lpparam: XC_LoadPackage.LoadPackageParam) {
+class GojekApiHooks{
     private val tag = "[GoAPI]"
     
     fun initHooks() {
