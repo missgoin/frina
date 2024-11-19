@@ -16,7 +16,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
+import de.robv.android.xposed.callbacks.XC_LoadPackage
 import java.lang.Exception
 
 class MainHook : IXposedHookLoadPackage {
@@ -24,19 +24,19 @@ class MainHook : IXposedHookLoadPackage {
     val tag = "[FR.ina]"    
 //    lateinit var context: Context
     
-//    private var gojekApiHooks: GojekApiHooks? = null
-    private var locationApiHooks: LocationApiHooks? = null
-    private var systemServicesHooks: SystemServicesHooks? = null
-
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
-        if (lpparam.packageName != "com.gojek.partner" || lpparam.packageName != "com.grabtaxi.driver2") return
+        if (lpparam.packageName != "com.gojek.partner") return
 
         initHooking(lpparam)
     }
     
+    //private var gojekApiHooks: GojekApiHooks? = null
+    private var locationApiHooks: LocationApiHooks? = null
+    private var systemServicesHooks: SystemServicesHooks? = null
+
     private fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         // If not playing or null, do not proceed with hooking
