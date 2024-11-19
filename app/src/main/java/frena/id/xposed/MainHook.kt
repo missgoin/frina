@@ -31,9 +31,8 @@ class MainHook : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         // Avoid hooking own app to prevent recursion
-        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
-
-
+        //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
+        if (lpparam.packageName != "com.gojek.partner" || lpparam.packageName != "com.grabtaxi.driver2") return
 
         initHooking(lpparam)
     }
