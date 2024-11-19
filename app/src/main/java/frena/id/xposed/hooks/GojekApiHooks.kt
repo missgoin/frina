@@ -32,7 +32,7 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
                 "valueOf",
                 Boolean::class.java,
                 object : XC_MethodReplacement() {
-                    override fun replaceHookedMethod(param: MethodHookParam): Any {
+                    override fun replaceHookedMethod(param: MethodHookParam) {
                     GojekUtil.gojekbypassreguler()
                     XposedBridge.log("$tag: finding bypass")
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {
@@ -40,9 +40,7 @@ class GojekApiHooks(val appLpparam: LoadPackageParam) {
                         return true
                         XposedBridge.log("$tag: success")
                         }
-                    } else {
-                        return false
-                      }
+                    }
                 })
         
         } catch (e: Exception) {
