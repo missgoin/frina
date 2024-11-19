@@ -31,6 +31,10 @@ class MainHook : IXposedHookLoadPackage {
          // Avoid hooking own app to prevent recursion
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
+        // If not playing or null, do not proceed with hooking
+        if (PreferencesUtil.getIsPlaying() != true) return
+
+        
         if (lpparam != null) {
             when (lpparam.packageName) {
                 
@@ -47,10 +51,7 @@ class MainHook : IXposedHookLoadPackage {
                                 override fun beforeHookedMethod(param: MethodHookParam) {                                    
                                     XposedBridge.log("$tag: target initialized")                                    
                                 }
-                                
-                                
-                            // If not playing or null, do not proceed with hooking
-                            if (PreferencesUtil.getIsPlaying() != true) return
+                                                                
 
                                 override fun afterHookedMethod(param: MethodHookParam) {
                                     //super.afterHookedMethod(param)
@@ -90,7 +91,7 @@ class MainHook : IXposedHookLoadPackage {
 
 
         // If not playing or null, do not proceed with hooking
-        if (PreferencesUtil.getIsPlaying() != true) return
+//        if (PreferencesUtil.getIsPlaying() != true) return
 
         // Hook system services if user asked for system wide hooks
         if (lpparam.packageName == "android") {
