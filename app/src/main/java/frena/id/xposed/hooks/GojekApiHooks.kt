@@ -15,13 +15,13 @@ import java.lang.Exception
 class GojekApiHooks{
     private val tag = "[GoAPI]"
     
-    fun GojekAPI() {
-        hookBypassReguler(lpparam)
-    }
+//    fun GojekAPI() {
+//        hookBypassReguler(lpparam)
+//    }
     
     private fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
-        if (lpparam.packageName == "com.gojek.partner") {
+       // if (lpparam.packageName == "com.gojek.partner") {
             XposedBridge.log("$tag: finding bypass")
 
             val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate$allDeepLinkEntries$2", classLoader)
@@ -44,7 +44,7 @@ class GojekApiHooks{
                     XposedBridge.log(e)
                   }
             )
-        }
+      //  }
 
     }
 }
