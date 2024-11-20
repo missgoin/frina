@@ -20,7 +20,7 @@ import java.lang.Exception
 import java.io.File
 
 class GojekApiHooks{
-    private val tag = "[Gjk-API]"    
+    private val tag = "[FR.ina-GjAPI]"    
     
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         

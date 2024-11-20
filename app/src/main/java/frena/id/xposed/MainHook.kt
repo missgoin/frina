@@ -27,7 +27,7 @@ import java.lang.Exception
 import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
-    val tag = "[F.Rina]"
+    val tag = "[FR.ina]"
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
     
@@ -36,7 +36,7 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if (lpparam.packageName != "com.gojek.partner" || lpparam.packageName != "net.aleksandre.android.whereami") return
+        if (lpparam.packageName != "com.gojek.partner") return
         
         GojekApiHooks().hookBypassReguler(lpparam)
         initHooking(lpparam)
