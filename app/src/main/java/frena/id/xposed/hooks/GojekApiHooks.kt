@@ -19,7 +19,7 @@ class GojekApiHooks{
 //        hookBypassReguler(lpparam)
 //    }
     
-    private fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
+    fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
        // if (lpparam.packageName == "com.gojek.partner") {
             XposedBridge.log("$tag: finding bypass")
