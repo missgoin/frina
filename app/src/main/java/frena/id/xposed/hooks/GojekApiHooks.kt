@@ -10,6 +10,7 @@ import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
+import android.content.Intent
 import java.lang.Exception
 
 class GojekApiHooks{
@@ -47,4 +48,11 @@ class GojekApiHooks{
             }
 
     }
+    
+    fun hookAutoKill(lpparam: lpparam: XC_LoadPackage.LoadPackageParam) {
+    
+    
+    
+    }
+    
 }
