@@ -20,7 +20,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 import java.lang.Exception
 
 class MainHook : IXposedHookLoadPackage {
-    val tag = "[F.Rina]"
+    val tag = "[F.Rina]"     
     
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
@@ -69,7 +69,7 @@ class MainHook : IXposedHookLoadPackage {
             "android.app.Activity",
             lpparam.classLoader,
             "onResume",
-            Activity::class.java,
+            activity::class.java,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     context = (param.args[0] as Application).applicationContext.also {
