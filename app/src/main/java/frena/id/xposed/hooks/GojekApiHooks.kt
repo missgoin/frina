@@ -4,14 +4,20 @@ package frena.id.xposed.hooks
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 
+import android.app.Application
+import android.app.Activity
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
-import android.content.Intent
 import java.lang.Exception
+import java.io.File
 
 class GojekApiHooks{
     private val tag = "[Gjk-API]"    
@@ -23,12 +29,12 @@ class GojekApiHooks{
         try {
             XposedBridge.log("$tag: finding bypass")
 
-            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate$allDeepLinkEntries$2", lpparam.classLoader)
+            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries$2", lpparam.classLoader)
 
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
                 "valueOf",
-                Boolean::class.java,
+                //Boolean::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     GojekUtil.gojekbypassreguler()        

@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
