@@ -66,10 +66,10 @@ class MainHook : IXposedHookLoadPackage {
             })
             
         XposedHelpers.findAndHookMethod(
-            "activity",
+            "android.app.Activity",
             lpparam.classLoader,
             "onResume",
-            string::class.java,
+            Activity::class.java,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     context = (param.args[0] as Application).applicationContext.also {
