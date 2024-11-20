@@ -20,7 +20,8 @@ class GojekApiHooks{
 //    }
     
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
-        
+    
+        try {
        // if (lpparam.packageName == "com.gojek.partner") {
             XposedBridge.log("$tag: finding bypass")
 
@@ -39,11 +40,11 @@ class GojekApiHooks{
                         XposedBridge.log("$tag: success")
                         }
                     }
-                } catch (e: Exception) {
-                    XposedBridge.log("$tag: error")
-                    XposedBridge.log(e)
-                  })
+                })
       //  }
+        } catch (e: Exception) {
+            XposedBridge.log("$tag: error")
+            }
 
     }
 }
