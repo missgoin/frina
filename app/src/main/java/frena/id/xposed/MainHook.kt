@@ -20,7 +20,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 import java.lang.Exception
 
 class MainHook : IXposedHookLoadPackage {
-    val tag = "[FR.ina]"    
+    val tag = "[F.Rina]"
     
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
@@ -64,6 +64,24 @@ class MainHook : IXposedHookLoadPackage {
                     locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
                 }
             })
+            
+        XposedHelpers.findAndHookMethod(
+            "activity",
+            lpparam.classLoader,
+            "onResume",
+            string::class.java,
+            object : XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    context = (param.args[0] as Application).applicationContext.also {
+                        XposedBridge.log("$tag onResume acquired")
+                        //Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
+                    }
+                    locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
+                }
+            })
+
+
+
     }
 
 

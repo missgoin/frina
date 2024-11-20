@@ -13,7 +13,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 import java.lang.Exception
 
 class GojekApiHooks{
-    private val tag = "[GoAPI]"
+    private val tag = "[Gjk-API]"
     
 //    fun GojekAPI() {
 //        hookBypassReguler(lpparam)
@@ -37,7 +37,7 @@ class GojekApiHooks{
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {
                         param.result = true
                         //return true
-                        XposedBridge.log("$tag: success")
+                        XposedBridge.log("$tag: reguler bypassed")
                         }
                     }
                 })
