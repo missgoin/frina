@@ -28,7 +28,7 @@ class MainHook : IXposedHookLoadPackage {
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         if (lpparam.packageName != "com.gojek.partner") return
         
-        GojekApiHooks().hookBypassReguler(lpparam)
+        GojekApiHooks().GojekAPI(lpparam)
 
         initHooking(lpparam)
     }

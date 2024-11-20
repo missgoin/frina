@@ -15,6 +15,10 @@ import java.lang.Exception
 class GojekApiHooks{
     private val tag = "[GoAPI]"
     
+    fun GojekAPI() {
+        hookBypassReguler(lpparam)
+    }
+    
     private fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
         if (lpparam.packageName == "com.gojek.partner") {
