@@ -69,10 +69,9 @@ class MainHook : IXposedHookLoadPackage {
             "android.app.Activity",
             lpparam.classLoader,
             "onResume",
-            activity::class.java,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    context = (param.args[0] as Application).applicationContext.also {
+                    context = (param.args[0] as Activity).applicationContext.also {
                         XposedBridge.log("$tag onResume acquired")
                         //Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
                     }
