@@ -15,26 +15,12 @@ import java.lang.Exception
 class GojekApiHooks{
     private val tag = "[GoAPI]"
     
-    fun initHooks() {
-        hookBypassReguler(lpparam)
-     //   gojekAPI()
-        XposedBridge.log("$tag instantiated bypass")
-    }
-    
-//    private fun gojekAPI() {
-//        hookBypassReguler(appLpparam.classLoader)
-//    }
-
     private fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
-    
-        if (lpparam != null) {
-            when (lpparam.packageName) {
-                
-                "com.gojek.partner" -> {
-                    XposedBridge.log("$tag: finding ...")                 
-            
-                    try {
-                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", classLoader)
+        
+        if (lpparam.packageName == "com.gojek.partner") {
+            XposedBridge.log("$tag: finding bypass")
+
+            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", classLoader)
 
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
@@ -42,37 +28,19 @@ class GojekApiHooks{
                 Boolean::class.java,
                 object : XC_MethodReplacement() {
                     override fun replaceHookedMethod(param: MethodHookParam) {
-                    GojekUtil.gojekbypassreguler()
-                    XposedBridge.log("$tag: finding bypass")
+                    GojekUtil.gojekbypassreguler()                
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {
                         param.result = true
                         //return true
                         XposedBridge.log("$tag: success")
                         }
                     }
-                })
-        
-        } catch (e: Exception) {
-            XposedBridge.log("$tag: error")
-            XposedBridge.log(e)
-          }
-                        
-                    
-                    
-                    
-                    
-                }
-            }
+                } catch (e: Exception) {
+                    XposedBridge.log("$tag: error")
+                    XposedBridge.log(e)
+                  }
+            )
         }
-    
-    
-    
-    
-    
-                           
-        
-    
-    
-    }
 
+    }
 }

@@ -7,7 +7,7 @@ import android.widget.Toast
 import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
-//import frena.id.xposed.hooks.GojekApiHooks
+import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.NotificationUtils
 import frena.id.xposed.utils.GojekUtil
@@ -20,15 +20,15 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 import java.lang.Exception
 
 class MainHook : IXposedHookLoadPackage {
-
     val tag = "[FR.ina]"    
-
     
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         if (lpparam.packageName != "com.gojek.partner") return
+        
+        GojekApiHooks(lpparam)
 
         initHooking(lpparam)
     }
