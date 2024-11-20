@@ -14,38 +14,34 @@ import android.content.Intent
 import java.lang.Exception
 
 class GojekApiHooks{
-    private val tag = "[Gjk-API]"
-    
-//    fun GojekAPI() {
-//        hookBypassReguler(lpparam)
-//    }
+    private val tag = "[Gjk-API]"    
     
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
-    
+        
+        if (lpparam.packageName == "com.gojek.partner") {
+        
         try {
-       // if (lpparam.packageName == "com.gojek.partner") {
             XposedBridge.log("$tag: finding bypass")
 
-            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries$2", lpparam.classLoader)
+            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate$allDeepLinkEntries$2", lpparam.classLoader)
 
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
                 "valueOf",
                 Boolean::class.java,
-                object : XC_MethodReplacement() {
-                    override fun replaceHookedMethod(param: MethodHookParam) {
-                    GojekUtil.gojekbypassreguler()                
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                    GojekUtil.gojekbypassreguler()        
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {
-                        param.result = true
-                        //return true
+                        param.result = true                        
                         XposedBridge.log("$tag: reguler bypassed")
                         }
                     }
                 })
-      //  }
         } catch (e: Exception) {
             XposedBridge.log("$tag: error")
             }
+        }
 
     }
     
