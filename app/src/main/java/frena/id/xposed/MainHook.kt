@@ -28,6 +28,12 @@ import java.io.File
 class MainHook : IXposedHookLoadPackage {
     val tag = "[F.Rina]"
     
+
+
+    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+    
+        VersionCodeHooks().hookVersionCode(lpparam)
+        
     // Version Code
     val i = VersionCodeHooks().hookVersionCode(lpparam, "com.gojek.partner")
     val j = VersionCodeHooks().hookVersionCode(lpparam, "com.gojek.driver.kilat")
@@ -44,11 +50,7 @@ class MainHook : IXposedHookLoadPackage {
         j != 0 -> XposedBridge.log("GoKilat Code : $vcodekilat")
         k != 0 -> XposedBridge.log("Shope Code : $vcodeshope")
         g != 0 -> XposedBridge.log("Grab Code : $vcodegrab")
-    }
-
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-    
-        VersionCodeHooks().hookVersionCode(lpparam)
+    }        
 
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return

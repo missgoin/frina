@@ -20,6 +20,7 @@ import java.io.File
 
 class VersionCodeHooks{
     private val tag = "[VersionCode]"
+    
     var vcodeptnr: Int = 0
     var vcodekilat: Int = 0
     var vcodegrab: Int = 0
