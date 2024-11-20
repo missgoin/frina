@@ -22,12 +22,29 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
-
 import java.lang.Exception
 import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
     val tag = "[F.Rina]"
+    
+    // Version Code
+    val i = VersionCodeHooks().hookVersionCode(lpparam, "com.gojek.partner")
+    val j = VersionCodeHooks().hookVersionCode(lpparam, "com.gojek.driver.kilat")
+    val k = VersionCodeHooks().hookVersionCode(lpparam, "com.shopee.foody.driver.id")
+    val g = VersionCodeHooks().hookVersionCode(lpparam, "com.grabtaxi.driver2")
+
+    vcodekilat = j
+    vcodeptnr = i
+    vcodeshope = k
+    vcodegrab = g
+
+    when {
+        i != 0 -> XposedBridge.log("GoPartner Code : $vcodeptnr")
+        j != 0 -> XposedBridge.log("GoKilat Code : $vcodekilat")
+        k != 0 -> XposedBridge.log("Shope Code : $vcodeshope")
+        g != 0 -> XposedBridge.log("Grab Code : $vcodegrab")
+    }
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
     
