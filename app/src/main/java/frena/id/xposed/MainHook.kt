@@ -35,7 +35,7 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if (lpparam.packageName != "com.gojek.partner") return
+        if (lpparam.packageName != "com.gojek.partner" || lpparam.packageName != "net.aleksandre.android.whereami") return
         
         GojekApiHooks().hookBypassReguler(lpparam)
         initHooking(lpparam)
