@@ -38,7 +38,9 @@ class GojekApiHooks{
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         XposedBridge.log("$tag: initializing bypass")
                     }
-                })
+                } catch (e: Exception) {
+                    XposedBridge.log("$tag: before error")
+                  })
 
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
@@ -50,17 +52,16 @@ class GojekApiHooks{
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {                                
                         param.result = true
                         XposedBridge.log("$tag: reguler bypassed")
-                        }
+                        } 
+                        return
                     }
-                })
-            }
-            
-            return
-
-        } catch (e: Exception) {
-            XposedBridge.log("$tag: error")
-            }
-            
+                } catch (e: Exception) {
+                    XposedBridge.log("$tag: replacement error")
+                  })
+            } catch (e: Exception) {
+                XposedBridge.log("$tag: error")
+              }
+        }
 
     }
     
