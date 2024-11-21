@@ -30,6 +30,16 @@ class GojekApiHooks{
             //XposedBridge.log("$tag: finding bypass")
 
             val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
+            
+            XposedHelpers.findAndHookMethod(
+                darkBaseDeepLinkDelegateClass,
+                "valueOf",
+                //Boolean::class.java,
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        XposedBridge.log("$tag: initializing bypass")
+                    }
+                })
 
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
@@ -40,7 +50,7 @@ class GojekApiHooks{
                     GojekUtil.gojekbypassreguler()        
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {
                         XposedBridge.log("$tag: reguler bypassed")
-                        return auto_bid_enabled ?: true
+                        return valueOf ?: true
                         //param.result = true
                         }
                     }
