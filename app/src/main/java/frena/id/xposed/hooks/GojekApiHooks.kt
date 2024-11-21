@@ -40,7 +40,7 @@ class GojekApiHooks{
                     GojekUtil.gojekbypassreguler()        
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {
                         XposedBridge.log("$tag: reguler bypassed")
-                        return.Boolean.valueOf(true)
+                        return auto_bid_enabled ?: true
                         //param.result = true
                         }
                     }
