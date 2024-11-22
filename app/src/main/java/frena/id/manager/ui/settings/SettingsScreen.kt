@@ -66,17 +66,17 @@ fun SettingsScreen(
             step = 1f
         ),
         // Custom Altitude
-        DoubleSettingData(
-            title = "Custom Altitude",
-            useValueState = settingsViewModel.useAltitude.collectAsState(),
-            valueState = settingsViewModel.altitude.collectAsState(),
-            setUseValue = settingsViewModel::setUseAltitude,
-            setValue = settingsViewModel::setAltitude,
-            label = "Altitude (m)",
-            minValue = 0f,
-            maxValue = 2000f,
-            step = 0.5f
-        ),
+//        DoubleSettingData(
+//            title = "Custom Altitude",
+//            useValueState = settingsViewModel.useAltitude.collectAsState(),
+//            valueState = settingsViewModel.altitude.collectAsState(),
+//            setUseValue = settingsViewModel::setUseAltitude,
+//            setValue = settingsViewModel::setAltitude,
+//            label = "Altitude (m)",
+//            minValue = 0f,
+//            maxValue = 2000f,
+//            step = 0.5f
+//        ),
         // Custom MSL
         DoubleSettingData(
             title = "Custom MSL",

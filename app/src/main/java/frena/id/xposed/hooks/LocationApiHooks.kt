@@ -68,21 +68,21 @@ class LocationApiHooks(val appLpparam: LoadPackageParam) {
 
                     })
 
-            XposedHelpers.findAndHookMethod(
-                locationClass,
-                "getAltitude",
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
-                        XposedBridge.log("$tag Leaving method getAltitude()")
-                        XposedBridge.log("\t Original altitude: ${param.result as Double}")
-                        if (PreferencesUtil.getUseAltitude() == true) {
-                            param.result =  LocationUtil.altitude
-                            XposedBridge.log("\t Modified to: ${LocationUtil.altitude}")
-                        }
-                    }
-
-                })
+//            XposedHelpers.findAndHookMethod(
+//                locationClass,
+//                "getAltitude",
+//                object : XC_MethodHook() {
+//                    override fun afterHookedMethod(param: MethodHookParam) {
+//                        LocationUtil.updateLocation()
+//                        XposedBridge.log("$tag Leaving method getAltitude()")
+//                        XposedBridge.log("\t Original altitude: ${param.result as Double}")
+//                        if (PreferencesUtil.getUseAltitude() == true) {
+//                            param.result =  LocationUtil.altitude
+//                            XposedBridge.log("\t Modified to: ${LocationUtil.altitude}")
+//                        }
+//                    }
+//
+//                })
 
             XposedHelpers.findAndHookMethod(
                 locationClass,

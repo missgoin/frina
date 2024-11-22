@@ -37,13 +37,13 @@ object PreferencesUtil {
         return getPreference<Double>(KEY_ACCURACY)
     }
 
-    fun getUseAltitude(): Boolean? {
-        return getPreference<Boolean>(KEY_USE_ALTITUDE)
-    }
+//    fun getUseAltitude(): Boolean? {
+//        return getPreference<Boolean>(KEY_USE_ALTITUDE)
+//    }
 
-    fun getAltitude(): Double? {
-        return getPreference<Double>(KEY_ALTITUDE)
-    }
+//    fun getAltitude(): Double? {
+//        return getPreference<Double>(KEY_ALTITUDE)
+//    }
 
     fun getUseRandomize(): Boolean? {
         return getPreference<Boolean>(KEY_USE_RANDOMIZE)
@@ -99,7 +99,7 @@ object PreferencesUtil {
             Double::class -> {
                 val defaultValue = when (key) {
                     KEY_ACCURACY -> java.lang.Double.doubleToRawLongBits(DEFAULT_ACCURACY)
-                    KEY_ALTITUDE -> java.lang.Double.doubleToRawLongBits(DEFAULT_ALTITUDE)
+//                    KEY_ALTITUDE -> java.lang.Double.doubleToRawLongBits(DEFAULT_ALTITUDE)
                     KEY_RANDOMIZE_RADIUS -> java.lang.Double.doubleToRawLongBits(DEFAULT_RANDOMIZE_RADIUS)
                     KEY_MEAN_SEA_LEVEL -> java.lang.Double.doubleToRawLongBits(DEFAULT_MEAN_SEA_LEVEL)
                     else -> -1L

@@ -99,29 +99,29 @@ class PreferencesRepository(context: Context) {
         return java.lang.Double.longBitsToDouble(bits)
     }
 
-    fun saveUseAltitude(useAltitude: Boolean) {
-        sharedPrefs.edit()
-            .putBoolean(KEY_USE_ALTITUDE, useAltitude)
-            .apply()
-        Log.d(tag, "Saved UseAltitude: $useAltitude")
-    }
+//    fun saveUseAltitude(useAltitude: Boolean) {
+//        sharedPrefs.edit()
+./            .putBoolean(KEY_USE_ALTITUDE, useAltitude)
+//            .apply()
+//        Log.d(tag, "Saved UseAltitude: $useAltitude")
+//    }
 
-    fun getUseAltitude(): Boolean {
-        return sharedPrefs.getBoolean(KEY_USE_ALTITUDE, DEFAULT_USE_ALTITUDE)
-    }
+//    fun getUseAltitude(): Boolean {
+//        return sharedPrefs.getBoolean(KEY_USE_ALTITUDE, DEFAULT_USE_ALTITUDE)
+//    }
 
-    fun saveAltitude(altitude: Double) {
-        val bits = java.lang.Double.doubleToRawLongBits(altitude)
-        sharedPrefs.edit()
-            .putLong(KEY_ALTITUDE, bits)
-            .apply()
-        Log.d(tag, "Saved Altitude: $altitude")
-    }
+//    fun saveAltitude(altitude: Double) {
+//        val bits = java.lang.Double.doubleToRawLongBits(altitude)
+//        sharedPrefs.edit()
+//            .putLong(KEY_ALTITUDE, bits)
+//            .apply()
+//        Log.d(tag, "Saved Altitude: $altitude")
+//    }
 
-    fun getAltitude(): Double {
-        val bits = sharedPrefs.getLong(KEY_ALTITUDE, java.lang.Double.doubleToRawLongBits(DEFAULT_ALTITUDE))
-        return java.lang.Double.longBitsToDouble(bits)
-    }
+//    fun getAltitude(): Double {
+//        val bits = sharedPrefs.getLong(KEY_ALTITUDE, java.lang.Double.doubleToRawLongBits(DEFAULT_ALTITUDE))
+//        return java.lang.Double.longBitsToDouble(bits)
+//    }
 
     fun saveUseRandomize(randomize: Boolean) {
         sharedPrefs.edit()

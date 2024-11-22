@@ -21,11 +21,11 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val _accuracy = MutableStateFlow(DEFAULT_ACCURACY)
     val accuracy: StateFlow<Double> get() = _accuracy
 
-    private val _useAltitude = MutableStateFlow(DEFAULT_USE_ALTITUDE)
-    val useAltitude: StateFlow<Boolean> get() = _useAltitude
+//    private val _useAltitude = MutableStateFlow(DEFAULT_USE_ALTITUDE)
+//    val useAltitude: StateFlow<Boolean> get() = _useAltitude
 
-    private val _altitude = MutableStateFlow(DEFAULT_ALTITUDE)
-    val altitude: StateFlow<Double> get() = _altitude
+//    private val _altitude = MutableStateFlow(DEFAULT_ALTITUDE)
+//    val altitude: StateFlow<Double> get() = _altitude
 
     private val _useRandomize = MutableStateFlow(DEFAULT_USE_RANDOMIZE)
     val useRandomize: StateFlow<Boolean> get() = _useRandomize
@@ -67,8 +67,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             _useAccuracy.value = preferencesRepository.getUseAccuracy()
             _accuracy.value = preferencesRepository.getAccuracy()
-            _useAltitude.value = preferencesRepository.getUseAltitude()
-            _altitude.value = preferencesRepository.getAltitude()
+//            _useAltitude.value = preferencesRepository.getUseAltitude()
+//            _altitude.value = preferencesRepository.getAltitude()
             _useRandomize.value = preferencesRepository.getUseRandomize()
             _randomizeRadius.value = preferencesRepository.getRandomizeRadius()
             _useVerticalAccuracy.value = preferencesRepository.getUseVerticalAccuracy()
@@ -94,15 +94,15 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         preferencesRepository.saveAccuracy(value)
     }
 
-    fun setUseAltitude(value: Boolean) {
-        _useAltitude.value = value
-        preferencesRepository.saveUseAltitude(value)
-    }
+//    fun setUseAltitude(value: Boolean) {
+//        _useAltitude.value = value
+//        preferencesRepository.saveUseAltitude(value)
+//    }
 
-    fun setAltitude(value: Double) {
-        _altitude.value = value
-        preferencesRepository.saveAltitude(value)
-    }
+//    fun setAltitude(value: Double) {
+//        _altitude.value = value
+//        preferencesRepository.saveAltitude(value)
+//    }
 
     fun setUseRandomize(value: Boolean) {
         _useRandomize.value = value

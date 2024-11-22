@@ -5,7 +5,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import frena.id.data.DEFAULT_ACCURACY
-import frena.id.data.DEFAULT_ALTITUDE
+//import frena.id.data.DEFAULT_ALTITUDE
 import frena.id.data.DEFAULT_MEAN_SEA_LEVEL
 import frena.id.data.DEFAULT_MEAN_SEA_LEVEL_ACCURACY
 import frena.id.data.DEFAULT_RANDOMIZE_RADIUS
@@ -33,7 +33,7 @@ object LocationUtil {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     var accuracy: Float = 0F
-    var altitude: Double = 0.0
+//    var altitude: Double = 0.0
     var verticalAccuracy: Float = 0F
     var meanSeaLevel: Double = 0.0
     var meanSeaLevelAccuracy: Float = 0F
@@ -64,9 +64,9 @@ object LocationUtil {
             fakeLocation.accuracy = accuracy
         }
 
-        if (altitude != 0.0) {
-            fakeLocation.altitude = altitude
-        }
+//        if (altitude != 0.0) {
+//            fakeLocation.altitude = altitude
+//        }
 
         if (verticalAccuracy != 0F) {
             fakeLocation.verticalAccuracyMeters = verticalAccuracy
@@ -122,9 +122,9 @@ object LocationUtil {
                     accuracy = (PreferencesUtil.getAccuracy() ?: DEFAULT_ACCURACY).toFloat()
                 }
 
-                 if (PreferencesUtil.getUseAltitude() == true) {
-                     altitude = PreferencesUtil.getAltitude() ?: DEFAULT_ALTITUDE
-                }
+//                 if (PreferencesUtil.getUseAltitude() == true) {
+//                     altitude = PreferencesUtil.getAltitude() ?: DEFAULT_ALTITUDE
+//                }
 
                 if (PreferencesUtil.getUseVerticalAccuracy() == true) {
                     verticalAccuracy = PreferencesUtil.getVerticalAccuracy()?.toFloat() ?: DEFAULT_VERTICAL_ACCURACY
@@ -150,7 +150,7 @@ object LocationUtil {
                     XposedBridge.log("$TAG Updated fake location values to:")
                     XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
                     XposedBridge.log("\tAccuracy: $accuracy")
-                    XposedBridge.log("\tAltitude: $altitude")
+//                    XposedBridge.log("\tAltitude: $altitude")
                     XposedBridge.log("\tVertical Accuracy: $verticalAccuracy")
                     XposedBridge.log("\tMean Sea Level: $meanSeaLevel")
                     XposedBridge.log("\tMean Sea Level Accuracy: $meanSeaLevelAccuracy")
