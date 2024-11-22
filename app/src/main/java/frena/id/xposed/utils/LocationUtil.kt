@@ -6,8 +6,7 @@ import android.location.LocationManager
 import android.os.Build
 import frena.id.data.DEFAULT_ACCURACY
 //import frena.id.data.DEFAULT_ALTITUDE
-import frena.id.data.DEFAULT_MEAN_SEA_LEVEL
-import frena.id.data.DEFAULT_MEAN_SEA_LEVEL_ACCURACY
+
 import frena.id.data.DEFAULT_RANDOMIZE_RADIUS
 import frena.id.data.DEFAULT_SPEED
 import frena.id.data.DEFAULT_SPEED_ACCURACY
@@ -35,8 +34,8 @@ object LocationUtil {
     var accuracy: Float = 0F
 //    var altitude: Double = 0.0
     var verticalAccuracy: Float = 0F
-    var meanSeaLevel: Double = 0.0
-    var meanSeaLevelAccuracy: Float = 0F
+
+
     var speed: Float = 0F
     var speedAccuracy: Float = 0F
 
@@ -80,15 +79,9 @@ object LocationUtil {
             fakeLocation.speedAccuracyMetersPerSecond = speedAccuracy
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            if (meanSeaLevel != 0.0) {
-                fakeLocation.mslAltitudeMeters = meanSeaLevel
-            }
-
-            if (meanSeaLevelAccuracy != 0F) {
-                fakeLocation.mslAltitudeAccuracyMeters = meanSeaLevelAccuracy
-            }
-        }
+ 
+        
+        
 
         attemptHideMockProvider(fakeLocation)
 
@@ -130,13 +123,10 @@ object LocationUtil {
                     verticalAccuracy = PreferencesUtil.getVerticalAccuracy()?.toFloat() ?: DEFAULT_VERTICAL_ACCURACY
                 }
 
-                if (PreferencesUtil.getUseMeanSeaLevel() == true) {
-                    meanSeaLevel = PreferencesUtil.getMeanSeaLevel() ?: DEFAULT_MEAN_SEA_LEVEL
-                }
 
-                if (PreferencesUtil.getUseMeanSeaLevelAccuracy() == true) {
-                    meanSeaLevelAccuracy = PreferencesUtil.getMeanSeaLevelAccuracy()?.toFloat() ?: DEFAULT_MEAN_SEA_LEVEL_ACCURACY
-                }
+
+
+
 
                 if (PreferencesUtil.getUseSpeed() == true) {
                     speed = PreferencesUtil.getSpeed()?.toFloat() ?: DEFAULT_SPEED
@@ -147,15 +137,15 @@ object LocationUtil {
                 }
 
                 if (DEBUG) {
-                    XposedBridge.log("$TAG Updated fake location values to:")
+//                    XposedBridge.log("$TAG Updated fake location values to:")
                     XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
-                    XposedBridge.log("\tAccuracy: $accuracy")
+//                    XposedBridge.log("\tAccuracy: $accuracy")
 //                    XposedBridge.log("\tAltitude: $altitude")
-                    XposedBridge.log("\tVertical Accuracy: $verticalAccuracy")
-                    XposedBridge.log("\tMean Sea Level: $meanSeaLevel")
-                    XposedBridge.log("\tMean Sea Level Accuracy: $meanSeaLevelAccuracy")
-                    XposedBridge.log("\tSpeed: $speed")
-                    XposedBridge.log("\tSpeed Accuracy: $speedAccuracy")
+//                    XposedBridge.log("\tVertical Accuracy: $verticalAccuracy")
+
+
+//                    XposedBridge.log("\tSpeed: $speed")
+//                    XposedBridge.log("\tSpeed Accuracy: $speedAccuracy")
                 }
             } ?: XposedBridge.log("$TAG Last clicked location is null")
         } catch (e: Exception) {

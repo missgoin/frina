@@ -37,11 +37,8 @@ const val KEY_RANDOMIZE_RADIUS = "randomize_radius"
 const val KEY_USE_VERTICAL_ACCURACY = "use_vertical_accuracy"
 const val KEY_VERTICAL_ACCURACY = "vertical_accuracy"
 
-const val KEY_USE_MEAN_SEA_LEVEL = "use_mean_sea_level"
-const val KEY_MEAN_SEA_LEVEL = "mean_sea_level"
 
-const val KEY_USE_MEAN_SEA_LEVEL_ACCURACY = "use_mean_sea_level_accuracy"
-const val KEY_MEAN_SEA_LEVEL_ACCURACY = "mean_sea_level_accuracy"
+
 
 const val KEY_USE_SPEED = "use_speed"
 const val KEY_SPEED = "speed"
@@ -72,11 +69,8 @@ const val DEFAULT_RANDOMIZE_RADIUS = 0.0
 const val DEFAULT_USE_VERTICAL_ACCURACY = false
 const val DEFAULT_VERTICAL_ACCURACY = 0.0f
 
-const val DEFAULT_USE_MEAN_SEA_LEVEL = false
-const val DEFAULT_MEAN_SEA_LEVEL = 0.0
 
-const val DEFAULT_USE_MEAN_SEA_LEVEL_ACCURACY = false
-const val DEFAULT_MEAN_SEA_LEVEL_ACCURACY = 0.0f
+
 
 const val DEFAULT_USE_SPEED = false
 const val DEFAULT_SPEED = 0.0f

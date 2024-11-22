@@ -61,21 +61,9 @@ object PreferencesUtil {
         return getPreference<Float>(KEY_VERTICAL_ACCURACY)
     }
 
-    fun getUseMeanSeaLevel(): Boolean? {
-        return getPreference<Boolean>(KEY_USE_MEAN_SEA_LEVEL)
-    }
 
-    fun getMeanSeaLevel(): Double? {
-        return getPreference<Double>(KEY_MEAN_SEA_LEVEL)
-    }
 
-    fun getUseMeanSeaLevelAccuracy(): Boolean? {
-        return getPreference<Boolean>(KEY_USE_MEAN_SEA_LEVEL_ACCURACY)
-    }
 
-    fun getMeanSeaLevelAccuracy(): Float? {
-        return getPreference<Float>(KEY_MEAN_SEA_LEVEL_ACCURACY)
-    }
 
     fun getUseSpeed(): Boolean? {
         return getPreference<Boolean>(KEY_USE_SPEED)
@@ -110,7 +98,7 @@ object PreferencesUtil {
             Float::class -> {
                 val defaultValue = when (key) {
                     KEY_VERTICAL_ACCURACY -> DEFAULT_VERTICAL_ACCURACY
-                    KEY_MEAN_SEA_LEVEL_ACCURACY -> DEFAULT_MEAN_SEA_LEVEL_ACCURACY
+
                     KEY_SPEED -> DEFAULT_SPEED
                     KEY_SPEED_ACCURACY -> DEFAULT_SPEED_ACCURACY
                     else -> -1f

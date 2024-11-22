@@ -36,10 +36,16 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if (lpparam.packageName != "com.gojek.partner") return
+        if ((lpparam.packageName == "com.gojek.partner") || 
+        (lpparam.packageName == "net.aleksandre.android.whereami")) {
         
-        GojekApiHooks().hookBypassReguler(lpparam)
-        initHooking(lpparam)
+            GojekApiHooks().hookBypassReguler(lpparam)
+            initHooking(lpparam)
+        
+        } else {
+            return
+          }
+           
         
     }
     
@@ -65,7 +71,7 @@ class MainHook : IXposedHookLoadPackage {
             "callApplicationOnCreate",
             Application::class.java,
             object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam) {
+                override fun afterHookedMethod(param: MethodHookParam) {
                     context = (param.args[0] as Application).applicationContext.also {
                         XposedBridge.log("$tag Target App's context has been acquired successfully.")
                         Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()

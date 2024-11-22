@@ -39,17 +39,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val _verticalAccuracy = MutableStateFlow(DEFAULT_VERTICAL_ACCURACY)
     val verticalAccuracy: StateFlow<Float> get() = _verticalAccuracy
 
-    private val _useMeanSeaLevel = MutableStateFlow(DEFAULT_USE_MEAN_SEA_LEVEL)
-    val useMeanSeaLevel: StateFlow<Boolean> get() = _useMeanSeaLevel
 
-    private val _meanSeaLevel = MutableStateFlow(DEFAULT_MEAN_SEA_LEVEL)
-    val meanSeaLevel: StateFlow<Double> get() = _meanSeaLevel
 
-    private val _useMeanSeaLevelAccuracy = MutableStateFlow(DEFAULT_USE_MEAN_SEA_LEVEL_ACCURACY)
-    val useMeanSeaLevelAccuracy: StateFlow<Boolean> get() = _useMeanSeaLevelAccuracy
-
-    private val _meanSeaLevelAccuracy = MutableStateFlow(DEFAULT_MEAN_SEA_LEVEL_ACCURACY)
-    val meanSeaLevelAccuracy: StateFlow<Float> get() = _meanSeaLevelAccuracy
 
     private val _useSpeed = MutableStateFlow(DEFAULT_USE_SPEED)
     val useSpeed: StateFlow<Boolean> get() = _useSpeed
@@ -73,10 +64,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             _randomizeRadius.value = preferencesRepository.getRandomizeRadius()
             _useVerticalAccuracy.value = preferencesRepository.getUseVerticalAccuracy()
             _verticalAccuracy.value = preferencesRepository.getVerticalAccuracy()
-            _useMeanSeaLevel.value = preferencesRepository.getUseMeanSeaLevel()
-            _meanSeaLevel.value = preferencesRepository.getMeanSeaLevel()
-            _useMeanSeaLevelAccuracy.value = preferencesRepository.getUseMeanSeaLevelAccuracy()
-            _meanSeaLevelAccuracy.value = preferencesRepository.getMeanSeaLevelAccuracy()
+
             _useSpeed.value = preferencesRepository.getUseSpeed()
             _speed.value = preferencesRepository.getSpeed()
             _useSpeedAccuracy.value = preferencesRepository.getUseSpeedAccuracy()
@@ -124,25 +112,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         preferencesRepository.saveVerticalAccuracy(value)
     }
 
-    fun setUseMeanSeaLevel(value: Boolean) {
-        _useMeanSeaLevel.value = value
-        preferencesRepository.saveUseMeanSeaLevel(value)
-    }
 
-    fun setMeanSeaLevel(value: Double) {
-        _meanSeaLevel.value = value
-        preferencesRepository.saveMeanSeaLevel(value)
-    }
-
-    fun setUseMeanSeaLevelAccuracy(value: Boolean) {
-        _useMeanSeaLevelAccuracy.value = value
-        preferencesRepository.saveUseMeanSeaLevelAccuracy(value)
-    }
-
-    fun setMeanSeaLevelAccuracy(value: Float) {
-        _meanSeaLevelAccuracy.value = value
-        preferencesRepository.saveMeanSeaLevelAccuracy(value)
-    }
 
     fun setUseSpeed(value: Boolean) {
         _useSpeed.value = value

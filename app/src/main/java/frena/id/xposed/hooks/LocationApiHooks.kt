@@ -129,42 +129,6 @@ class LocationApiHooks(val appLpparam: LoadPackageParam) {
                     }
                 })
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                XposedHelpers.findAndHookMethod(
-                    locationClass,
-                    "getMslAltitudeMeters",
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            LocationUtil.updateLocation()
-                            XposedBridge.log("$tag Leaving method getMslAltitudeMeters()")
-                            val originalMslAltitude = param.result as? Double
-                            XposedBridge.log("\tOriginal MSL altitude: $originalMslAltitude")
-                            if (PreferencesUtil.getUseMeanSeaLevel() == true) {
-                                param.result = LocationUtil.meanSeaLevel
-                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevel}")
-                            }
-                        }
-                    })
-
-                // Hook getMslAltitudeAccuracyMeters()
-                XposedHelpers.findAndHookMethod(
-                    locationClass,
-                    "getMslAltitudeAccuracyMeters",
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            LocationUtil.updateLocation()
-                            XposedBridge.log("$tag Leaving method getMslAltitudeAccuracyMeters()")
-                            val originalMslAltitudeAccuracy = param.result as? Float
-                            XposedBridge.log("\tOriginal MSL altitude accuracy: $originalMslAltitudeAccuracy")
-                            if (PreferencesUtil.getUseMeanSeaLevelAccuracy() == true) {
-                                param.result = LocationUtil.meanSeaLevelAccuracy
-                                XposedBridge.log("\tModified to: ${LocationUtil.meanSeaLevelAccuracy}")
-                            }
-                        }
-                    })
-            } else {
-                XposedBridge.log("$tag getMslAltitudeMeters() and getMslAltitudeAccuracyMeters() not available on this API level")
-            }
 
         } catch (e: Exception) {
             XposedBridge.log("$tag Error hooking Location class - ${e.message}")

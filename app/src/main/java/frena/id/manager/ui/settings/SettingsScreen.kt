@@ -77,30 +77,9 @@ fun SettingsScreen(
 //            maxValue = 2000f,
 //            step = 0.5f
 //        ),
-        // Custom MSL
-        DoubleSettingData(
-            title = "Custom MSL",
-            useValueState = settingsViewModel.useMeanSeaLevel.collectAsState(),
-            valueState = settingsViewModel.meanSeaLevel.collectAsState(),
-            setUseValue = settingsViewModel::setUseMeanSeaLevel,
-            setValue = settingsViewModel::setMeanSeaLevel,
-            label = "MSL (m)",
-            minValue = -400f,
-            maxValue = 2000f,
-            step = 0.5f
-        ),
-        // Custom MSL Accuracy
-        FloatSettingData(
-            title = "Custom MSL Accuracy",
-            useValueState = settingsViewModel.useMeanSeaLevelAccuracy.collectAsState(),
-            valueState = settingsViewModel.meanSeaLevelAccuracy.collectAsState(),
-            setUseValue = settingsViewModel::setUseMeanSeaLevelAccuracy,
-            setValue = settingsViewModel::setMeanSeaLevelAccuracy,
-            label = "MSL Accuracy (m)",
-            minValue = 0f,
-            maxValue = 100f,
-            step = 1f
-        ),
+
+
+
         // Custom Speed
         FloatSettingData(
             title = "Custom Speed",

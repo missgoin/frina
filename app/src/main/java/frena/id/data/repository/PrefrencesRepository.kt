@@ -206,51 +206,8 @@ class PreferencesRepository(context: Context) {
         return sharedPrefs.getFloat(KEY_VERTICAL_ACCURACY, DEFAULT_VERTICAL_ACCURACY)
     }
 
-    fun saveUseMeanSeaLevel(useMeanSeaLevel: Boolean) {
-        sharedPrefs.edit()
-            .putBoolean(KEY_USE_MEAN_SEA_LEVEL, useMeanSeaLevel)
-            .apply()
-        Log.d(tag, "Saved UseMeanSeaLevel: $useMeanSeaLevel")
-    }
 
-    fun getUseMeanSeaLevel(): Boolean {
-        return sharedPrefs.getBoolean(KEY_USE_MEAN_SEA_LEVEL, DEFAULT_USE_MEAN_SEA_LEVEL)
-    }
 
-    fun saveMeanSeaLevel(meanSeaLevel: Double) {
-        val bits = java.lang.Double.doubleToRawLongBits(meanSeaLevel)
-        sharedPrefs.edit()
-            .putLong(KEY_MEAN_SEA_LEVEL, bits)
-            .apply()
-        Log.d(tag, "Saved MeanSeaLevel: $meanSeaLevel")
-    }
-
-    fun getMeanSeaLevel(): Double {
-        val bits = sharedPrefs.getLong(KEY_MEAN_SEA_LEVEL, java.lang.Double.doubleToRawLongBits(DEFAULT_MEAN_SEA_LEVEL))
-        return java.lang.Double.longBitsToDouble(bits)
-    }
-
-    fun saveUseMeanSeaLevelAccuracy(useMeanSeaLevelAccuracy: Boolean) {
-        sharedPrefs.edit()
-            .putBoolean(KEY_USE_MEAN_SEA_LEVEL_ACCURACY, useMeanSeaLevelAccuracy)
-            .apply()
-        Log.d(tag, "Saved UseMeanSeaLevelAccuracy: $useMeanSeaLevelAccuracy")
-    }
-
-    fun getUseMeanSeaLevelAccuracy(): Boolean {
-        return sharedPrefs.getBoolean(KEY_USE_MEAN_SEA_LEVEL_ACCURACY, DEFAULT_USE_MEAN_SEA_LEVEL_ACCURACY)
-    }
-
-    fun saveMeanSeaLevelAccuracy(meanSeaLevelAccuracy: Float) {
-        sharedPrefs.edit()
-            .putFloat(KEY_MEAN_SEA_LEVEL_ACCURACY, meanSeaLevelAccuracy)
-            .apply()
-        Log.d(tag, "Saved MeanSeaLevelAccuracy: $meanSeaLevelAccuracy")
-    }
-
-    fun getMeanSeaLevelAccuracy(): Float {
-        return sharedPrefs.getFloat(KEY_MEAN_SEA_LEVEL_ACCURACY, DEFAULT_MEAN_SEA_LEVEL_ACCURACY)
-    }
 
     fun saveUseSpeed(useSpeed: Boolean) {
         sharedPrefs.edit()
