@@ -101,7 +101,7 @@ class PreferencesRepository(context: Context) {
 
 //    fun saveUseAltitude(useAltitude: Boolean) {
 //        sharedPrefs.edit()
-./            .putBoolean(KEY_USE_ALTITUDE, useAltitude)
+//            .putBoolean(KEY_USE_ALTITUDE, useAltitude)
 //            .apply()
 //        Log.d(tag, "Saved UseAltitude: $useAltitude")
 //    }
