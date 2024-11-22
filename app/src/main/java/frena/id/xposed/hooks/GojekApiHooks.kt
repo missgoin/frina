@@ -25,7 +25,7 @@ class GojekApiHooks{
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
         try {
-            //if (lpparam.packageName == "com.gojek.partner") {
+            if (lpparam.packageName == "com.gojek.partner") {
             //XposedBridge.log("$tag: finding bypass")
 
             val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries$2", lpparam.classLoader)
@@ -44,20 +44,19 @@ class GojekApiHooks{
                 darkBaseDeepLinkDelegateClass,
                 "valueOf",
                 //Boolean::class.java,
-                object : XC_MethodReplacement() {
-                    override fun replaceHookedMethod(param: MethodHookParam) {
-                    GojekUtil.gojekbypassreguler()        
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        GojekUtil.gojekbypassreguler()        
                         if (PreferencesUtil.getUseGojekBypassReg() == true) {                                
-                        param.result = true
-                        XposedBridge.log("$tag: reguler bypassed")
+                            param.result = true
+                            XposedBridge.log("$tag: reguler bypassed")
                         }
-                        return
                     }
                 })
-            
+            }
         } catch (e: Exception) {
                 XposedBridge.log("$tag: error")
-              }
+                }
     }
     
 }

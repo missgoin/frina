@@ -67,7 +67,7 @@ fun ErrorScreen() {
         onDismissRequest = {},
         title = { Text("Module Not Active") },
         text = {
-            Text( "f.Rina module is not active in your Xposed manager app. Please enable it and restart the app to continue." )
+            Text( "FR.ina module is not active in your Xposed manager app. Please enable it and restart the app to continue." )
         },
         confirmButton = {
             Button(onClick = {
