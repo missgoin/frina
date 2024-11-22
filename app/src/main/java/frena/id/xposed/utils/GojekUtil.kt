@@ -19,7 +19,7 @@ object GojekUtil {
             PreferencesUtil.getUseGojekBypassReg()?.let {
 
                 if (PreferencesUtil.getUseGojekBypassReg() == true) {
-                    gojekBypassReg= PreferencesUtil.getGojekBypassReg() ?: DEFAULT_GOJEK_BYPASS_REG
+                    PreferencesUtil.getGojekBypassReg() ?: DEFAULT_GOJEK_BYPASS_REG
                 }
 
             } ?: XposedBridge.log("$TAG: bypass activated")

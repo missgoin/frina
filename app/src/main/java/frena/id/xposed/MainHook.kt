@@ -65,7 +65,7 @@ class MainHook : IXposedHookLoadPackage {
             "callApplicationOnCreate",
             Application::class.java,
             object : XC_MethodHook() {
-                override fun afterHookedMethod(param: MethodHookParam) {
+                override fun beforeHookedMethod(param: MethodHookParam) {
                     context = (param.args[0] as Application).applicationContext.also {
                         XposedBridge.log("$tag Target App's context has been acquired successfully.")
                         Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
