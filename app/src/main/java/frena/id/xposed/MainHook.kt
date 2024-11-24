@@ -27,7 +27,7 @@ import java.lang.Exception
 import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
-    val tag = "[FR.ina]"
+    val tag = "[FRina]"
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
     
@@ -36,26 +36,30 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if ((lpparam.packageName == "com.gojek.partner") || 
-        (lpparam.packageName == "net.aleksandre.android.whereami")) {
+        if ((lpparam.packageName == "com.gojek.partner") ||
+        (lpparam.packageName == "com.grabtaxi.driver2")) ||
+        (lpparam.packageName == "com.shopee.foody.driver.id")) ||
+        (lpparam.packageName == "net.aleksandre.android.whereami"))
+        {
         
             GojekApiHooks().hookBypassReguler(lpparam)
-            initHooking(lpparam)
+            GojekApiHooks().hookGojekLocation(lpparam)
+            GojekApiHooks().hookGojekLocationManager(lpparam)
+            
+        //    initHooking(lpparam)
         
         } else {
             return
           }
-           
-        
+
     }
-    
-    
-    private var locationApiHooks: LocationApiHooks? = null
-    private var systemServicesHooks: SystemServicesHooks? = null   
-    lateinit var context: Context
+        
 
     private fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
-
+        lateinit var context: Context
+        private var locationApiHooks: LocationApiHooks? = null
+        private var systemServicesHooks: SystemServicesHooks? = null       
+        
         // If not playing or null, do not proceed with hooking
         if (PreferencesUtil.getIsPlaying() != true) return
 
@@ -64,7 +68,6 @@ class MainHook : IXposedHookLoadPackage {
             systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
         }
         
-
         XposedHelpers.findAndHookMethod(
             "android.app.Instrumentation",
             lpparam.classLoader,
@@ -80,10 +83,7 @@ class MainHook : IXposedHookLoadPackage {
                 }
             })
 
-
-
     }
-
 
 }
 
