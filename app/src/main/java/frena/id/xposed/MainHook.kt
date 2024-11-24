@@ -14,7 +14,7 @@ import frena.id.xposed.hooks.SystemServicesHooks
 import frena.id.xposed.hooks.GojekApiHooks
 //import frena.id.xposed.hooks.VersionCodeHooks
 import frena.id.xposed.utils.PreferencesUtil
-import frena.id.xposed.utils.NotificationUtils
+//import frena.id.xposed.utils.NotificationUtils
 import frena.id.xposed.utils.GojekUtil
 //import frena.id.service.FRina-xLocation
 import de.robv.android.xposed.IXposedHookZygoteInit
@@ -41,6 +41,7 @@ class MainHook : IXposedHookLoadPackage {
         (lpparam.packageName == "com.shopee.foody.driver.id") ||
         (lpparam.packageName == "net.aleksandre.android.whereami")){
 
+            GojekApiHooks().checkVersionCode(lpparam)
             GojekApiHooks().hookBypassReguler(lpparam)
             GojekApiHooks().hookGojekLocation(lpparam)
             GojekApiHooks().hookServerLocationManager(lpparam)
