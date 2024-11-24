@@ -27,12 +27,35 @@ import java.lang.Exception
 import java.io.File
 
 class GojekApiHooks{
-    private val tag = "[FRina-API]"    
+    private val tag = "[FRina-API]"
     
+    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam) {
+    
+    try {
+        if (lpparam.packageName == "com.gojek.partner") {
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Class<?> pkgParserClass = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
+            Object packageLite = XposedHelpers.callStaticMethod(pkgParserClass, "parsePackageLite", apkPath, 0)
+            versionCode = XposedHelpers.getIntField(packageLite, "versionCode")
+        } else {
+            Class<?> parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
+            Object pkg = XposedHelpers.callMethod(parserCls.newInstance(), "parsePackage", apkPath, 0)
+            versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
+        }
+
+        }
+    } catch (e: Exception) {
+        XposedBridge.log("$tag: check version code error")
+            }
+    }
+    
+            
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
+            if versionCode == 4185 {
             XposedBridge.log("$tag: initializing bypass")
 
             val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
@@ -53,6 +76,7 @@ class GojekApiHooks{
                       //  }
                     }
                 })
+            }
             }
         } catch (e: Exception) {
                 XposedBridge.log("$tag: error")

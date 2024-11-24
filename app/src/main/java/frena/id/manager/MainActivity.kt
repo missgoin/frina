@@ -3,6 +3,8 @@ package frena.id.manager
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+//import frena.id.service.FRina-xLocation
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -67,7 +69,7 @@ fun ErrorScreen() {
         onDismissRequest = {},
         title = { Text("Module Not Active") },
         text = {
-            Text( "FR.ina module is not active in your Xposed manager app. Please enable it and restart the app to continue." )
+            Text( "FRina module is not active in your Xposed manager app. Please enable it and restart the app to continue." )
         },
         confirmButton = {
             Button(onClick = {
