@@ -23,7 +23,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 object LocationUtil {
-    private const val TAG = "[LocationUtil]"
+    private const val TAG = "[FRina Utils]"
 
     private const val DEBUG: Boolean = true
 
@@ -138,7 +138,7 @@ object LocationUtil {
 
                 if (DEBUG) {
 //                    XposedBridge.log("$TAG Updated fake location values to:")
-                    XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
+//                    XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
 //                    XposedBridge.log("\tAccuracy: $accuracy")
 //                    XposedBridge.log("\tAltitude: $altitude")
 //                    XposedBridge.log("\tVertical Accuracy: $verticalAccuracy")
@@ -147,7 +147,7 @@ object LocationUtil {
 //                    XposedBridge.log("\tSpeed: $speed")
 //                    XposedBridge.log("\tSpeed Accuracy: $speedAccuracy")
                 }
-            } ?: XposedBridge.log("$TAG Last clicked location is null")
+            } ?: XposedBridge.log("$TAG fake location tidak mendukung aplikasi tersebut.")
         } catch (e: Exception) {
             XposedBridge.log("$TAG Error - ${e.message}")
         }

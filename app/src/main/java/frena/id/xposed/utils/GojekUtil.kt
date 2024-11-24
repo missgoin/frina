@@ -9,7 +9,7 @@ import frena.id.xposed.utils.PreferencesUtil
 import de.robv.android.xposed.XposedBridge
 
 object GojekUtil {
-    private const val TAG = "[GojekUtil]"
+    private const val TAG = "[FRina Utils]"
 
     @Synchronized
     fun gojekbypassreguler() {

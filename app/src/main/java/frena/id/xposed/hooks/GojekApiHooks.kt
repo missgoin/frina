@@ -108,24 +108,8 @@ class GojekApiHooks{
                     //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
                         }
                     }
-                    })
+                })
                     
-                    
-                    
-            }
-        } catch (e: Exception) {
-            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
-        }
-    }
-    
-    fun hookGojekLocationManager(lpparam: XC_LoadPackage.LoadPackageParam) {
-                
-        try {
-            if (lpparam.packageName == "com.gojek.partner") {
-            
-            if (PreferencesUtil.getIsPlaying() != true) return
-            XposedBridge.log("$tag: initializing location manager")
-
             val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", lpparam.classLoader)
            
             XposedHelpers.findAndHookMethod(
@@ -143,10 +127,62 @@ class GojekApiHooks{
                         XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
+            
+            
+            val gojeklocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", lpparam.classLoader)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                XposedHelpers.findAndHookMethod(
+                    gojeklocationManagerServiceClass,
+                    "getLastLocation",
+                    LocationRequest::class.java,
+                    String::class.java,
+                    object : XC_MethodHook() {
+                        override fun beforeHookedMethod(param: MethodHookParam) {
+                            XposedBridge.log("$tag: System hook location")
+                        //    XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
+                            val fakeLocation = LocationUtil.createFakeLocation()
+                            param.result = fakeLocation
+                            XposedBridge.log("\t Fake location: $fakeLocation")
+                        }
+                    })
+            } else {
+                XposedBridge.log("$tag: versi Android OS terlalu rendah, minimal OS 12.")
+            }
+
+            val methodsToReplace = arrayOf(
+                "addGnssBatchingCallback",
+                "addGnssMeasurementsListener",
+                "addGnssNavigationMessageListener"
+            )
+
+            for (methodName in methodsToReplace) {
+                XposedHelpers.findAndHookMethod(
+                    locationManagerServiceClass,
+                    methodName,
+                    XC_MethodReplacement.returnConstant(false)
+                )
+            }
+
+            XposedHelpers.findAndHookMethod(
+                XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", classLoader),
+                "callLocationChangedLocked",
+                Location::class.java,
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        XposedBridge.log("$tag: System hook callLocationChangedLocked")
+                        val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
+                        param.args[0] = fakeLocation
+                        XposedBridge.log("\t Fake location: $fakeLocation")
+                    }
+                })
+                    
             }
         } catch (e: Exception) {
-            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
         }
-    }    
+    }
+    
+
     
 }
