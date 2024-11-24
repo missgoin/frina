@@ -127,7 +127,8 @@ class GojekApiHooks{
 
             val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", lpparam.classLoader)
            
-            XposedHelpers.findAndHookMethod( 
+            XposedHelpers.findAndHookMethod(
+                gojeklocationManagerClass,
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
