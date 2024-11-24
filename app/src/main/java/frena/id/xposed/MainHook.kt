@@ -16,6 +16,7 @@ import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.NotificationUtils
 import frena.id.xposed.utils.GojekUtil
+import frena.id.service.FRina-xLocation
 import de.robv.android.xposed.IXposedHookZygoteInit
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook

@@ -13,8 +13,6 @@ import frena.id.service.TimerForegroundService
 
 import android.content.ComponentName
 import android.graphics.BitmapFactory
-import frena.id.xposed.utils.R
-import android.net.Uri
 
 
 class NotificationUtils(context:Context) {
@@ -22,7 +20,7 @@ class NotificationUtils(context:Context) {
     private var mContext = context
     private lateinit var notificationBuilder: NotificationCompat.Builder
     val notificationManager = NotificationManagerCompat.from(mContext)
-    val CHANNEL_ID = "f.Rina_Channel"
+    val CHANNEL_ID = "FRina_Channel"
     val NOTIFICATION_ID = 69
     val EXTRA_CANCEL_TIMER_FROM_NOTIFICATION =
         "CANCEL_TIMER_FROM_NOTIFICATION"
@@ -53,7 +51,7 @@ class NotificationUtils(context:Context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "f.Rina"
+            val name = "FRina"
             val descriptionText = "Channel Description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
@@ -102,17 +100,7 @@ class NotificationUtils(context:Context) {
          * This is required for compatibility with Android 8.0 (API level 26) and higher,
          * but is ignored by older versions.
          */
-        notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_loc_notification)
-            .setContentTitle("Timer Clock")
-            .setContentText("00:00:00")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .addAction(
-                R.drawable.ic_baseline_timer_24,
-                "Stop Timer",
-                servicePendingIntent
-            )
+
     }
 
 }
