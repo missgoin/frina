@@ -57,10 +57,10 @@ class GojekApiHooks{
                 XposedBridge.log("$tag: error")
                 }
     }
-    
-    
+
+
     fun hookGojekLocation(lpparam: XC_LoadPackage.LoadPackageParam) {
-                
+
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
@@ -127,16 +127,18 @@ class GojekApiHooks{
                         XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
-        } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            } catch (e: Exception) {
+                XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+                }
         }
-        
-            // Hook system services if user asked for system wide hooks
+
+        try {
+            // Hook system services
             if (lpparam.packageName == "android") {
                 systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
             }
-            
+        }
+
     }
 
-    
 }
