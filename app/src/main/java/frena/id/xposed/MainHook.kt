@@ -30,10 +30,6 @@ class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-
-    //    private var locationApiHooks: LocationApiHooks? = null
-        private var systemServicesHooks: SystemServicesHooks? = null       
-
         //VersionCodeHooks().hookVersionCode(lpparam)       
 
         // Avoid hooking own app to prevent recursion
@@ -44,13 +40,9 @@ class MainHook : IXposedHookLoadPackage {
         (lpparam.packageName == "com.shopee.foody.driver.id") ||
         (lpparam.packageName == "net.aleksandre.android.whereami")){
 
-        if (lpparam.packageName == "android") {
-            systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
-        }
-
             GojekApiHooks().hookBypassReguler(lpparam)
             GojekApiHooks().hookGojekLocation(lpparam)
-            GojekApiHooks().hookGojekLocationManager(lpparam)
+            GojekApiHooks().hookServerLocationManager(lpparam)
 
         //    initHooking(lpparam)
 
