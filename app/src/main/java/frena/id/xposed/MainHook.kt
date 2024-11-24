@@ -51,34 +51,21 @@ class MainHook : IXposedHookLoadPackage {
             initHooking(lpparam)
             }
     }
-        
-    fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
-        lateinit var context: Context
+
         private var locationApiHooks: LocationApiHooks? = null
         private var systemServicesHooks: SystemServicesHooks? = null       
-        
+               
+    fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
+        lateinit var context: Context
+ 
         // If not playing or null, do not proceed with hooking
-        if (PreferencesUtil.getIsPlaying() != true) return
+      //  if (PreferencesUtil.getIsPlaying() != true) return
 
         // Hook system services if user asked for system wide hooks
-        if (lpparam.packageName == "android") {
-            systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
-        }
+     //   if (lpparam.packageName == "android") {
+    //        systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
+     //   }
         
-        XposedHelpers.findAndHookMethod(
-            "android.app.Instrumentation",
-            lpparam.classLoader,
-            "callApplicationOnCreate",
-            Application::class.java,
-            object : XC_MethodHook() {
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    context = (param.args[0] as Application).applicationContext.also {
-                        XposedBridge.log("$tag Target App's context has been acquired successfully.")
-                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
-                    }
-                    locationApiHooks = LocationApiHooks(lpparam).also { it.initHooks() }
-                }
-            })
 
     }
 
