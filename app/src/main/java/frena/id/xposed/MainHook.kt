@@ -37,10 +37,9 @@ class MainHook : IXposedHookLoadPackage {
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
         if ((lpparam.packageName == "com.gojek.partner") ||
-        (lpparam.packageName == "com.grabtaxi.driver2")) ||
-        (lpparam.packageName == "com.shopee.foody.driver.id")) ||
-        (lpparam.packageName == "net.aleksandre.android.whereami"))
-        {
+        (lpparam.packageName == "com.grabtaxi.driver2") ||
+        (lpparam.packageName == "com.shopee.foody.driver.id") ||
+        (lpparam.packageName == "net.aleksandre.android.whereami")){
         
             GojekApiHooks().hookBypassReguler(lpparam)
             GojekApiHooks().hookGojekLocation(lpparam)
@@ -53,7 +52,7 @@ class MainHook : IXposedHookLoadPackage {
             }
     }
         
-    private fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
+    fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
         lateinit var context: Context
         private var locationApiHooks: LocationApiHooks? = null
         private var systemServicesHooks: SystemServicesHooks? = null       
