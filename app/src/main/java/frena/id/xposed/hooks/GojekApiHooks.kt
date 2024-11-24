@@ -172,14 +172,14 @@ class GojekApiHooks{
 
             for (methodName in methodsToReplace) {
                 XposedHelpers.findAndHookMethod(
-                    locationManagerServiceClass,
+                    serverLocationManagerServiceClass,
                     methodName,
                     XC_MethodReplacement.returnConstant(false)
                 )
             }
 
             XposedHelpers.findAndHookMethod(
-                XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", classLoader),
+                XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", lpparam.classLoader),
                 "callLocationChangedLocked",
                 Location::class.java,
                 object : XC_MethodHook() {
