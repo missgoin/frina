@@ -12,11 +12,11 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
 class SystemServicesHooks(val appLpparam: LoadPackageParam) {
-    private val tag = "[SystemServicesHooks]"
+    private val tag = "[FRina-SystemAPI]"
 
     fun initHooks() {
         hookSystemServices(appLpparam.classLoader)
-        XposedBridge.log("$tag Instantiated hooks successfully")
+    //    XposedBridge.log("$tag Instantiated hooks successfully")
     }
 
     private fun hookSystemServices(classLoader: ClassLoader) {
@@ -31,15 +31,15 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                     String::class.java,
                     object : XC_MethodHook() {
                         override fun beforeHookedMethod(param: MethodHookParam) {
-                            XposedBridge.log("$tag [SystemHook] Entered method getLastLocation(locationRequest, packageName)")
-                            XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
+                            XposedBridge.log("$tag: System hook location")
+                        //    XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
                             val fakeLocation = LocationUtil.createFakeLocation()
                             param.result = fakeLocation
-                            XposedBridge.log("\t Modified to: $fakeLocation (original method not executed)")
+                            XposedBridge.log("\t Fake location: $fakeLocation")
                         }
                     })
             } else {
-                XposedBridge.log("$tag API level too low. System services hooks are not available.")
+                XposedBridge.log("$tag: versi Android OS terlalu rendah, minimal OS 12.")
             }
 
             val methodsToReplace = arrayOf(
@@ -56,17 +56,16 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                 )
             }
 
-
             XposedHelpers.findAndHookMethod(
                 XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", classLoader),
                 "callLocationChangedLocked",
                 Location::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
-                        XposedBridge.log("$tag [SystemHook] Entered method callLocationChangedLocked(location)")
+                        XposedBridge.log("$tag: System hook callLocationChangedLocked")
                         val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
                         param.args[0] = fakeLocation
-                        XposedBridge.log("\t Modified to: $fakeLocation")
+                        XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
 

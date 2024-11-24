@@ -52,8 +52,8 @@ class MainHook : IXposedHookLoadPackage {
             }
     }
 
-        private var locationApiHooks: LocationApiHooks? = null
-        private var systemServicesHooks: SystemServicesHooks? = null       
+    //    private var locationApiHooks: LocationApiHooks? = null
+    //    private var systemServicesHooks: SystemServicesHooks? = null       
                
     fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
         lateinit var context: Context
