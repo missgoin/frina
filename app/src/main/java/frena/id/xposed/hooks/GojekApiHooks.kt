@@ -132,13 +132,6 @@ class GojekApiHooks{
                 }
         }
 
-        try {
-            // Hook system services
-            if (lpparam.packageName == "android") {
-                systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
-            }
-        }
-
     }
 
 }
