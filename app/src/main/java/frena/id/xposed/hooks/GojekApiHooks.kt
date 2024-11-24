@@ -6,6 +6,8 @@ import frena.id.xposed.utils.PreferencesUtil
 
 import android.location.Location
 import frena.id.xposed.utils.LocationUtil
+import frena.id.xposed.hooks.LocationApiHooks
+import frena.id.xposed.hooks.SystemServicesHooks
 
 import android.app.Application
 import android.app.Activity
@@ -37,16 +39,15 @@ class GojekApiHooks{
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
                 "valueOf",
-                "boolean",
                 //Boolean::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         //val bypassreguler = (param.args[0]=true as? String )
                         //param.args[0] = bypassreguler
-                        //param.args[0] = true
+                        param.args[0] = true
                       //  GojekUtil.gojekbypassreguler()        
                       //  if (PreferencesUtil.getUseGojekBypassReg() == true) {                                
-                            param.result = true
+                      //      param.result = true
                             XposedBridge.log("$tag: reguler bypassed")
                       //  }
                     }
