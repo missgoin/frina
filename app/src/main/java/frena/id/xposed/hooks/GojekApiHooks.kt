@@ -5,6 +5,7 @@ import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 
 import android.location.Location
+import android.location.LocationRequest
 import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
