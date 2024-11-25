@@ -53,9 +53,9 @@ class GojekApiHooks{
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
         try {
-            if (lpparam.packageName == "com.gojek.partner") {
+            if (lpparam.packageName == "com.gojek.partner") 
 
-                if versionCode == 4185 {
+                if (checkVersionCode.versionCode == 4185) {
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
@@ -66,8 +66,7 @@ class GojekApiHooks{
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             val bypassreguler = (param.args[0]=true as? Boolean )
-                            //param.result = bypassreguler
-                            param.args[0] = bypassreguler
+                            param.result = bypassreguler                            
                             //param.args[0] = true
                             //GojekUtil.gojekbypassreguler()        
                             //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
@@ -77,7 +76,7 @@ class GojekApiHooks{
                     })
                 }
 
-                if versionCode == 4186 {
+                if (checkVersionCode.versionCode == 4186) {
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
@@ -89,7 +88,6 @@ class GojekApiHooks{
                         override fun afterHookedMethod(param: MethodHookParam) {
                             val bypassreguler = (param.args[0]=true as? Boolean )
                             param.result = bypassreguler
-                            //param.args[0] = bypassreguler
                             //param.args[0] = true
                             //GojekUtil.gojekbypassreguler()        
                             //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
@@ -98,7 +96,7 @@ class GojekApiHooks{
                         }
                     })
                 }
-            }
+            
         } catch (e: Exception) {
                 XposedBridge.log("$tag: error")
                 }
