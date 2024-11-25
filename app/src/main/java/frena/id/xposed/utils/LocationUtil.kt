@@ -23,7 +23,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 object LocationUtil {
-    private const val TAG = "[FRina Utils]"
+    private const val TAG = "[FRina Util]"
 
     private const val DEBUG: Boolean = true
 

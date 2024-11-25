@@ -27,13 +27,13 @@ import java.lang.Exception
 import java.io.File
 
 class GojekApiHooks{
-    private val tag = "[FRina-API]"
+    private val tag = "[FRina API.gp]"
     
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
     
         try {
             if (lpparam.packageName == "com.gojek.partner"){
-            XposedBridge.log("$tag: Checking version code")
+                //XposedBridge.log("$tag: Checking version code")
         
                 val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
                 val parser = parserCls.newInstance()
@@ -41,12 +41,11 @@ class GojekApiHooks{
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-                   // return (versionCode)
                     val result: Int = versionCode
-                    XposedBridge.log("$tag: Gopartner version code $versionCode")
+                    XposedBridge.log("$tag: version code $versionCode")
             }
         } catch (e: Throwable) {
-            XposedBridge.log("$tag: version code error")
+            XposedBridge.log("$tag: error finding version code")
             }
         return
     }
@@ -55,28 +54,50 @@ class GojekApiHooks{
                 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
-         //   if versionCode == 4186 {
-            XposedBridge.log("$tag: initializing bypass")
 
-            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
-            
-            XposedHelpers.findAndHookMethod(
-                darkBaseDeepLinkDelegateClass,
-                "setAutoFocusDisable",
-                //Boolean::class.java,
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        //val bypassreguler = (param.args[0]=true as? String )
-                        //param.args[0] = bypassreguler
-                        param.args[0] = true
-                      //  GojekUtil.gojekbypassreguler()        
-                      //  if (PreferencesUtil.getUseGojekBypassReg() == true) {                                
-                      //      param.result = true
-                            XposedBridge.log("$tag: reguler bypassed")
-                      //  }
-                    }
-                })
-         //   }
+                if versionCode == 4185 {
+                    XposedBridge.log("$tag: initializing bypass")
+                    
+                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
+                    XposedHelpers.findAndHookMethod(
+                    darkBaseDeepLinkDelegateClass,
+                    "valueOf",
+                    //Boolean::class.java,
+                    object : XC_MethodHook() {
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            val bypassreguler = (param.args[0]=true as? Boolean )
+                            //param.result = bypassreguler
+                            param.args[0] = bypassreguler
+                            //param.args[0] = true
+                            //GojekUtil.gojekbypassreguler()        
+                            //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
+                                //param.result = true
+                                XposedBridge.log("$tag: reguler bypassed")
+                        }
+                    })
+                }
+
+                if versionCode == 4186 {
+                    XposedBridge.log("$tag: initializing bypass")
+                    
+                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
+                    XposedHelpers.findAndHookMethod(
+                    darkBaseDeepLinkDelegateClass,
+                    "setAutoFocusDisable",
+                    //Boolean::class.java,
+                    object : XC_MethodHook() {
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            val bypassreguler = (param.args[0]=true as? Boolean )
+                            param.result = bypassreguler
+                            //param.args[0] = bypassreguler
+                            //param.args[0] = true
+                            //GojekUtil.gojekbypassreguler()        
+                            //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
+                                //param.result = true
+                                XposedBridge.log("$tag: reguler bypassed")
+                        }
+                    })
+                }
             }
         } catch (e: Exception) {
                 XposedBridge.log("$tag: error")

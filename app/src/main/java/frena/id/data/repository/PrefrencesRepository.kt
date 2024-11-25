@@ -11,7 +11,7 @@ import frena.id.data.model.FavoriteLocation
 import frena.id.data.model.LastClickedLocation
 
 class PreferencesRepository(context: Context) {
-    private val tag = "PreferencesRepository"
+    private val tag = "Preferences Repository"
 
     @SuppressLint("WorldReadableFiles")
     private val sharedPrefs = try {

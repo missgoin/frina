@@ -8,7 +8,7 @@ import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
 
 object PreferencesUtil {
-    private const val TAG = "[PreferencesUtil]"
+    private const val TAG = "[Preferences Util]"
 
     private val preferences: XSharedPreferences = XSharedPreferences(MANAGER_APP_PACKAGE_NAME, SHARED_PREFS_FILE).apply {
         makeWorldReadable()

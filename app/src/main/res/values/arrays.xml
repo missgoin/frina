@@ -2,5 +2,6 @@
     <string-array name="xposedscope" >
         <item>android</item>
         <item>net.aleksandre.android.whereami</item>
+         <item>com.gojek.partner</item>
     </string-array>
 </resources>

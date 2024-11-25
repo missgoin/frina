@@ -38,7 +38,7 @@
         <!-- Introduction to the module (shown in the framework) -->
         <meta-data
             android:name="xposeddescription"
-            android:value="f.Rina module" />
+            android:value="FRina-module app for Indonesia" />
         <!-- The minimum supported Api version of the module is usually 54. -->
         <meta-data
             android:name="xposedminversion"
