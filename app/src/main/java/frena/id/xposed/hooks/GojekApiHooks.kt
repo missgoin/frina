@@ -14,7 +14,6 @@ import android.app.Application
 import android.app.Activity
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
-import android.content.pm.PackageParser
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -32,7 +31,7 @@ class GojekApiHooks{
     
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): String {
     
-    return try {
+    try {
         if (lpparam.packageName == "com.gojek.partner") {
         
         val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
@@ -41,10 +40,10 @@ class GojekApiHooks{
         val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
         val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
         val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-        "${versionName} ($versionCode)"
+        return String.format("%s (%d)", versionName, versionCode)
         }
     } catch (e: Throwable) {
-        "(unknown)"
+        XposedBridge.log("$tag: version code error")
         }
     }
 
