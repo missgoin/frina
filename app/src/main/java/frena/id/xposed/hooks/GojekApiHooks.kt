@@ -29,19 +29,19 @@ import java.io.File
 class GojekApiHooks{
     private val tag = "[FRina-API]"
     
-    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): String {
+    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): int {
     
         try {
-            if (lpparam.packageName == "com.gojek.partner") {
+            if (lpparam.packageName == "com.gojek.partner")
         
                 val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
                 val parser = parserCls.newInstance()
                 val apkPath = File(lpparam.appInfo.sourceDir)
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
-                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode") as String
-                    return String (versionCode)
-            }
+                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
+                    return int (versionCode)
+            
         } catch (e: Throwable) {
             XposedBridge.log("$tag: version code error")
             }
