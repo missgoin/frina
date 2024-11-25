@@ -42,7 +42,8 @@ class GojekApiHooks{
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
                     val result: Int = versionCode
-                    XposedBridge.log("$tag: version code $versionCode")
+                    val versiGopartner = result: Int
+                    XposedBridge.log("$tag: version code $versiGopartner")
             }
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")
@@ -55,7 +56,7 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "com.gojek.partner") 
 
-                if (checkVersionCode(versionCode)) == 4185 {
+                if ((checkVersionCode(versiGopartner)) == 4185) {
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
@@ -76,7 +77,7 @@ class GojekApiHooks{
                     })
                 }
 
-                if (checkVersionCode(versionCode)) == 4186) {
+                if ((checkVersionCode(versiGopartner)) == 4186) {
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
