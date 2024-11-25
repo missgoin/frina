@@ -39,8 +39,8 @@ class GojekApiHooks{
                 val apkPath = File(lpparam.appInfo.sourceDir)
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
-                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode") as Int
-                    return Any.format("%s (%d)", versionName, versionCode)
+                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode") as Unit
+                    return Any("%s (%d)", versionName, versionCode)
             }
         } catch (e: Throwable) {
             XposedBridge.log("$tag: version code error")
