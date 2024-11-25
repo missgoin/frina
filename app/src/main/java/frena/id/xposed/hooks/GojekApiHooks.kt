@@ -31,29 +31,27 @@ class GojekApiHooks{
     
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): String {
     
-    try {
-        if (lpparam.packageName == "com.gojek.partner") {
+        try {
+            if (lpparam.packageName == "com.gojek.partner") {
         
-        val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
-        val parser = parserCls.newInstance()
-        val apkPath = File(lpparam.appInfo.sourceDir)
-        val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
-        val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
-        val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-        return String.format("%s (%d)", versionName, versionCode)
-        }
-    } catch (e: Throwable) {
-        XposedBridge.log("$tag: version code error")
-        }
+                val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
+                val parser = parserCls.newInstance()
+                val apkPath = File(lpparam.appInfo.sourceDir)
+                val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
+                val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
+                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
+                    return String.format("%s (%d)", versionName, versionCode)
+            }
+        } catch (e: Throwable) {
+            return "(unknown)"
+            }
     }
-
-
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
-            if versionCode == 4185 {
+         //   if versionCode == 4185 {
             XposedBridge.log("$tag: initializing bypass")
 
             val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
@@ -74,7 +72,7 @@ class GojekApiHooks{
                       //  }
                     }
                 })
-            }
+         //   }
             }
         } catch (e: Exception) {
                 XposedBridge.log("$tag: error")
