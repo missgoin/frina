@@ -14,6 +14,7 @@ import android.app.Application
 import android.app.Activity
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
+import android.content.pm.PackageParser
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -29,27 +30,25 @@ import java.io.File
 class GojekApiHooks{
     private val tag = "[FRina-API]"
     
-    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam) {
+    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): String {
     
-    try {
+    return try {
         if (lpparam.packageName == "com.gojek.partner") {
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val pkgParserClass = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
-            val Object packageLite = XposedHelpers.callStaticMethod(pkgParserClass, "parsePackageLite", apkPath, 0)
-            versionCode = XposedHelpers.getIntField(packageLite, "versionCode")
-        } else {
-            val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
-            val Object pkg = XposedHelpers.callMethod(parserCls.newInstance(), "parsePackage", apkPath, 0)
-            versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
+        val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
+        val parser = parserCls.newInstance()
+        val apkPath = File(lpparam.appInfo.sourceDir)
+        val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
+        val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
+        val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
+        "${versionName} ($versionCode)"
         }
-
+    } catch (e: Throwable) {
+        "(unknown)"
         }
-    } catch (e: Exception) {
-        XposedBridge.log("$tag: check version code error")
-            }
     }
-    
+
+
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
@@ -58,11 +57,11 @@ class GojekApiHooks{
             if versionCode == 4185 {
             XposedBridge.log("$tag: initializing bypass")
 
-            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
+            val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
             
             XposedHelpers.findAndHookMethod(
                 darkBaseDeepLinkDelegateClass,
-                "valueOf",
+                "setAutoFocusDisable",
                 //Boolean::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
