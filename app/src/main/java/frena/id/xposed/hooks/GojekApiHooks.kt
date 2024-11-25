@@ -36,11 +36,11 @@ class GojekApiHooks{
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val pkgParserClass = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
-            Object packageLite = XposedHelpers.callStaticMethod(pkgParserClass, "parsePackageLite", apkPath, 0)
+            val Object packageLite = XposedHelpers.callStaticMethod(pkgParserClass, "parsePackageLite", apkPath, 0)
             versionCode = XposedHelpers.getIntField(packageLite, "versionCode")
         } else {
             val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
-            Object pkg = XposedHelpers.callMethod(parserCls.newInstance(), "parsePackage", apkPath, 0)
+            val Object pkg = XposedHelpers.callMethod(parserCls.newInstance(), "parsePackage", apkPath, 0)
             versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
         }
 
