@@ -43,9 +43,9 @@ class GojekApiHooks{
                     return String.format("%s (%d)", versionName, versionCode)
             }
         } catch (e: Throwable) {
-            return "(unknown)"
+            XposedBridge.log("$tag: version code error")
             }
-    }
+    } return
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
