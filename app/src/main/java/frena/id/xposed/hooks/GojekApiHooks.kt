@@ -45,7 +45,8 @@ class GojekApiHooks{
         } catch (e: Throwable) {
             XposedBridge.log("$tag: version code error")
             }
-    } return
+        return
+    }
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
