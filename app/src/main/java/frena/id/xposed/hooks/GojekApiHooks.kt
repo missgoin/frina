@@ -28,7 +28,6 @@ import java.io.File
 
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
-    var versiGopartner : Int
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         if (versiGopartner == 4186) {
