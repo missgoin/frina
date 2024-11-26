@@ -27,29 +27,7 @@ import java.lang.Exception
 import java.io.File
 
 class GojekApiHooks{
-    private val tag = "[FRina API.gp]"
-    
-    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
-    
-        try {
-            if (lpparam.packageName == "com.gojek.partner"){
-                //XposedBridge.log("$tag: Checking version code")
-        
-                val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
-                val parser = parserCls.newInstance()
-                val apkPath = File(lpparam.appInfo.sourceDir)
-                val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
-                //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
-                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-                    val result: Int = versionCode
-                    val versiGopartner = Int
-                    XposedBridge.log("$tag: version code $versiGopartner")
-            }
-        } catch (e: Throwable) {
-            XposedBridge.log("$tag: error finding version code")
-            }
-        return
-    }
+    private val tag = "[FRina API.gp]"   
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
@@ -69,7 +47,7 @@ class GojekApiHooks{
                     //Boolean::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            val bypassreguler = (param.args[0]=true as Boolean)
+                            val bypassreguler = param.args[0] as Boolean
                             param.result = bypassreguler
                             //param.args[0] = true
                             //GojekUtil.gojekbypassreguler()        

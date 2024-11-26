@@ -10,6 +10,29 @@ import de.robv.android.xposed.XposedBridge
 
 object GojekUtil {
     private const val TAG = "[FRina Util]"
+    
+    @Synchronized
+    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
+    
+        try {
+            if (lpparam.packageName == "com.gojek.partner"){
+                //XposedBridge.log("$tag: Checking version code")
+        
+                val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
+                val parser = parserCls.newInstance()
+                val apkPath = File(lpparam.appInfo.sourceDir)
+                val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
+                //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
+                val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
+                    val result: Int = versionCode
+                    val versiGopartner = Int
+                    XposedBridge.log("$tag: version code $versiGopartner")
+            }
+        } catch (e: Throwable) {
+            XposedBridge.log("$tag: error finding version code")
+            }
+        return
+    }
 
     @Synchronized
     fun gojekbypassreguler() {
