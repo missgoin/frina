@@ -41,7 +41,7 @@ class MainHook : IXposedHookLoadPackage {
         (lpparam.packageName == "com.shopee.foody.driver.id") ||
         (lpparam.packageName == "net.aleksandre.android.whereami")){
 
-            GojekApiHooks().checkVersionCode(lpparam)
+            
             GojekApiHooks().hookBypassReguler(lpparam)
             GojekApiHooks().hookGojekLocation(lpparam)
             GojekApiHooks().hookServerLocationManager(lpparam)

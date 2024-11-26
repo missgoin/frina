@@ -1,12 +1,26 @@
 // GojekUtil.kt
 package frena.id.xposed.utils
 
-import android.os.Build
 import frena.id.data.DEFAULT_USE_GOJEK_BYPASS_REG
 //import frena.id.data.DEFAULT_GOBYPASSREG
 import frena.id.data.DEFAULT_USE_GOJEK_BYPASS_ACE
 import frena.id.xposed.utils.PreferencesUtil
+
+import android.app.Application
+import android.app.Activity
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
+import de.robv.android.xposed.callbacks.XC_LoadPackage
+import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
+import java.lang.Exception
+import java.io.File
 
 object GojekUtil {
     private const val TAG = "[FRina Util]"
