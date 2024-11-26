@@ -23,7 +23,7 @@ import java.lang.Exception
 import java.io.File
 
 object GojekUtil {
-    private const val TAG = "[FRina Util]"
+    private const val tag = "[FRina Util]"
     
     @Synchronized
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
