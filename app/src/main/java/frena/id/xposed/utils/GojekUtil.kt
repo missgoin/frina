@@ -60,8 +60,7 @@ object GojekUtil {
     @Synchronized
     fun gojekbypassreguler() {
     
-        try {
-        
+        try {       
             PreferencesUtil.getUseGojekBypassReg()?.let {
 
                 if (PreferencesUtil.getUseGojekBypassReg() == true) {
