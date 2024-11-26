@@ -27,10 +27,11 @@ import java.lang.Exception
 import java.io.File
 
 class GojekApiHooks{
-    private val tag = "[FRina API.gp]"   
+    private val tag = "[FRina API.gp]"
+    var versiGopartner : Int
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
-        if (GojekUtil.versiGopartner) == 4186 {
+        if (versiGopartner == 4186) {
                 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
