@@ -30,7 +30,7 @@ class GojekApiHooks{
     private val tag = "[FRina API.gp]"
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
-        if GojekUtil.versiGopartner == 4186 {
+        if (GojekUtil.versiGopartner == 4186) {
                 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
