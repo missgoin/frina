@@ -36,10 +36,10 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if ((lpparam.packageName == "com.gojek.partner") ||
-        (lpparam.packageName == "com.grabtaxi.driver2") ||
-        (lpparam.packageName == "com.shopee.foody.driver.id") ||
-        (lpparam.packageName == "net.aleksandre.android.whereami")){
+      if ((lpparam.packageName == "com.gojek.partner") 
+        || (lpparam.packageName == "com.grabtaxi.driver2") 
+        || (lpparam.packageName == "com.shopee.foody.driver.id") 
+        || (lpparam.packageName == "net.aleksandre.android.whereami")){
 
             GojekUtil.checkVersionCode(lpparam)
             GojekApiHooks().hookBypassReguler(lpparam)
@@ -50,8 +50,8 @@ class MainHook : IXposedHookLoadPackage {
 
         } else {
             initHooking(lpparam)
-        }
-    }
+            }
+      }
 
     //    private var locationApiHooks: LocationApiHooks? = null
     //    private var systemServicesHooks: SystemServicesHooks? = null       
