@@ -58,11 +58,11 @@ object GojekUtil {
                 if (PreferencesUtil.getUseGojekBypassReg() == true) {
                     PreferencesUtil.getUseGojekBypassReg() ?: DEFAULT_USE_GOJEK_BYPASS_REG
                 }
-                    XposedBridge.log("$TAG: bypass activated")
+                    XposedBridge.log("$tag: bypass activated")
 
             }
         } catch (e: Exception) {
-            XposedBridge.log("$TAG: Error - ${e.message}")
+            XposedBridge.log("$tag: Error - ${e.message}")
             }
     }
 
