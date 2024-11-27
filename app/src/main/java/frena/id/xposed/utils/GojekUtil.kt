@@ -25,8 +25,8 @@ import java.io.File
 object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
-    
-    val versiGopartner : Int = 0
+    private var versiGopartner : Int = 0
+ //   val versiGopartner : Int = 0
     
     @Synchronized
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
@@ -41,24 +41,19 @@ object GojekUtil {
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-                    val result: Int = versionCode
-                    val versiGopartner = result                   
+                    
+                    
+                    var versiGopartner by Delegates.notNull<Int>()
+                        val result: Int = versionCode
                     XposedBridge.log("$tag: version code $versiGopartner")
             }
-            
-            when {
-                versiGopartner != 0 -> XposedBridge.log("gp.VersionCode $versiGopartner")
-            }
-        
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")
             }
         return
-        
-        
     }
-    
-    
+     
+   
 
     @Synchronized
     fun gojekbypassreguler() {
