@@ -54,8 +54,9 @@ class ForegroundService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        preferencesRepository.saveIsPlaying(isPlaying.true)
-        
+
+        PreferencesUtil.getIsPlaying() == true
+
         if (!isStarted) {
             makeForeground()
             // place here any logic that should run just once when the Service is started
