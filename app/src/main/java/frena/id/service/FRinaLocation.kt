@@ -4,9 +4,10 @@ import android.app.*
 
 import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
-import frena.id.data.repository.PrefrencesRepository
+import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
+import frena.id.R
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -53,6 +54,8 @@ class ForegroundService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        preferencesRepository.saveIsPlaying(isPlaying.true)
+        
         if (!isStarted) {
             makeForeground()
             // place here any logic that should run just once when the Service is started

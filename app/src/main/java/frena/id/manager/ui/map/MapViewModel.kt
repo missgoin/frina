@@ -1,6 +1,6 @@
 package frena.id.manager.ui.map
 
-import frena.id.service.FRina-my-xLocation
+import frena.id.service.FRinaLocation
 
 import android.app.Application
 import androidx.compose.runtime.*

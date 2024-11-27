@@ -1,6 +1,6 @@
 package frena.id.manager.ui.map
 
-import frena.id.service.FRina-my-xLocation
+import frena.id.service.FRinaLocation
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
