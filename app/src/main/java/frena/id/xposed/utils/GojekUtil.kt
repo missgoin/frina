@@ -26,7 +26,7 @@ object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
     
-    var versiGopartner : Int = 0
+    val versiGopartner : Int = 0
     
     @Synchronized
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
@@ -44,8 +44,8 @@ object GojekUtil {
                     val result: Int = versionCode
                     //val versiGopartner = result
                     
-                    if (versiGopartner): Int {
-                        param.result = result: Int
+                    if (versiGopartner) {
+                        return result: Int
                     }
                     
                     XposedBridge.log("$tag: version code $versiGopartner")
