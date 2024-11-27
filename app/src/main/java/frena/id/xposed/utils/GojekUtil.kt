@@ -25,7 +25,7 @@ import java.io.File
 object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
-    var versiGopartner : Int = 0
+    var versiGopartner : Int = 4186
  //   val versiGopartner : Int = 0
     
     @Synchronized
@@ -44,7 +44,8 @@ object GojekUtil {
                     
                     
                     var versiGopartner : Int {
-                            versiGopartner = versionCode
+                        VersiGopartner = versionCode
+                        return 
                         }
                         
                     XposedBridge.log("$tag: version code $versiGopartner")

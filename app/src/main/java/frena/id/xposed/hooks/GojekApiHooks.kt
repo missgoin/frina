@@ -1,12 +1,13 @@
 // GojekApiHooks.kt
 package frena.id.xposed.hooks
 
+import android.location.Location
+import android.location.LocationRequest
+
+import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 
-import android.location.Location
-import android.location.LocationRequest
-import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
 
@@ -28,11 +29,12 @@ import java.io.File
 
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
+   // var versiGopartner : Int = 4186
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
-        val gp: Int = GojekUtil.versiGopartner
-        if (gp == 4186) {
+       // val gp: Int = GojekUtil.versiGopartner
+        if (versiGopartner == 4186) {
                 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
