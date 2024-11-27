@@ -25,7 +25,7 @@ import java.io.File
 object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
-    var versiGopartner : Int = 4186
+  //  var versiGopartner : Int = 4186
  //   val versiGopartner : Int = 0
     
     @Synchronized
@@ -41,12 +41,7 @@ object GojekUtil {
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-                    
-                    
-                    var versiGopartner : Int {
-                        VersiGopartner = versionCode
-                        return 
-                        }
+                val versiGopartner : Int = versionCode                    
                         
                     XposedBridge.log("$tag: version code $versiGopartner")
             }
