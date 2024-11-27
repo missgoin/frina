@@ -82,7 +82,7 @@ class ForegroundService: Service() {
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("FRina x-Location")
             .setContentText("Foreground service x-Location")
-            .setSmallIcon(R.drawable.ic_your_app_logo)
+            .setSmallIcon(R.drawable.ic_frina_logo)
             .setContentIntent(pendingIntent)
             .build()
 
