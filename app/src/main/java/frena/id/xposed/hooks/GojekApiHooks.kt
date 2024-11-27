@@ -102,7 +102,7 @@ class GojekApiHooks{
 
             val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)
             
-            XposedBridge.hookAllConstructors(
+            XposedBridge.hookAllMethods(
                 gojekvirtualClass,
                 "O0OO0oOo",
                 object : XC_MethodHook() {
@@ -111,11 +111,11 @@ class GojekApiHooks{
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
                         param.result = LocationUtil.latitude
-                    //    XposedBridge.log("\t Modified to: ${LocationUtil.latitude}")
+                        XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
                     }
                 })
 
-            XposedBridge.hookAllConstructors(
+            XposedBridge.hookAllMethods(
                 gojekvirtualClass,
                 "O0OO0oOo0",
                 object : XC_MethodHook() {
@@ -124,12 +124,12 @@ class GojekApiHooks{
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
                         param.result =  LocationUtil.longitude
-                    //    XposedBridge.log("\t Modified to: ${LocationUtil.longitude}")
+                        XposedBridge.log("\t LONG modified to: ${LocationUtil.longitude}")
                     }
                 })
             }
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag: Error hooking virtual class - ${e.message}")
                 }
 
     }
