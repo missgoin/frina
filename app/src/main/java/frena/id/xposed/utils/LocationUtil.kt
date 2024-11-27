@@ -138,7 +138,7 @@ object LocationUtil {
 
                 if (DEBUG) {
 //                    XposedBridge.log("$TAG Updated fake location values to:")
-//                    XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
+                    XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
 //                    XposedBridge.log("\tAccuracy: $accuracy")
 //                    XposedBridge.log("\tAltitude: $altitude")
 //                    XposedBridge.log("\tVertical Accuracy: $verticalAccuracy")

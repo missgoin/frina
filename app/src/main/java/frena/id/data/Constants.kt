@@ -63,8 +63,8 @@ const val DEFAULT_ACCURACY = 0.0
 //const val DEFAULT_USE_ALTITUDE = false
 //const val DEFAULT_ALTITUDE = 0.0
 
-const val DEFAULT_USE_RANDOMIZE = false
-const val DEFAULT_RANDOMIZE_RADIUS = 0.0
+const val DEFAULT_USE_RANDOMIZE = true
+const val DEFAULT_RANDOMIZE_RADIUS = 0.2
 
 const val DEFAULT_USE_VERTICAL_ACCURACY = false
 const val DEFAULT_VERTICAL_ACCURACY = 0.0f
