@@ -44,8 +44,8 @@ object GojekUtil {
                     val result: Int = versionCode
                     val versiGopartner = result
                     
-                    if (versiGopartner != 0) {
-                        return versiGopartner : Int
+                    if (versiGopartner != 0)  {
+                        return versiGopartner: Unit
                         }
                     
                     XposedBridge.log("$tag: version code $versiGopartner")
