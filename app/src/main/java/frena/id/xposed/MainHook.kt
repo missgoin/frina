@@ -43,8 +43,9 @@ class MainHook : IXposedHookLoadPackage {
 
             GojekUtil.checkVersionCode(lpparam)
             GojekApiHooks().hookBypassReguler(lpparam)
-            GojekApiHooks().hookGojekLocation(lpparam)
-            GojekApiHooks().hookServerLocationManager(lpparam)
+            GojekApiHooks().hookGojekVirtual(lpparam)            
+        //    GojekApiHooks().hookGojekLocation(lpparam)
+        //    GojekApiHooks().hookServerLocationManager(lpparam)
 
         //    initHooking(lpparam)
 
@@ -57,7 +58,7 @@ class MainHook : IXposedHookLoadPackage {
     //    private var systemServicesHooks: SystemServicesHooks? = null       
                
     fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
-        lateinit var context: Context
+      //  lateinit var context: Context
  
         // If not playing or null, do not proceed with hooking
       //  if (PreferencesUtil.getIsPlaying() != true) return

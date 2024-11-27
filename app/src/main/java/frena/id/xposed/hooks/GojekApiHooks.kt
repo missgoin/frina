@@ -33,13 +33,9 @@ class GojekApiHooks{
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
-       // val gp: Int = GojekUtil.versiGopartner
         if (versiGopartner == 4186) {
-                
-        try {
-            if (lpparam.packageName == "com.gojek.partner") {
-           
-                //if ((checkVersionCode(versiGopartner)) == 4186) {
+            try {
+                if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
@@ -50,6 +46,7 @@ class GojekApiHooks{
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             val bypassreguler = param.args[0] as Boolean
+                            param.args[0] = true
                             param.result = bypassreguler
                             //param.args[0] = true
                             //GojekUtil.gojekbypassreguler()        
@@ -58,11 +55,83 @@ class GojekApiHooks{
                                 XposedBridge.log("$tag: reguler bypassed")
                         }
                     })
-            }
-        } catch (e: Exception) {
+                }
+            } catch (e: Exception) {
                 XposedBridge.log("$tag: error")
                 }
         }
+        
+        if (versiGopartner == 4185) {
+            try {
+                if (lpparam.packageName == "com.gojek.partner") {       
+                    XposedBridge.log("$tag: initializing bypass")
+                    
+                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
+                    XposedHelpers.findAndHookMethod(
+                    darkBaseDeepLinkDelegateClass,
+                    "valueOf",
+                    //Boolean::class.java,
+                    object : XC_MethodHook() {
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            val bypassreguler = param.args[0] as Boolean
+                            param.args[0] = true
+                            param.result = bypassreguler
+                            //param.args[0] = true
+                            //GojekUtil.gojekbypassreguler()        
+                            //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
+                                //param.result = true
+                                XposedBridge.log("$tag: reguler bypassed")
+                        }
+                    })
+                }
+            } catch (e: Exception) {
+                XposedBridge.log("$tag: error")
+                }
+        }
+        
+    }
+
+
+    fun hookGojekVirtual(lpparam: XC_LoadPackage.LoadPackageParam) {
+
+        try {
+            if (lpparam.packageName == "com.gojek.partner") {
+            
+            if (PreferencesUtil.getIsPlaying() != true) return
+            XposedBridge.log("$tag: initializing virtual location")
+
+            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)
+            
+            XposedHelpers.findAndHookMethod(
+                gojekvirtualClass,
+                "O0OO0oOo",
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getLatitude()")
+                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
+                        param.result = LocationUtil.latitude
+                    //    XposedBridge.log("\t Modified to: ${LocationUtil.latitude}")
+                    }
+                })
+
+            XposedHelpers.findAndHookMethod(
+                gojekvirtualClass,
+                "O0OO0oOo0",
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getLongitude()")
+                    //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
+                        param.result =  LocationUtil.longitude
+                    //    XposedBridge.log("\t Modified to: ${LocationUtil.longitude}")
+                    }
+                })
+            }
+        } catch (e: Exception) {
+            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+                }
+
     }
 
 
@@ -131,7 +200,7 @@ class GojekApiHooks{
                     //    XposedBridge.log("\t Requested data from: $provider")
                         val fakeLocation =  LocationUtil.createFakeLocation(provider = provider)
                         param.result = fakeLocation
-                        XposedBridge.log("\t Fake location: $fakeLocation")
+                    //    XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
             }
