@@ -44,7 +44,7 @@ object GojekUtil {
                     val result: Int = versionCode
                     val versiGopartner = result
                     
-                    if versiGopartner != 0 {
+                    if (versiGopartner != 0) {
                         return versiGopartner
                         }
                     
