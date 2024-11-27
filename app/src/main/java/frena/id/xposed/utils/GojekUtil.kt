@@ -43,8 +43,7 @@ object GojekUtil {
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
                     
                     
-                    var versiGopartner : Int 
-                        cekversi {
+                    var versiGopartner : Int {
                             versiGopartner = versionCode
                         }
                         
