@@ -33,7 +33,7 @@ fun DrawerContent(
                 .padding(16.dp)
         ) {
             Text(
-                text = "FR.ina module",
+                text = "FRina module",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(12.dp)
             )

@@ -1,5 +1,7 @@
 package frena.id.manager.ui.map
 
+import frena.id.service.FRina-my-xLocation
+
 import android.app.Application
 import androidx.compose.runtime.*
 import androidx.lifecycle.AndroidViewModel

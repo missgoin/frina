@@ -3,7 +3,7 @@ package frena.id.manager
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-//import frena.id.service.FRina-xLocation
+import frena.id.service.FRina-my-xLocation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
