@@ -57,7 +57,6 @@ class ForegroundService: Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     
         val isplaying = (PreferencesUtil.getIsPlaying() == true)
-        param.result = isplaying
       
         if (!isStarted) {
             makeForeground()
