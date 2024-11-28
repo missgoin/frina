@@ -105,14 +105,14 @@ class GojekApiHooks{
             
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "O0OO0oOo",
+                "<init>",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                     
-                        Object gojekLocationListener = param.args[1]
-                        for (Method method : gojekLocationListener.getClass().getDeclaredMethods()) {
+                        Object O0OO0oOo = param.args[1]
+                        for (Method method : O0OO0oOo.getClass().getDeclaredMethods()) {
                             if (method.getParameterTypes().length == 10) {
-                                XposedBridge.hookAllMethods(gojekLocationListener.getClass(), method.getName(), new XC_MethodHook() {
+                                XposedBridge.hookAllMethods(O0OO0oOo.getClass(), method.getName(), new XC_MethodHook() {
                                     override fun beforeHookedMethod(param: MethodHookParam) {
                                         if LocationUtil.updateLocation() {
                                             param.args[1] = Double.valueOf(LocationUtil.latitude)
