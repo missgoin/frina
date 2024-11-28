@@ -108,13 +108,14 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
-                        val f = param.thisObject.javaClass.getDeclaredField("d")
-                        f.isAccessible = true
-                        val LocationUtil.latitude = f[param.thisObject] as Double
+                        val d = param.thisObject.javaClass.getDeclaredField("d")
+                        d.isAccessible = true
+                        val g = LocationUtil.latitude
                             LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
-                        param.result = LocationUtil.latitude
+                    //    param.result = LocationUtil.latitude
+                        d.set(param.thisObject, g)
                         XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
                     }
                 })
