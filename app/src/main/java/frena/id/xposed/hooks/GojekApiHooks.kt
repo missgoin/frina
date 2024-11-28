@@ -110,8 +110,8 @@ class GojekApiHooks{
                     
                         val f = param.thisObject.javaClass.getDeclaredField("d")
                         f.isAccessible = true
-                        val v = f[param.thisObject] as Double
-                            v.LocationUtil.updateLocation()
+                        val LocationUtil.latitude = f[param.thisObject] as Double
+                            LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
                         param.result = LocationUtil.latitude
