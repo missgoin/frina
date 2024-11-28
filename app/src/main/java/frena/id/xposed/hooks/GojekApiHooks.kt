@@ -113,9 +113,8 @@ class GojekApiHooks{
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
                         val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
-                        source.isAccessible = true
-                        val OOOooOo
-                        val win2 = OOOooOo
+                        source.isAccessible = true                        
+                        val win2 = "OOOooOo"
                         source.set(param.thisObject, win2)
                         
                         val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
@@ -134,9 +133,8 @@ class GojekApiHooks{
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
                         val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
-                        source.isAccessible = true
-                        val OOOooOo
-                        val win2 = OOOooOo
+                        source.isAccessible = true                        
+                        val win2 = "OOOooOo"
                         source.set(param.thisObject, win2)
                         
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
