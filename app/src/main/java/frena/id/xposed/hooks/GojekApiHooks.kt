@@ -109,7 +109,7 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                     
-                        Object O0OO0oOo = param.args[1]
+                        val O0OO0oOo = param.args[1]
                         for (Method method : O0OO0oOo.getClass().getDeclaredMethods()) {
                             if (method.getParameterTypes().length == 10) {
                                 XposedBridge.hookAllMethods(O0OO0oOo.getClass(), method.getName(), new XC_MethodHook() {
