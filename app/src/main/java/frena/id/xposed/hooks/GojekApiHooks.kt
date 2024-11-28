@@ -107,10 +107,8 @@ class GojekApiHooks{
 
             val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
-            XposedHelpers.findAndHookMethod(
+            XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
-                "toString",
-                String::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         
@@ -126,10 +124,8 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedHelpers.findAndHookMethod(
+            XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
-                "toString",
-                String::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         
