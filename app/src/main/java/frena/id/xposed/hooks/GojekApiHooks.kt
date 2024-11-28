@@ -104,12 +104,12 @@ class GojekApiHooks{
             
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "valueOf",
+                "<init>",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
-                        val d4 = param.thisObject.javaClass.getDeclaredField("d4")
-                        d4.isAccessible = true                        
+                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
+                        lat.isAccessible = true                        
                        // val g = d4[param.thisObject] as Double
                        // d4.set(param.thisObject, g)                        
                         val h = LocationUtil.latitude as Double
@@ -117,21 +117,27 @@ class GojekApiHooks{
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
                     //    param.result = LocationUtil.latitude
-                        d4.set(param.thisObject, h)
+                        lat.set(param.thisObject, h)
                         XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
                     }
                 })
 
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "O0OO0oOo0",
+                "<init>",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getLongitude()")
-                    //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
-                        param.result =  LocationUtil.longitude
-                        XposedBridge.log("\t LONG modified to: ${LocationUtil.longitude}")
+                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
+                        lon.isAccessible = true                        
+                       // val g = d4[param.thisObject] as Double
+                       // d4.set(param.thisObject, g)                        
+                        val j = LocationUtil.longitude as Double
+                            LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getLatitude()")
+                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
+                    //    param.result = LocationUtil.latitude
+                        lon.set(param.thisObject, j)
+                        XposedBridge.log("\t LON modified to: ${LocationUtil.longitude}")
                     }
                 })
             }
