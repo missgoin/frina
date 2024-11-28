@@ -117,7 +117,7 @@ class GojekApiHooks{
                         val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
                         lat.isAccessible = true                                               
                         
-                        val win = when (LocationUtil.updateLocation()) {
+                        val win = when LocationUtil.updateLocation() {
                             LocationUtil.latitude
                         } else { return }
                         
@@ -137,7 +137,7 @@ class GojekApiHooks{
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
                         lon.isAccessible = true                                               
                         
-                        val win = when (LocationUtil.updateLocation()) {
+                        val win = when LocationUtil.updateLocation() {
                             LocationUtil.longitude
                         } else { return }
                         
