@@ -26,6 +26,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.lang.Exception
 import java.io.File
+import java.lang.reflect.Method
 
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
@@ -104,21 +105,24 @@ class GojekApiHooks{
             
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "<init>",
+                "O0OO0oOo",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                     
-                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
-                        lat.isAccessible = true                        
-                       // val g = d4[param.thisObject] as Double
-                       // d4.set(param.thisObject, g)                        
-                        val h = LocationUtil.latitude as Double
-                            LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getLatitude()")
-                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
-                    //    param.result = LocationUtil.latitude
-                        lat.set(param.thisObject, h)
-                        XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
+                        Object gojekLocationListener = param.args[1]
+                        for (Method method : gojekLocationListener.getClass().getDeclaredMethods()) {
+                            if (method.getParameterTypes().length == 10) {
+                                XposedBridge.hookAllMethods(gojekLocationListener.getClass(), method.getName(), new XC_MethodHook() {
+                                    override fun beforeHookedMethod(param: MethodHookParam) {
+                                        if LocationUtil.updateLocation() {
+                                            param.args[1] = Double.valueOf(LocationUtil.latitude)
+                                        }
+                                        super.beforeHookedMethod(param)
+                                            XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
+                                    })
+                                }
+                            }
+                        }
                     }
                 })
 
@@ -126,7 +130,7 @@ class GojekApiHooks{
                 gojekvirtualClass,
                 "<init>",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
                         lon.isAccessible = true                        
                        // val g = d4[param.thisObject] as Double
@@ -141,6 +145,7 @@ class GojekApiHooks{
                     }
                 })
             }
+            
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking virtual class - ${e.message}")
                 }
