@@ -108,6 +108,7 @@ class GojekApiHooks{
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 "toString",
+                String::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
@@ -127,6 +128,7 @@ class GojekApiHooks{
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 "toString",
+                String::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
