@@ -105,43 +105,29 @@ class GojekApiHooks{
             
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "<init>",
+                "O0OO0oOo",
+                Double::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                    
-                        val O0OO0oOo = param.args[1]
-                        for (Method method : O0OO0oOo.getClass().getDeclaredMethods()) {
-                            if (method.getParameterTypes().length == 10) {
-                                XposedBridge.hookAllMethods(O0OO0oOo.getClass(), method.getName(), new XC_MethodHook() {
-                                    override fun beforeHookedMethod(param: MethodHookParam) {
-                                        if LocationUtil.updateLocation() {
-                                            param.args[1] = Double.valueOf(LocationUtil.latitude)
-                                        }
-                                        super.beforeHookedMethod(param)
-                                            XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
-                                    })
-                                }
-                            }
-                        }
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getLatitude()")
+                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
+                        param.result = LocationUtil.latitude
+                        XposedBridge.log("\t LAT modified to: ${LocationUtil.latitude}")
                     }
                 })
 
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "<init>",
+                "O0OO0oOo0",
+                Double::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
-                        lon.isAccessible = true                        
-                       // val g = d4[param.thisObject] as Double
-                       // d4.set(param.thisObject, g)                        
-                        val j = LocationUtil.longitude as Double
-                            LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getLatitude()")
-                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
-                    //    param.result = LocationUtil.latitude
-                        lon.set(param.thisObject, j)
-                        XposedBridge.log("\t LON modified to: ${LocationUtil.longitude}")
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getLongitude()")
+                    //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
+                        param.result =  LocationUtil.longitude
+                        XposedBridge.log("\t LONG modified to: ${LocationUtil.longitude}")
                     }
                 })
             }
