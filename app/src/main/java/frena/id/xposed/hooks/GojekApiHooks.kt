@@ -119,7 +119,7 @@ class GojekApiHooks{
                         
                         val win = when (LocationUtil.updateLocation()) {
                             param.result = LocationUtil.latitude
-                        }
+                        } else -> return
                         
                         lat.set(param.thisObject, win)
                                                
@@ -139,7 +139,7 @@ class GojekApiHooks{
                         
                         val win = when (LocationUtil.updateLocation()) {
                             param.result = LocationUtil.longitude
-                        }
+                        } else -> return
                         
                         lon.set(param.thisObject, win)
                                                
