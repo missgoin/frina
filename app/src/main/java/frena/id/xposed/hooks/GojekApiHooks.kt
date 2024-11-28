@@ -42,6 +42,7 @@ class GojekApiHooks{
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
+                    
                     XposedHelpers.findAndHookMethod(
                     darkBaseDeepLinkDelegateClass,
                     "setAutoFocusDisable",
@@ -70,6 +71,7 @@ class GojekApiHooks{
                     XposedBridge.log("$tag: initializing bypass")
                     
                     val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
+                    
                     XposedHelpers.findAndHookMethod(
                     darkBaseDeepLinkDelegateClass,
                     "valueOf",
@@ -105,10 +107,10 @@ class GojekApiHooks{
 
             val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
-            XposedBridge.hookAllConstructors(
+            XposedBridge.hookAllMethods(
                 gojekvirtualClass,
                 "toString",
-                String::class.java,
+            //    String::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
@@ -125,10 +127,10 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedBridge.hookAllConstructors(
+            XposedBridge.hookAllMethods(
                 gojekvirtualClass,
                 "toString",
-                String::class.java,
+            //    String::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
