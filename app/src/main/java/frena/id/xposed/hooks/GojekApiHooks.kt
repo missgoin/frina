@@ -107,12 +107,12 @@ class GojekApiHooks{
 
             val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
-            XposedBridge.hookAllConstructors(
+            XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
                 "toString",
-            //    String::class.java,
+                String::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         
                         val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
                         lat.isAccessible = true
@@ -126,12 +126,12 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedBridge.hookAllConstructors(
+            XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
                 "toString",
-            //    String::class.java,
+                String::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
                         lon.isAccessible = true                                               
