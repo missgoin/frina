@@ -110,34 +110,40 @@ class GojekApiHooks{
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        
+                        val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
+                        source.isAccessible = true
+                        val win2 = OOOooOo
+                        source.set(param.thisObject, win2)
                         
                         val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
-                        lat.isAccessible = true
-                        
+                        lat.isAccessible = true                       
                         LocationUtil.updateLocation()
                         val win = LocationUtil.latitude
-
                         lat.set(param.thisObject, win)
                                                
-                        XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
+                     //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
                     }
                 })
 
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        
+                        val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
+                        source.isAccessible = true
+                        val win2 = OOOooOo
+                        source.set(param.thisObject, win2)
                         
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
-                        lon.isAccessible = true                                               
-                        
+                        lon.isAccessible = true
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude
-                        
+                        val win = LocationUtil.longitude                        
                         lon.set(param.thisObject, win)
                                                
-                        XposedBridge.log("\t LON : ${LocationUtil.longitude}")
+                    //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
                 })
             

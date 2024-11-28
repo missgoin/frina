@@ -111,7 +111,7 @@ object PreferencesUtil {
                 if (json != null) {
                     try {
                         Gson().fromJson(json, T::class.java).also {
-                            XposedBridge.log("$TAG Retrieved $key: $it")
+                    //        XposedBridge.log("$TAG Retrieved $key: $it")
                         }
                     } catch (e: Exception) {
                         XposedBridge.log("$TAG Error parsing $key JSON: ${e.message}")
