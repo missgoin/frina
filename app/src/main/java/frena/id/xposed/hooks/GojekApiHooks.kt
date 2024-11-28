@@ -114,6 +114,7 @@ class GojekApiHooks{
                         
                         val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
                         source.isAccessible = true
+                        val OOOooOo
                         val win2 = OOOooOo
                         source.set(param.thisObject, win2)
                         
@@ -134,6 +135,7 @@ class GojekApiHooks{
                         
                         val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
                         source.isAccessible = true
+                        val OOOooOo
                         val win2 = OOOooOo
                         source.set(param.thisObject, win2)
                         
