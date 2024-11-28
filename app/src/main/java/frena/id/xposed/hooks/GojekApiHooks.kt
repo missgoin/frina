@@ -115,12 +115,11 @@ class GojekApiHooks{
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
                         val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
-                        lat.isAccessible = true                                               
+                        lat.isAccessible = true
                         
-                        val win = when LocationUtil.updateLocation() {
-                            LocationUtil.latitude
-                        } else { return }
-                        
+                        LocationUtil.updateLocation()
+                        val win = LocationUtil.latitude
+
                         lat.set(param.thisObject, win)
                                                
                         XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
@@ -137,9 +136,8 @@ class GojekApiHooks{
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
                         lon.isAccessible = true                                               
                         
-                        val win = when LocationUtil.updateLocation() {
-                            LocationUtil.longitude
-                        } else { return }
+                        LocationUtil.updateLocation()
+                        val win = LocationUtil.longitude
                         
                         lon.set(param.thisObject, win)
                                                
