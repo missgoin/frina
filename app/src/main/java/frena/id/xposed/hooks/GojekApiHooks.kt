@@ -100,14 +100,18 @@ class GojekApiHooks{
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
 
-            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)
+            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
             XposedBridge.hookAllMethods(
                 gojekvirtualClass,
-                "O0OO0oOo",
+                "valueOf",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
+                    
+                        val f = param.thisObject.javaClass.getDeclaredField("d")
+                        f.isAccessible = true
+                        val v = f[param.thisObject] as Double
+                            v.LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
                         param.result = LocationUtil.latitude
