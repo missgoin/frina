@@ -26,7 +26,7 @@ object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
   //  var versiGopartner : Int = 4186
- //   val versiGopartner : Int = 0
+    var versiGopartner : Int = 0
     
     @Synchronized
     fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
