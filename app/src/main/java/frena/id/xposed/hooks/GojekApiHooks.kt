@@ -112,7 +112,7 @@ class GojekApiHooks{
             XposedHelpers.findAndHookMethod(
                 browserpublickeyClass,
                 "setAutoFocusDisable",
-                boolean::class.java,
+                Boolean::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
     
