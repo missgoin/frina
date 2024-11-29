@@ -106,6 +106,34 @@ class GojekApiHooks{
             
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
+            
+            val browserpublickeyClass = XposedHelpers.findClass("dark.BrowserPublicKeyCredentialRequestOptions\$Builder", lpparam.classLoader)            
+            
+            XposedHelpers.findAndHookMethod(
+                browserpublickeyClass,
+                "setAutoFocusDisable",
+                boolean::class.java,
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+    
+                        val lat = param.args[0] as Double 
+                        val lon = param.args[1] as Double
+                        lat.isAccessible = true
+                        lon.isAccessible = true
+                        
+                        
+                        
+                       // param.args[0] = true
+                       // param.args[1] = true
+                        
+                        lat.set(param.args[0], true)
+                        lon.set(param.args[1], true)
+                        
+                        XposedBridge.log("$tag: disable autofocus")
+                    }
+                })
+            
+            
 
             val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
