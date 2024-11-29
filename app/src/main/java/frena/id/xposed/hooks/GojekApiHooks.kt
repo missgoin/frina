@@ -32,7 +32,7 @@ import java.lang.reflect.Field
 
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
-    var versiGopartner : Int = 4186
+    //var versiGopartner : Int = 4186    
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
@@ -49,9 +49,9 @@ class GojekApiHooks{
                     //Boolean::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            val bypassreguler = param.args[0] as Boolean
+                            //val bypassreguler = param.args[0] as Boolean
                             param.args[0] = true
-                            param.result = bypassreguler
+                            //param.result = bypassreguler
                             //param.args[0] = true
                             //GojekUtil.gojekbypassreguler()        
                             //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
@@ -78,9 +78,9 @@ class GojekApiHooks{
                     //Boolean::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            val bypassreguler = param.args[0] as Boolean
+                            //val bypassreguler = param.args[0] as Boolean
                             param.args[0] = true
-                            param.result = bypassreguler
+                            //param.result = bypassreguler
                             //param.args[0] = true
                             //GojekUtil.gojekbypassreguler()        
                             //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
@@ -111,12 +111,7 @@ class GojekApiHooks{
                 gojekvirtualClass,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        
-                        val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
-                        source.isAccessible = true                        
-                        val win2 = "OOOooOo"
-                        source.set(param.thisObject, win2)
-                        
+    
                         val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
                         lat.isAccessible = true                       
                         LocationUtil.updateLocation()
@@ -131,11 +126,6 @@ class GojekApiHooks{
                 gojekvirtualClass,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        
-                        val source = param.thisObject.javaClass.getDeclaredField("OOOooOo")
-                        source.isAccessible = true                        
-                        val win2 = "OOOooOo"
-                        source.set(param.thisObject, win2)
                         
                         val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
                         lon.isAccessible = true
