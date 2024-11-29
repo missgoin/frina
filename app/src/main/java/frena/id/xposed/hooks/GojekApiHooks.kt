@@ -47,7 +47,7 @@ class GojekApiHooks{
                     XposedHelpers.findAndHookMethod(
                     darkBaseDeepLinkDelegateClass,
                     "setAutoFocusDisable",
-                    //Boolean::class.java,
+                    Boolean::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             //val bypassreguler = param.args[0] as Boolean
@@ -77,7 +77,7 @@ class GojekApiHooks{
                     XposedHelpers.findAndHookMethod(
                     darkBaseDeepLinkDelegateClass,
                     "valueOf",
-                    //Boolean::class.java,
+                    Boolean::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             //val bypassreguler = param.args[0] as Boolean
@@ -114,20 +114,12 @@ class GojekApiHooks{
                 "setAutoFocusDisable",
                 Boolean::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-    
-                        val lat = param.args[0] as Double 
-                        val lon = param.args[1] as Double
-                        lat.isAccessible = true
-                        lon.isAccessible = true
+                    override fun beforeHookedMethod(param: MethodHookParam) {                                                  
+                        param.args[0] = true
+                        param.args[1] = true
                         
-                        
-                        
-                       // param.args[0] = true
-                       // param.args[1] = true
-                        
-                        lat.set(param.args[0], true)
-                        lon.set(param.args[1], true)
+                        //d.set(param.args[0], true)
+                        //d2.set(param.args[1], true)
                         
                         XposedBridge.log("$tag: disable autofocus")
                     }
