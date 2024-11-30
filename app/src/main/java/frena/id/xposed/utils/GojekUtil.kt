@@ -47,7 +47,7 @@ object GojekUtil {
                 
                 XposedBridge.log("$tag: gp version code $versiGopartner")
                 
-                return $versiGopartner
+                return versiGopartner as Int
                 
             }
         } catch (e: Throwable) {
