@@ -44,14 +44,13 @@ object GojekUtil {
                 val VersiGopartner: Int = versionCode
                 
                 println("${VersiGopartner}")
-                
-                
+                               
                     XposedBridge.log("$tag: gp version code $VersiGopartner")
             }
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")
             }
-        return
+        return ${VersiGopartner}
     }
     
      
