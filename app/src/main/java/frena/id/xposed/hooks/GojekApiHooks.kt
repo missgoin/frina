@@ -36,7 +36,7 @@ class GojekApiHooks{
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
-        val versiGojek = GojekUtil.gojekVersionCode()
+        val versiGojek = GojekUtil.gojekVersionCode(versiGopartner)
         
         if (versiGojek == 4186) {
             try {
