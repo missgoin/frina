@@ -26,10 +26,10 @@ object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
   //  var versiGopartner : Int = 4186
-    var versiGopartner : Int = 0
+  //  var versiGopartner : Int = 0
     
     @Synchronized
-    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Int {
+    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): {
     
         try {
             if (lpparam.packageName == "com.gojek.partner") {
@@ -41,11 +41,12 @@ object GojekUtil {
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-                val versiGopartner : Int = versionCode
-                return versiGopartner
+                return versionCode
+                //val versiGopartner = versionCode
+                //return versiGopartner
                 //versiGopartner = println("$VersiGopartner") as Int
                 
-                XposedBridge.log("$tag: gp version code $versiGopartner")
+                XposedBridge.log("$tag: gp version code $versionCode")
                 
                 //return versiGopartner as Int
                 
