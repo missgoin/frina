@@ -47,8 +47,7 @@ class GojekApiHooks{
                     
                     XposedHelpers.findAndHookMethod(
                     darkBaseDeepLinkDelegateClass,
-                    "setAutoFocusDisable",
-                    Boolean::class.java,
+                    "setAutoFocusDisable",                    
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             //val bypassreguler = param.args[0] as Boolean
@@ -77,7 +76,6 @@ class GojekApiHooks{
                     XposedHelpers.findAndHookMethod(
                     darkBaseDeepLinkDelegateClass,
                     "valueOf",
-                    Boolean::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             //val bypassreguler = param.args[0] as Boolean
