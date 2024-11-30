@@ -109,7 +109,7 @@ class GojekApiHooks{
             
             val browserpublickeyClass = XposedHelpers.findClass("dark.BrowserPublicKeyCredentialRequestOptions\$Builder", lpparam.classLoader)            
             
-            XposedBridge.hookAllMethods(
+            XposedHelpers.findAndHookMethod(
                 browserpublickeyClass,
                 "setAutoFocusDisable",
                 Double::class.java,
