@@ -50,7 +50,7 @@ object GojekUtil {
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")
             }
-        return
+        
     }
      
    
