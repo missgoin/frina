@@ -36,7 +36,7 @@ class GojekApiHooks{
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {
         
-         if (GojekUtil.versiGopartner == 4186) {
+         if (GojekUtil.gojekVersionCode == 4186) {
             
             try {
                 if (lpparam.packageName == "com.gojek.partner") {
@@ -66,7 +66,7 @@ class GojekApiHooks{
                 }
         }
                 
-        if (GojekUtil.versiGopartner == 4185) {
+        if (GojekUtil.gojekVersionCode == 4185) {
             
             try {
                 if (lpparam.packageName == "com.gojek.partner") {       

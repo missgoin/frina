@@ -29,7 +29,7 @@ object GojekUtil {
     var versiGopartner : Int = 0
     
     @Synchronized
-    fun checkVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
+    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Int {
     
         try {
             if (lpparam.packageName == "com.gojek.partner"){
@@ -41,11 +41,10 @@ object GojekUtil {
                 val pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0)
                 //val versionName = XposedHelpers.getObjectField(pkg, "mVersionName") as String
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
-                val versiGopartner : Int = versionCode    
-                
-                    if (versiGopartner > 0) : Int {
-                        return versiGopartner
-                    }
+                val versiGopartner : Int = versionCode
+                    
+                    return versiGopartner
+                    
                     XposedBridge.log("$tag: gp version code $versiGopartner")
             }
         } catch (e: Throwable) {
