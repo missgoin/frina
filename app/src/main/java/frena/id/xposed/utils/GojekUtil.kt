@@ -26,13 +26,13 @@ object GojekUtil {
     private const val tag = "[FRina Util]"
   //  private const val versiGopartner
   //  var versiGopartner : Int = 4186
-  //  var versiGopartner : Int = 0
+    var versiGopartner : Int = 0
     
     @Synchronized
     fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
     
         try {
-            if (lpparam.packageName == "com.gojek.partner"){
+            if (lpparam.packageName == "com.gojek.partner") {
                 //XposedBridge.log("$tag: Checking version code")
         
                 val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
@@ -43,14 +43,14 @@ object GojekUtil {
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
                 val VersiGopartner: Int = versionCode
                 
-                println("${VersiGopartner}")
+                println("$VersiGopartner")
                                
                     XposedBridge.log("$tag: gp version code $VersiGopartner")
             }
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")
             }
-        return ${VersiGopartner}
+        return $VersiGopartner
     }
     
      
