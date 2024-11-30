@@ -29,7 +29,7 @@ object GojekUtil {
     var versiGopartner : Int = 0
     
     @Synchronized
-    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Unit {
+    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Int {
     
         try {
             if (lpparam.packageName == "com.gojek.partner"){
@@ -49,7 +49,7 @@ object GojekUtil {
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")
             }
-        return
+        return versiGopartner
     }
      
    
