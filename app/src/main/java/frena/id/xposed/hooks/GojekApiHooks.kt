@@ -36,9 +36,9 @@ class GojekApiHooks{
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
-        GojekUtil.gojekVersionCode(versionCode)
+        var versiGopartner = GojekUtil.gojekVersionCode(versionCode)
         
-        if (GojekUtil.versionCode == 4186) {
+        if (versiGopartner == 4186) {
             try {
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")
@@ -67,7 +67,7 @@ class GojekApiHooks{
                 }
         }
                 
-        if (GojekUtil.versionCode == 4185) {
+        if (versiGopartner == 4185) {
             try {
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")

@@ -29,7 +29,7 @@ object GojekUtil {
   //  var versiGopartner : Int = 0
     
     @Synchronized
-    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): {
+    fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam) {
     
         try {
             if (lpparam.packageName == "com.gojek.partner") {
