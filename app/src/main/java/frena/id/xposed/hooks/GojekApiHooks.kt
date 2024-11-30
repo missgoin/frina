@@ -32,13 +32,13 @@ import java.lang.reflect.Field
 
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
- //   var versiGopartner : Int = 0
+    var versiGopartner : Int = 0
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
-        GojekUtil.gojekVersionCode(versiGopartner)
+        GojekUtil.gojekVersionCode()        
         
-        if (versiGopartner == 4186) {
+        if (GojekUtil.versiGopartner == 4186) {
             try {
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")
@@ -67,7 +67,7 @@ class GojekApiHooks{
                 }
         }
                 
-        if (versiGopartner == 4185) {
+        if (GojekUtil.versiGopartner == 4185) {
             try {
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")
