@@ -32,7 +32,7 @@ import java.lang.reflect.Field
 
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
-    //var versiGopartner : Int = 0
+    var versiGojek : Int = 0
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
