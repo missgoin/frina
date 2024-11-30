@@ -43,7 +43,7 @@ object GojekUtil {
                 val versionCode = XposedHelpers.getIntField(pkg, "mVersionCode")
                 val versiGopartner : Int = versionCode    
                 
-                    if (versiGopartner > 0) {
+                    if (versiGopartner > 0) : Int {
                         return versiGopartner
                     }
                     XposedBridge.log("$tag: gp version code $versiGopartner")
