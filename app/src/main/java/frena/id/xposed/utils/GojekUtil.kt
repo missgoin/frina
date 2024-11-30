@@ -44,14 +44,14 @@ object GojekUtil {
                 
                 //val versiGopartner = versionCode
                 //return versiGopartner
-                versionCode.versiGopartner = versiGopartner
+                //versiGopartner = versionCode.versiGopartner
                 
-                if (versiGopartner != 0) {
-                    versionCode.versiGopartner = versiGopartner
-                }
+           //     if (versiGopartner != 0) {
+           //         versiGopartner = versionCode.versiGopartner
+           //     }
                 //versiGopartner = println("$VersiGopartner") as Int
                 
-                XposedBridge.log("$tag: gp version code $versiGopartner")
+                XposedBridge.log("$tag: gp version code $versionCode")
                 
                 return versionCode
                 
@@ -59,7 +59,7 @@ object GojekUtil {
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")            
             }
-        return versionCode
+        return
     }
     
      
