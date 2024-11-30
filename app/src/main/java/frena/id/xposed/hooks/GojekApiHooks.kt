@@ -112,7 +112,7 @@ class GojekApiHooks{
             XposedBridge.hookAllMethods(
                 browserpublickeyClass,
                 "setAutoFocusDisable",
-                Boolean::class.java,
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {                                                  
                         param.args[0] = true
