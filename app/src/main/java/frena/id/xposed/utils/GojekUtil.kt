@@ -32,7 +32,7 @@ object GojekUtil {
     fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Int {
     
         try {
-            if (lpparam.packageName == "com.gojek.partner") 
+            if (lpparam.packageName == "com.gojek.partner") {
                 //XposedBridge.log("$tag: Checking version code")
         
                 val parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader)
@@ -48,7 +48,7 @@ object GojekUtil {
                 
                 return "$versiGopartner"
                 
-            
+            }
         } catch (e: Throwable) {
             XposedBridge.log("$tag: error finding version code")            
             }
