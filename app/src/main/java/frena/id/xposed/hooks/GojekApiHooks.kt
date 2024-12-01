@@ -105,26 +105,36 @@ class GojekApiHooks{
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
             
-            val browserpublickeyClass = XposedHelpers.findClass("dark.BrowserPublicKeyCredentialRequestOptions\$Builder", lpparam.classLoader)            
+            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
             XposedHelpers.findAndHookMethod(
-                browserpublickeyClass,
-                "setAutoFocusDisable",
+                gojekvirtualClass,
+                "equal",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {                                                  
-                        param.args[0] = true
-                        param.args[1] = true
+                        //param.args[0] = true
+                        //param.args[1] = true
                         
                         //d.set(param.args[0], true)
                         //d2.set(param.args[1], true)
                         
-                        XposedBridge.log("$tag: disable autofocus")
+                        XposedBridge.log("$tag: equal on beforeHookedMethod")
                     }
                 })
-            
+                
+            XposedHelpers.findAndHookMethod(
+                gojekvirtualClass,
+                "equal",
+                object : XC_MethodReplacement() {
+                    override fun replaceHookedMethod(param: MethodHookParam): Any {
+                        return true
+                    
+                        XposedBridge.log("$tag: equal on MethodReplacement")
+                    }                               
+                })
             
 
-            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
+           // val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
             
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
