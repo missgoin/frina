@@ -45,7 +45,7 @@ object GojekUtil {
                 //val versiGopartner = versionCode
                 //return versiGopartner
                  
-                return $versionCode
+                return versionCode
            //     if (versiGopartner != 0) {
            //         versiGopartner = versionCode.versiGopartner
            //     }
