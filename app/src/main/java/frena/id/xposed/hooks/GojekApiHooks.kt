@@ -66,7 +66,7 @@ class GojekApiHooks{
                 }
         }
                 
-        if (GojekUtil.versiGopartner == 4185) {
+        if (versiGopartner == 4185) {
             try {
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")

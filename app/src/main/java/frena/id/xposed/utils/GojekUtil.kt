@@ -44,8 +44,8 @@ object GojekUtil {
                 
                 //val versiGopartner = versionCode
                 //return versiGopartner
-                //versiGopartner = versionCode.versiGopartner
-                
+                versiGopartner = versionCode.versiGopartner
+                return versiGopartner
            //     if (versiGopartner != 0) {
            //         versiGopartner = versionCode.versiGopartner
            //     }
@@ -53,7 +53,7 @@ object GojekUtil {
                 
                 XposedBridge.log("$tag: gp version code $versionCode")
                 
-                return versionCode
+            //    return versionCode
                 
             }
         } catch (e: Throwable) {
