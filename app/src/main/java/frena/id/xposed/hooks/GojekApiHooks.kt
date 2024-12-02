@@ -136,12 +136,14 @@ class GojekApiHooks{
                 })
             
     
-            XposedBridge.hookAllConstructors(
+            XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
+                "valueOf",
+                double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
-                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
+                        val lat = param.thisObject.javaClass.getDeclaredField("d4")
                         lat.isAccessible = true                       
                         LocationUtil.updateLocation()
                         val win = LocationUtil.latitude
@@ -151,18 +153,20 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedBridge.hookAllConstructors(
+            XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
+                "valueOf",
+                double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        
-                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
-                        lon.isAccessible = true
+    
+                        val lat = param.thisObject.javaClass.getDeclaredField("d5")
+                        lat.isAccessible = true                       
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude                        
-                        lon.set(param.thisObject, win)
+                        val win = LocationUtil.latitude
+                        lat.set(param.thisObject, win)
                                                
-                    //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
+                     //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
                     }
                 })
             
