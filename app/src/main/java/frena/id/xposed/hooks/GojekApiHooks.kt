@@ -139,7 +139,7 @@ class GojekApiHooks{
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
                 "valueOf",
-                double::class.java,
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
@@ -156,7 +156,7 @@ class GojekApiHooks{
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
                 "valueOf",
-                double::class.java,
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
