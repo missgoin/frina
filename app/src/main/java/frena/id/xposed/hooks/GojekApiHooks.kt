@@ -109,7 +109,8 @@ class GojekApiHooks{
             
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
-                "equal",
+                "equals",
+                Object::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {                                                  
                         //param.args[0] = true
@@ -124,7 +125,8 @@ class GojekApiHooks{
                 
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
-                "equal",
+                "equals",
+                Object::class.java,
                 object : XC_MethodReplacement() {
                     override fun replaceHookedMethod(param: MethodHookParam): Any {
                         return true
