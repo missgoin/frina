@@ -118,28 +118,16 @@ class GojekApiHooks{
                         
                         //d.set(param.args[0], true)
                         //d2.set(param.args[1], true)
-                        
+                        return true                                             
                         XposedBridge.log("$tag: equal on beforeHookedMethod")
                     }
                 })
                 
-            XposedHelpers.findAndHookMethod(
-                gojekvirtualClass,
-                "equals",
-                Object::class.java,
-                object : XC_MethodReplacement() {
-                    override fun replaceHookedMethod(param: MethodHookParam): Any {
-                        return true
-                    
-                        XposedBridge.log("$tag: equal on MethodReplacement")
-                    }                               
-                })
-            
+
     
-            XposedHelpers.findAndHookMethod(
+            XposedHelpers.findMethodBestMatch(
                 gojekvirtualClass,
                 "valueOf",
-                Double::class.java, String::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
@@ -153,20 +141,19 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedHelpers.findAndHookMethod(
+            XposedHelpers.findMethodBestMatch(
                 gojekvirtualClass,
                 "valueOf",
-                Double::class.java, String::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
-                        val lat = param.thisObject.javaClass.getDeclaredField("d5")
-                        lat.isAccessible = true                       
+                        val lon = param.thisObject.javaClass.getDeclaredField("d5")
+                        lon.isAccessible = true                       
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.latitude
+                        val win = LocationUtil.longitude
                         lat.set(param.thisObject, win)
                                                
-                     //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
+                     //   XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
                 })
             
