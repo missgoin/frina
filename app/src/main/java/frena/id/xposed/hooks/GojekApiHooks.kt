@@ -133,9 +133,7 @@ class GojekApiHooks{
                     }                               
                 })
             
-
-           // val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
-            
+    
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 object : XC_MethodHook() {
