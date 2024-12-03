@@ -42,10 +42,10 @@ class MainHook : IXposedHookLoadPackage {
         || (lpparam.packageName == "net.aleksandre.android.whereami")){
 
             GojekUtil.gojekVersionCode(lpparam)
-            GojekApiHooks().hookBypassReguler(lpparam)
-            GojekApiHooks().hookGojekVirtual(lpparam)            
-        //    GojekApiHooks().hookGojekLocation(lpparam)
-        //    GojekApiHooks().hookServerLocationManager(lpparam)
+        //    GojekApiHooks().hookBypassReguler(lpparam)
+        //    GojekApiHooks().hookGojekVirtual(lpparam)            
+            GojekApiHooks().hookGojekLocation(lpparam)
+            GojekApiHooks().hookServerLocationManager(lpparam)
 
         //    initHooking(lpparam)
 

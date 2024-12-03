@@ -43,23 +43,7 @@ class GojekApiHooks{
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")
                     
-                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$Companion", lpparam.classLoader)
-                    
-                    XposedHelpers.findAndHookMethod(
-                    darkBaseDeepLinkDelegateClass,
-                    "setAutoFocusDisable",                    
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            //val bypassreguler = param.args[0] as Boolean
-                            param.args[0] = true
-                            //param.result = bypassreguler
-                            //param.args[0] = true
-                            //GojekUtil.gojekbypassreguler()        
-                            //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
-                                //param.result = true
-                                XposedBridge.log("$tag: reguler bypassed")
-                        }
-                    })
+
                 }
             } catch (e: Exception) {
                 XposedBridge.log("$tag: error")
@@ -71,23 +55,7 @@ class GojekApiHooks{
                 if (lpparam.packageName == "com.gojek.partner") {
                     XposedBridge.log("$tag: initializing bypass")
                     
-                    val darkBaseDeepLinkDelegateClass = XposedHelpers.findClass("dark.BaseDeepLinkDelegate\$allDeepLinkEntries\$2", lpparam.classLoader)
                     
-                    XposedHelpers.findAndHookMethod(
-                    darkBaseDeepLinkDelegateClass,
-                    "valueOf",
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            //val bypassreguler = param.args[0] as Boolean
-                            param.args[0] = true
-                            //param.result = bypassreguler
-                            //param.args[0] = true
-                            //GojekUtil.gojekbypassreguler()        
-                            //if (PreferencesUtil.getUseGojekBypassReg() == true) {                             
-                                //param.result = true
-                                XposedBridge.log("$tag: reguler bypassed")
-                        }
-                    })
                 }
             } catch (e: Exception) {
                 XposedBridge.log("$tag: error")
@@ -185,7 +153,7 @@ class GojekApiHooks{
                 gojeklocationClass,
                 "getLatitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
@@ -198,7 +166,7 @@ class GojekApiHooks{
                 gojeklocationClass,
                 "getLongitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
@@ -211,7 +179,7 @@ class GojekApiHooks{
                 gojeklocationClass,
                 "getAccuracy",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getAccuracy()")
                     //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
@@ -229,7 +197,7 @@ class GojekApiHooks{
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                     //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
                     //    XposedBridge.log("\t Original location: ${param.result as? Location}")
                         val provider = param.args[0] as String
