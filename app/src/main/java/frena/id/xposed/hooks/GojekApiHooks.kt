@@ -112,14 +112,20 @@ class GojekApiHooks{
                 "equals",
                 Object::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {                                                  
-                        //param.args[0] = true
-                        //param.args[1] = true
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                    
+                        val a = param.thisObject.javaClass.getDeclaredField("this")
+                        val b = param.thisObject.javaClass.getDeclaredField("obj")                        
+                        a.isAccessible = true
+                        b.isAccessible = true                       
+                        val c = true
+                        val d = true
+                        a.set(param.thisObject, c)
+                        b.set(param.thisObject, d)
                         
                         //d.set(param.args[0], true)
                         //d2.set(param.args[1], true)
-                        return true                                             
-                        XposedBridge.log("$tag: equal on beforeHookedMethod")
+                        XposedBridge.log("$tag: equals object hooked")
                     }
                 })
                 
@@ -151,7 +157,7 @@ class GojekApiHooks{
                         lon.isAccessible = true                       
                         LocationUtil.updateLocation()
                         val win = LocationUtil.longitude
-                        lat.set(param.thisObject, win)
+                        lon.set(param.thisObject, win)
                                                
                      //   XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
