@@ -47,9 +47,9 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
     implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("com.github.kittinunf.fuel:fuel:2.1.0")
-    implementation("com.github.kittinunf.fuel:fuel-android:2.1.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-M1")
+    implementation 'com.github.kittinunf.fuel:fuel:<latest-version>'
+    implementation 'com.github.kittinunf.fuel:fuel-android:<latest-version>'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-M2'
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
