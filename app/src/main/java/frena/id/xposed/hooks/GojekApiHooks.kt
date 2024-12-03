@@ -105,36 +105,16 @@ class GojekApiHooks{
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
             
-            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
-            
+            val gojekvirtualClass = XposedHelpers.findClass("com.gojek.driver.location.ping.courier.model.CourierPingRequestProto\$CourierPingRequest", lpparam.classLoader)            
+                        
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
-                "equals",
-                Object::class.java,
-                object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                    
-                        val a = param.thisObject.javaClass.getDeclaredField("this")
-                        val b = param.thisObject.javaClass.getDeclaredField("obj")                        
-                        a.isAccessible = true
-                        b.isAccessible = true                       
-                        val c = true
-                        val d = true
-                        a.set(param.thisObject, c)
-                        b.set(param.thisObject, d)
-                        
-                        //d.set(param.args[0], true)
-                        //d2.set(param.args[1], true)
-                        XposedBridge.log("$tag: equals object hooked")
-                    }
-                })               
-    
-            XposedBridge.hookAllConstructors(
-                gojekvirtualClass,
+                "setLatitude",
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
-                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
+                        val lat = param.thisObject.javaClass.getDeclaredField("d")
                         lat.isAccessible = true                       
                         LocationUtil.updateLocation()
                         val win = LocationUtil.latitude
@@ -144,12 +124,14 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedBridge.hookAllConstructors(
+            XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
+                "setLongitude",
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         
-                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
+                        val lon = param.thisObject.javaClass.getDeclaredField("d")
                         lon.isAccessible = true
                         LocationUtil.updateLocation()
                         val win = LocationUtil.longitude                        
