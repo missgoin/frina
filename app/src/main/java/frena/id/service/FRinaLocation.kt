@@ -1,12 +1,12 @@
 package frena.id.service
 
-import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
 import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.R
+import frena.id.service.StartReceiver
 
 import android.app.Notification
 import android.app.NotificationChannel

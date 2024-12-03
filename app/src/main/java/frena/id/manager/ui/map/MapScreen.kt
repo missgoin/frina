@@ -1,6 +1,5 @@
 package frena.id.manager.ui.map
 
-import frena.id.service.FRinaLocation
 import frena.id.manager.MainActivity
 
 import android.widget.Toast
