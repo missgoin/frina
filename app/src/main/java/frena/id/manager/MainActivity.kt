@@ -4,6 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 
+import frena.id.service.FRinaLocation
+import frena.id.service.Action
+import frena.id.service.StartReceiver
+import frena.id.service.Utils
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -54,9 +59,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        
-        
-        
     }
     
     // for notification service
@@ -75,8 +77,9 @@ class MainActivity : ComponentActivity() {
     }
     
     
-}
 
+}
+<
 @Composable
 fun ErrorScreen() {
     AlertDialog(
@@ -95,3 +98,4 @@ fun ErrorScreen() {
         dismissButton = null
     )
 }
+
