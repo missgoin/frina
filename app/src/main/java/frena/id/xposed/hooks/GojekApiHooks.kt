@@ -110,7 +110,6 @@ class GojekApiHooks{
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
                 "getLatitude",
-                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
@@ -123,7 +122,6 @@ class GojekApiHooks{
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
                 "getLongitude",
-                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {                       
                         LocationUtil.updateLocation()
