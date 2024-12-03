@@ -127,17 +127,14 @@ class GojekApiHooks{
                         //d2.set(param.args[1], true)
                         XposedBridge.log("$tag: equals object hooked")
                     }
-                })
-                
-
+                })               
     
-            XposedHelpers.findMethodBestMatch(
+            XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
-                "valueOf",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
     
-                        val lat = param.thisObject.javaClass.getDeclaredField("d4")
+                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
                         lat.isAccessible = true                       
                         LocationUtil.updateLocation()
                         val win = LocationUtil.latitude
@@ -147,23 +144,22 @@ class GojekApiHooks{
                     }
                 })
 
-            XposedHelpers.findMethodBestMatch(
+            XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
-                "valueOf",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-    
-                        val lon = param.thisObject.javaClass.getDeclaredField("d5")
-                        lon.isAccessible = true                       
+                        
+                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
+                        lon.isAccessible = true
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude
+                        val win = LocationUtil.longitude                        
                         lon.set(param.thisObject, win)
                                                
-                     //   XposedBridge.log("\t LON : ${LocationUtil.longitude}")
+                    //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
                 })
             
-            }            
+            }
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking virtual class - ${e.message}")
                 }
