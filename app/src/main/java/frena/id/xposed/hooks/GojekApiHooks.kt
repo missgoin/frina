@@ -109,16 +109,12 @@ class GojekApiHooks{
                         
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
-                "setLatitude",
+                "getLatitude",
                 Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-    
-                        val lat = param.thisObject.javaClass.getDeclaredField("d")
-                        lat.isAccessible = true                       
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.latitude
-                        lat.set(param.thisObject, win)
+                        param.result =  LocationUtil.latitude
                                                
                      //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
                     }
@@ -126,16 +122,12 @@ class GojekApiHooks{
 
             XposedHelpers.findAndHookMethod(
                 gojekvirtualClass,
-                "setLongitude",
+                "getLongitude",
                 Double::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        
-                        val lon = param.thisObject.javaClass.getDeclaredField("d")
-                        lon.isAccessible = true
+                    override fun afterHookedMethod(param: MethodHookParam) {                       
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude                        
-                        lon.set(param.thisObject, win)
+                        param.result =  LocationUtil.longitude
                                                
                     //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
