@@ -197,6 +197,10 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     fun clearAddToFavoritesInputs() {
         addToFavoritesState.value = FavoritesInputState() // Reset to the default state with empty fields
     }
+    
+    
+    
+    
 
 }
 

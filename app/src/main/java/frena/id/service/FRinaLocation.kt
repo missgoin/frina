@@ -1,7 +1,5 @@
 package frena.id.service
 
-import android.app.*
-
 import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
 import frena.id.data.repository.PreferencesRepository
@@ -14,11 +12,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Binder
-import android.os.IBinder
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -30,101 +24,189 @@ import android.graphics.BitmapFactory
 //import frena.id.service.GeneralCalculations
 //import frena.id.service.Constants
 //import frena.id.xposed.utils.NotificationUtils
+
+import android.app.*
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
+import android.os.IBinder
+import android.os.PowerManager
+import android.os.SystemClock
+import android.provider.Settings
+import android.widget.Toast
+import java.text.SimpleDateFormat
 import java.util.*
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.extensions.jsonBody
+import kotlinx.coroutines.*
 
-class ForegroundService: Service() {
 
-    private lateinit var notificationManager: NotificationManager
+class FRinaService : Service() {
 
-    // onStartCommand can be called multiple times, so we keep track of "started" state manually
-    private var isStarted = false
+    private var wakeLock: PowerManager.WakeLock? = null
+    private var isServiceStarted = false
+
+    override fun onBind(intent: Intent): IBinder? {
+        log("Some component want to bind with the service")
+        // We don't provide binding, so return null
+        return null
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        log("onStartCommand executed with startId: $startId")
+        if (intent != null) {
+            val action = intent.action
+            log("using an intent with action $action")
+            when (action) {
+                Actions.START.name -> startService()
+                Actions.STOP.name -> stopService()
+                else -> log("This should never happen. No action in the received intent")
+            }
+        } else {
+            log(
+                "with a null intent. It has been probably restarted by the system."
+            )
+        }
+        // by returning this we make sure the service is restarted if the system kills the service
+        return START_STICKY
+    }
 
     override fun onCreate() {
         super.onCreate()
-        // initialize dependencies here (e.g. perform dependency injection)
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        log("The service has been created".toUpperCase())
+        val notification = createNotification()
+        startForeground(1, notification)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        isStarted = false
+        log("The service has been destroyed".toUpperCase())
+        Toast.makeText(this, "Service destroyed", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        throw UnsupportedOperationException() // bound Service is a different story
+    override fun onTaskRemoved(rootIntent: Intent) {
+        val restartServiceIntent = Intent(applicationContext, FRinaService::class.java).also {
+            it.setPackage(packageName)
+        };
+        val restartServicePendingIntent: PendingIntent = PendingIntent.getService(this, 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+        applicationContext.getSystemService(Context.ALARM_SERVICE);
+        val alarmService: AlarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager;
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, restartServicePendingIntent);
     }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     
-        val isplaying = (PreferencesUtil.getIsPlaying() == true)
-      
-        if (!isStarted) {
-            makeForeground()
-            // place here any logic that should run just once when the Service is started
-            isStarted = true
-        }
+    private fun startService() {
+        if (isServiceStarted) return
+        log("Starting the foreground service task")
+        Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
+        isServiceStarted = true
+        setServiceState(this, ServiceState.STARTED)
 
-        // process the command here (e.g. retrieve extras from the Intent and act accordingly)
-        val demoString = intent?.getStringExtra(EXTRA_DEMO) ?: ""
-
-        return START_STICKY // makes sense for a Foreground Service, or even START_REDELIVER_INTENT
-    }
-
-    private fun makeForeground() {
-        val intent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        // before calling startForeground, we must create a notification and a corresponding
-        // notification channel
-        
-        createServiceNotificationChannel()
-
-        val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("FRina x-Location")
-            .setContentText("Foreground service x-Location")
-            .setSmallIcon(R.drawable.ic_frina_logo)
-            .setContentIntent(pendingIntent)
-            .build()
-
-        startForeground(ONGOING_NOTIFICATION_ID, notification)
-    }
-
-    private fun createServiceNotificationChannel() {
-        if (Build.VERSION.SDK_INT < 26) {
-            return // notification channels were added in API 26
-        }
-
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            "FRina Channel",
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-        notificationManager.createNotificationChannel(channel)
-    }
-
-    companion object {
-        private const val ONGOING_NOTIFICATION_ID = 101
-        private const val CHANNEL_ID = "1001"
-
-        private const val EXTRA_DEMO = "EXTRA_DEMO"
-
-        fun startService(context: Context, demoString: String) {
-            val intent = Intent(context, ForegroundService::class.java)
-            intent.putExtra(EXTRA_DEMO, demoString)
-            if (Build.VERSION.SDK_INT < 26) {
-                context.startService(intent)
-            } else {
-                context.startForegroundService(intent)
+        // we need this lock so our service gets not affected by Doze Mode
+        wakeLock =
+            (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FRinaService::lock").apply {
+                    acquire()
+                }
             }
+
+        // we're starting a loop in a coroutine
+        GlobalScope.launch(Dispatchers.IO) {
+            while (isServiceStarted) {
+                launch(Dispatchers.IO) {
+                    pingFakeServer()
+                }
+                delay(1 * 60 * 1000)
+            }
+            log("End of the loop for the service")
+        }
+    }
+
+    private fun stopService() {
+        log("Stopping the foreground service")
+        Toast.makeText(this, "Service stopping", Toast.LENGTH_SHORT).show()
+        try {
+            wakeLock?.let {
+                if (it.isHeld) {
+                    it.release()
+                }
+            }
+            stopForeground(true)
+            stopSelf()
+        } catch (e: Exception) {
+            log("Service stopped without being started: ${e.message}")
+        }
+        isServiceStarted = false
+        setServiceState(this, ServiceState.STOPPED)
+    }
+
+    private fun pingFakeServer() {
+        val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.mmmZ")
+        val gmtTime = df.format(Date())
+
+        val deviceId = Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID)
+
+        val json =
+            """
+                {
+                    "deviceId": "$deviceId",
+                    "createdAt": "$gmtTime"
+                }
+            """
+        try {
+            Fuel.post("https://jsonplaceholder.typicode.com/posts")
+                .jsonBody(json)
+                .response { _, _, result ->
+                    val (bytes, error) = result
+                    if (bytes != null) {
+                        log("[response bytes] ${String(bytes)}")
+                    } else {
+                        log("[response error] ${error?.message}")
+                    }
+                }
+        } catch (e: Exception) {
+            log("Error making the request: ${e.message}")
+        }
+    }
+
+    private fun createNotification(): Notification {
+        val notificationChannelId = "FRina Channel"
+
+        // depending on the Android API that we're dealing with we will have
+        // to use a specific method to create the notification
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = NotificationChannel(
+                notificationChannelId,
+                "FRina service notifications channel",
+                NotificationManager.IMPORTANCE_HIGH
+            ).let {
+                it.description = "FRina service channel"
+                it.enableLights(true)
+                it.lightColor = Color.RED
+                it.enableVibration(true)
+                it.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+                it
+            }
+            notificationManager.createNotificationChannel(channel)
         }
 
-        fun stopService(context: Context) {
-            val intent = Intent(context, ForegroundService::class.java)
-            context.stopService(intent)
+        val pendingIntent: PendingIntent = Intent(this, MainActivity::class.java).let { notificationIntent ->
+            PendingIntent.getActivity(this, 0, notificationIntent, 0)
         }
 
+        val builder: Notification.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.Builder(
+            this,
+            notificationChannelId
+        ) else Notification.Builder(this)
+
+        return builder
+            .setContentTitle("FRina Service")
+            .setContentText("FRina service is working now")
+            .setContentIntent(pendingIntent)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setTicker("Ticker text")
+            .setPriority(Notification.PRIORITY_HIGH) // for under android 26 compatibility
+            .build()
     }
 }
