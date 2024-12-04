@@ -1,5 +1,6 @@
 package frena.id.service
 
+import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
 import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
