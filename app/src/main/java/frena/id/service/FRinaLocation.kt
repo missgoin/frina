@@ -97,8 +97,8 @@ class FRinaService : Service() {
     
     private fun startService() {
         if (isServiceStarted) return
-        log("Starting the foreground service task")
-        Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
+            log("Starting the foreground service task")
+            Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
         setServiceState(this, ServiceState.STARTED)
 

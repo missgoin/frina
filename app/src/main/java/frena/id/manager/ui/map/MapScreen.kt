@@ -131,10 +131,12 @@ fun MapScreen(
                             mapViewModel.togglePlaying()
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    
+                                    log("START THE FOREGROUND SERVICE ON DEMAND")
+                                    actionOnService(Actions.START)
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    
+                                    log("STOP THE FOREGROUND SERVICE ON DEMAND")
+                                    actionOnService(Actions.STOP)
                             }
                         }
                     },
@@ -206,3 +208,18 @@ fun MapScreen(
         }
     }
 }
+
+
+private fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, EndlessService::class.java).also {
+            it.action = action.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                log("Starting the service in >=26 Mode")
+                startForegroundService(it)
+                return
+            }
+            log("Starting the service in < 26 Mode")
+            startService(it)
+        }
+    }

@@ -56,11 +56,9 @@
             android:value="true" />
             
         <service
-            android:name="frena.id.service.FRinaLocation"
+            android:name=".service.FRinaLocation"
             android:enabled="true"
-            android:exported="true"
-            android:process=":remote"
-            android:stopWithTask="false"
+            android:exported="true"            
             android:foregroundServiceType="location">
         </service>
             
