@@ -13,17 +13,14 @@ import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
 class MapViewModel(application: Application) : AndroidViewModel(application) {
-    // App's shared preferences
+
     private val preferencesRepository = PreferencesRepository(application)
 
-    // State variables
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
     val userLocation = mutableStateOf<GeoPoint?>(null)
     val isLoading = mutableStateOf(true)
-    val mapZoom = mutableStateOf<Double?>(null) // Add this line
-
-    // Dialog state variables
+    val mapZoom = mutableStateOf<Double?>(null)
     val showGoToPointDialog = mutableStateOf(false)
     val showAddToFavoritesDialog = mutableStateOf(false)
 
@@ -33,7 +30,6 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     private val _centerMapEvent = MutableSharedFlow<Unit>()
     val centerMapEvent: SharedFlow<Unit> = _centerMapEvent.asSharedFlow()
 
-    // Generic input state model for dialogs
     data class InputFieldState(var value: String = "", var errorMessage: String? = null)
 
     // GoToPointDialog state
@@ -68,7 +64,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
                 it.latitude,
                 it.longitude
             )
-        } ?: preferencesRepository.clearNonPersistentSettings()
+        } ?: preferencesRepository.clearLastClickedLocation()
     }
 
     fun addFavoriteLocation(favoriteLocation: FavoriteLocation) {
@@ -124,6 +120,10 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     // Set loading finished
     fun setLoadingFinished() {
         isLoading.value = false
+        isPlaying.value = preferencesRepository.getIsPlaying()
+        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
+            GeoPoint(it.latitude, it.longitude)
+        }
     }
 
     // Dialog show/hide logic
