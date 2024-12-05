@@ -1,6 +1,8 @@
 //Constants.kt
 package frena.id.data
 
+import frena.id.data.model.FRinaServiceState
+
 // APP
 const val MANAGER_APP_PACKAGE_NAME = "frena.id"
 const val SHARED_PREFS_FILE = "xposed_shared_prefs"
@@ -51,7 +53,7 @@ const val KEY_SPEED_ACCURACY = "speed_accuracy"
 
  // DEFAULT VALUES
  
-const val DEFAULT_FRINA_SERVICE = STOPPED
+const val DEFAULT_FRINA_SERVICE = "STOPPED"
  
  // gojek
 const val DEFAULT_USE_GOJEK_BYPASS_REG = true
