@@ -1,5 +1,7 @@
 package frena.id.manager.ui.map
 
+import frena.id.manager.MainActivity
+
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
@@ -31,8 +33,6 @@ fun MapScreen(
     val isFabClickable by remember { derivedStateOf { mapViewModel.isFabClickable } }
     val showGoToPointDialog by mapViewModel.showGoToPointDialog
     val showAddToFavoritesDialog by mapViewModel.showAddToFavoritesDialog
-    
-    val actionOnService by mapViewModel.actionOnService
     
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -128,16 +128,19 @@ fun MapScreen(
                 FloatingActionButton(
                     onClick = {
                         if (isFabClickable) {
-                            mapViewModel.togglePlaying()
-                            mapViewModel.actionOnService()
+                            mapViewModel.togglePlaying()                            
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    actionOnService(Actions.START)
+                                    
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    actionOnService(Actions.STOP)
+                                    
                             }
                         }
+                        
+
+
+                              
                     },
                     modifier = Modifier
                         .navigationBarsPadding()

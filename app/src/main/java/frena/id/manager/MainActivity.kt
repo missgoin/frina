@@ -3,6 +3,9 @@ package frena.id.manager
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -55,6 +58,22 @@ class MainActivity : ComponentActivity() {
     }
     
 
+    fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, FRinaLocation::class.java).also {
+            it.action = action.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                log("Starting the service in >=26 Mode")
+                startForegroundService(it)
+                return
+            }
+            log("Starting the service in < 26 Mode")
+            startService(it)
+        }
+    }
+    
+    
+    
     
 
 }
