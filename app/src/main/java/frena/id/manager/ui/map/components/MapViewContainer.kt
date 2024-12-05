@@ -41,7 +41,8 @@ fun MapViewContainer(
     val isLoading by mapViewModel.isLoading
     val lastClickedLocation by mapViewModel.lastClickedLocation
     val isPlaying by mapViewModel.isPlaying
-
+    val actionOnService by mapViewModel.actionOnService
+    
     // Remember MapView and overlays
     val mapView = rememberMapView(context)
     val userMarker = rememberUserMarker(mapView)
@@ -189,6 +190,7 @@ private fun SetupMapClickListener(
     mapView: MapView,
     mapViewModel: MapViewModel,
     isPlaying: Boolean
+    actionOnService: action
 ) {
     DisposableEffect(mapView, isPlaying) {
         val mapEventsReceiver = object : MapEventsReceiver {

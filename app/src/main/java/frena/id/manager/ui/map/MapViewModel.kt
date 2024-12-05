@@ -1,8 +1,8 @@
 package frena.id.manager.ui.map
 
-import frena.id.service.FRinaLocation
-import frena.id.service.Action
-import frena.id.service.Utils
+//import frena.id.service.FRinaLocation
+//import frena.id.service.Action
+//import frena.id.service.Utils
 import android.content.Context
 import android.content.Intent
 import android.os.Build

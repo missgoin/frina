@@ -129,7 +129,7 @@ fun MapScreen(
                     onClick = {
                         if (isFabClickable) {
                             mapViewModel.togglePlaying()
-                            mapViewModel.actionOnService
+                            mapViewModel.actionOnService()
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
                                     actionOnService(Actions.START)
