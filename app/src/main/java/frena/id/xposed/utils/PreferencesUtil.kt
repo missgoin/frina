@@ -4,7 +4,6 @@ package frena.id.xposed.utils
 import com.google.gson.Gson
 import frena.id.data.*
 import frena.id.data.model.LastClickedLocation
-import frena.id.data.model.FRinaServiceState
 import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
 

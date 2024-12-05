@@ -7,8 +7,9 @@ import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
 
-import frena.id.data.name
-import frena.id.data.key
+import frena.id.data.DEFAULT_FRINA_SERVICE
+import frena.id.data.FRINA_SERVICE
+import frena.id.data.KEY_USE_FRINA_SERVICE
 
 import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
@@ -54,6 +55,8 @@ class FRinaService : Service() {
     private var wakeLock: PowerManager.WakeLock? = null
     private var isServiceStarted = false
     
+    private val preferencesRepository = PreferencesRepository(application)
+
     enum class Actions {
         START,
         STOP
@@ -71,8 +74,8 @@ class FRinaService : Service() {
             val action = intent.action
         //    Log.d("using an intent with action $action")
             when (action) {
-                Actions.START.name -> startService()
-                Actions.STOP.name -> stopService()
+                Actions.START.FRINA_SERVICE -> startService()
+                Actions.STOP.FRINA_SERVICE -> stopService()
                 else -> Log.d("This should never happen. No action in the received intent")
             }
         } else {
@@ -110,7 +113,7 @@ class FRinaService : Service() {
         //    Log.d("Starting the foreground service task")
             Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
-        setServiceState(this, ServiceState.STARTED)
+        preferencesRepository.setServiceState(this, ServiceState.STARTED)
 
         // we need this lock so our service gets not affected by Doze Mode
         wakeLock =
@@ -147,7 +150,7 @@ class FRinaService : Service() {
        //     Log.d("Service stopped without being started: ${e.message}")
         }
         isServiceStarted = false
-        setServiceState(this, ServiceState.STOPPED)
+        preferencesRepository.setServiceState(this, ServiceState.STOPPED)
     }
 
     private fun pingFakeServer() {

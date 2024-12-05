@@ -1,14 +1,12 @@
 //Constants.kt
 package frena.id.data
 
-import frena.id.data.model.FRinaServiceState
-
 // APP
 const val MANAGER_APP_PACKAGE_NAME = "frena.id"
 const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 
 // SERVICE NOTIFICATION FRINA LOCATION
-const val name = "SPYSERVICE_KEY"
+const val FRINA_SERVICE = "frina_service"
 const val KEY_USE_FRINA_SERVICE = "use_frina_service"
 
 // gojek

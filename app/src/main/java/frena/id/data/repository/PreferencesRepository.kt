@@ -29,13 +29,14 @@ class PreferencesRepository(context: Context) {
 
 /// FRINA SERVICE
 fun setServiceState(context: Context, state: ServiceState) {
-    sharedPrefs.edit()
-        .putString(KEY_USE_FRINA_SERVICE, state.name)
-        .apply()
+    sharedPrefs.edit().let {
+        it.putString(KEY_USE_FRINA_SERVICE, state.FRINA_SERVICE)
+        it.apply()
+    }
 }
 
 fun getServiceState(context: Context): ServiceState {
-    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, DEFAULT_FRINA_SERVICE)
+    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.FRINA_SERVICE)
     return ServiceState.(value)
 }
 
