@@ -9,7 +9,6 @@ import frena.id.R
 
 import frena.id.data.name
 import frena.id.data.key
-import frena.id.data.model.FRinaServiceAction
 
 import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
@@ -54,6 +53,11 @@ class FRinaService : Service() {
 
     private var wakeLock: PowerManager.WakeLock? = null
     private var isServiceStarted = false
+    
+    enum class Actions {
+        START,
+        STOP
+    }
 
     override fun onBind(intent: Intent): IBinder? {
         Log.d("Some component want to bind with the service")

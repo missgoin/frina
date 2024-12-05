@@ -11,8 +11,7 @@ import com.google.gson.reflect.TypeToken
 import frena.id.data.*
 import frena.id.data.model.FavoriteLocation
 import frena.id.data.model.LastClickedLocation
-import frena.id.data.model.FRinaServiceState
-import frena.id.data.model.FRinaServiceAction
+
 
 class PreferencesRepository(context: Context) {
     private val tag = "Preferences Repository"
@@ -27,7 +26,14 @@ class PreferencesRepository(context: Context) {
     private val gson = Gson()
     
 
+
 /// FRINA SERVICE
+
+enum class ServiceState {
+    STARTED,
+    STOPPED
+}
+
 fun setServiceState(context: Context, state: ServiceState) {
     //val sharedPrefs = getPreferences(context)
     sharedPrefs.edit().let {
