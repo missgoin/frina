@@ -7,10 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 
-import frena.id.service.FRinaLocation
 import frena.id.data.repository.PreferencesRepository
-import frena.id.data.FRINA_SERVICE
-import frena.id.data.KEY_USE_FRINA_SERVICE
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -66,25 +63,6 @@ class MainActivity : ComponentActivity() {
     }
     
     
-    enum class Actions {
-        START,
-        STOP
-    }
-
-    fun actionOnService(action: Actions) {
-        if (preferencesRepository.getServiceState(this) == ServiceState.random() && action == Actions.STOP) return
-        Intent(this, FRinaLocation::class.java).also {
-            it.action = action.FRINA_SERVICE
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //    Log.d("Starting the service in >=26 Mode")
-                startForegroundService(it)
-                return
-            }
-        //    Log.d("Starting the service in < 26 Mode")
-            startService(it)
-        }
-    }
-        
     
     
 
