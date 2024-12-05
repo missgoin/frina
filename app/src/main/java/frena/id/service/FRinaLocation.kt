@@ -8,7 +8,7 @@ import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
 
 import frena.id.data.DEFAULT_FRINA_SERVICE
-import frena.id.data.FRINA_SERVICE
+import frena.id.data.name
 import frena.id.data.KEY_USE_FRINA_SERVICE
 
 import frena.id.xposed.hooks.GojekApiHooks
@@ -74,8 +74,8 @@ class FRinaService : Service() {
             val action = intent.action
         //    Log.d("using an intent with action $action")
             when (action) {
-                Actions.START.FRINA_SERVICE -> startService()
-                Actions.STOP.FRINA_SERVICE -> stopService()
+                Actions.START.name -> startService()
+                Actions.STOP.name -> stopService()
                 else -> // Log.d("This should never happen. No action in the received intent")
             }
         } else {

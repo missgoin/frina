@@ -6,7 +6,7 @@ const val MANAGER_APP_PACKAGE_NAME = "frena.id"
 const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 
 // SERVICE NOTIFICATION FRINA LOCATION
-const val FRINA_SERVICE = "frina_service"
+const val name = "frina_service"
 const val KEY_USE_FRINA_SERVICE = "use_frina_service"
 
 // gojek

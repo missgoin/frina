@@ -12,7 +12,7 @@ import frena.id.data.*
 import frena.id.data.model.FavoriteLocation
 import frena.id.data.model.LastClickedLocation
 import frena.id.data.KEY_USE_FRINA_SERVICE
-import frena.id.data.FRINA_SERVICE
+import frena.id.data.name
 
 class PreferencesRepository(context: Context) {
     private val tag = "Preferences Repository"
@@ -34,17 +34,17 @@ enum class ServiceState{
     STOPPED;
     companion object {
         //fun random(): ServiceState = STOPPED
-        
+        val sharedPrefs = context.getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_WORLD_READABLE)
         fun getServiceState(context: Context): ServiceState {
-            val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.FRINA_SERVICE)
-            return ServiceState.(value)
+            val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
+            return ServiceState.valueOf(value)
         }
     }
 }
 
 fun setServiceState(context: Context, state: ServiceState) {
     sharedPrefs.edit().let {
-        it.putString(KEY_USE_FRINA_SERVICE, state.FRINA_SERVICE)
+        it.putString(KEY_USE_FRINA_SERVICE, state.name)
         it.apply()
     }
 }
@@ -56,8 +56,8 @@ fun setServiceState(context: Context, state: ServiceState) {
 //}
     
 ////
-        
-            
+
+
     // gojek bypass reguler
     fun saveUseGojekBypassReg(useGojekBypassReg: Boolean) {
         sharedPrefs.edit()
