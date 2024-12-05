@@ -31,7 +31,9 @@ fun MapScreen(
     val isFabClickable by remember { derivedStateOf { mapViewModel.isFabClickable } }
     val showGoToPointDialog by mapViewModel.showGoToPointDialog
     val showAddToFavoritesDialog by mapViewModel.showAddToFavoritesDialog
-
+    
+    val actionOnService by mapViewModel.actionOnService
+    
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -127,13 +129,12 @@ fun MapScreen(
                     onClick = {
                         if (isFabClickable) {
                             mapViewModel.togglePlaying()
+                            mapViewModel.actionOnService
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    log("START THE FOREGROUND SERVICE ON DEMAND")
                                     actionOnService(Actions.START)
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    log("STOP THE FOREGROUND SERVICE ON DEMAND")
                                     actionOnService(Actions.STOP)
                             }
                         }
