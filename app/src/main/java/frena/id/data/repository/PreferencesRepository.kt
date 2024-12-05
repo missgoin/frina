@@ -15,6 +15,10 @@ import frena.id.data.model.LastClickedLocation
 
 class PreferencesRepository(context: Context) {
     private val tag = "Preferences Repository"
+    
+    private const val name = "SPYSERVICE_KEY"
+    private const val key = "SPYSERVICE_STATE"
+        
 
     @SuppressLint("WorldReadableFiles")
     private val sharedPrefs = try {
@@ -34,21 +38,18 @@ enum class ServiceState {
     STOPPED,
 }
 
-private const val name = "SPYSERVICE_KEY"
-private const val key = "SPYSERVICE_STATE"
 
 fun setServiceState(context: Context, state: ServiceState) {
     //val sharedPrefs = getPreferences(context)
-    sharedPrefs.edit() {
+    sharedPrefs.edit()
         .putString(key, state.name)
         .apply()
-    }
 }
 
 fun getServiceState(context: Context): ServiceState {
     //val sharedPrefs = getPreferences(context)
     val value = sharedPrefs.getString(key, ServiceState.STOPPED.name)
-    return ServiceState.valueOf(value)
+    return ServiceState.(value)
 }
 
 //private fun getPreferences(context: Context): SharedPreferences {
