@@ -1,15 +1,5 @@
 package frena.id.manager.ui.map
 
-import frena.id.manager.MainActivity
-import frena.id.service.FRinaLocation
-import frena.id.service.Action
-import frena.id.service.Utils
-import android.content.pm.PackageInfo
-import android.content.Context
-import android.content.Intent
-import android.os.Build
-import android.util.Log
-
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
@@ -217,16 +207,3 @@ fun MapScreen(
     }
 }
 
-    private fun actionOnService(action: Actions) {
-        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
-        Intent(this, FRinaLocation::class.java).also {
-            it.action = action.name
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                log("Starting the service in >=26 Mode")
-                startForegroundService(it)
-                return
-            }
-            log("Starting the service in < 26 Mode")
-            startService(it)
-        }
-    }

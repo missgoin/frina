@@ -1,5 +1,13 @@
 package frena.id.manager.ui.map
 
+import frena.id.service.FRinaLocation
+import frena.id.service.Action
+import frena.id.service.Utils
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.util.Log
+
 import android.app.Application
 import androidx.compose.runtime.*
 import androidx.lifecycle.AndroidViewModel
@@ -199,6 +207,20 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     }
     
     
+    
+    fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, FRinaLocation::class.java).also {
+            it.action = action.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                log("Starting the service in >=26 Mode")
+                startForegroundService(it)
+                return
+            }
+            log("Starting the service in < 26 Mode")
+            startService(it)
+        }
+    }
     
     
 

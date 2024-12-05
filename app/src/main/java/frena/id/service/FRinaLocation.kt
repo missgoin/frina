@@ -8,6 +8,10 @@ import frena.id.manager.ui.map.MapViewModel
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.R
 
+import frena.id.xposed.hooks.GojekApiHooks
+import frena.id.xposed.utils.PreferencesUtil
+import frena.id.xposed.utils.GojekUtil
+
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager

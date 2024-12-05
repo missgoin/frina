@@ -31,8 +31,6 @@ class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-        //VersionCodeHooks().hookVersionCode(lpparam)       
-
         // Avoid hooking own app to prevent recursion
         //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
@@ -42,33 +40,18 @@ class MainHook : IXposedHookLoadPackage {
         || (lpparam.packageName == "net.aleksandre.android.whereami")){
 
             GojekUtil.gojekVersionCode(lpparam)
-        //    GojekApiHooks().hookBypassReguler(lpparam)
-        //    GojekApiHooks().hookGojekVirtual(lpparam)            
+            //GojekApiHooks().hookBypassReguler(lpparam)
+            //GojekApiHooks().hookGojekVirtual(lpparam)            
             GojekApiHooks().hookGojekLocation(lpparam)
             GojekApiHooks().hookServerLocationManager(lpparam)
-
-        //    initHooking(lpparam)
 
         } else {
             initHooking(lpparam)
             }
       }
-
-    //    private var locationApiHooks: LocationApiHooks? = null
-    //    private var systemServicesHooks: SystemServicesHooks? = null       
-               
+ 
     fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
       //  lateinit var context: Context
- 
-        // If not playing or null, do not proceed with hooking
-      //  if (PreferencesUtil.getIsPlaying() != true) return
-
-        // Hook system services if user asked for system wide hooks
-     //   if (lpparam.packageName == "android") {
-    //        systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
-     //   }
-        
-
     }
 
 
