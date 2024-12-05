@@ -76,7 +76,7 @@ class FRinaService : Service() {
             when (action) {
                 Actions.START.FRINA_SERVICE -> startService()
                 Actions.STOP.FRINA_SERVICE -> stopService()
-                else -> Log.d("This should never happen. No action in the received intent")
+                else -> // Log.d("This should never happen. No action in the received intent")
             }
         } else {
         //    Log.d("with a null intent. It has been probably restarted by the system.")

@@ -38,14 +38,14 @@ enum class ServiceState{
 
 fun setServiceState(context: Context, state: ServiceState) {
     sharedPrefs.edit().let {
-        it.putString(KEY_USE_FRINA_SERVICE, state.FRINA_SERVICE)
+        it.putString(KEY_USE_FRINA_SERVICE, state)
         it.apply()
     }
 }
 
 fun getServiceState(context: Context): ServiceState {
-    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.FRINA_SERVICE)
-    return ServiceState.(value)
+    //val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED)
+    return sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED)
 }
 
 //private fun getPreferences(context: Context): SharedPreferences {
