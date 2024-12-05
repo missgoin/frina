@@ -8,8 +8,10 @@ import android.content.Intent
 import android.os.Build
 
 import frena.id.service.FRinaLocation
-import frena.id.service.Action
-import frena.id.service.Utils
+import frena.id.data.repository.PreferencesRepository
+import frena.id.data.model.FRinaServiceAction
+import frena.id.data.name
+import frena.id.data.key
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -62,7 +64,20 @@ class MainActivity : ComponentActivity() {
     }
     
 
-
+    fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, FRinaLocation::class.java).also {
+            it.action = action.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Log.d("Starting the service in >=26 Mode")
+                startForegroundService(it)
+                return
+            }
+            Log.d("Starting the service in < 26 Mode")
+            startService(it)
+        }
+    }
+        
     
     
 
@@ -88,17 +103,4 @@ fun ErrorScreen() {
 }
 
 
-    fun actionOnService(action: Actions) {
-        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
-        Intent(this, FRinaLocation::class.java).also {
-            it.action = action.name
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                log("Starting the service in >=26 Mode")
-                startForegroundService(it)
-                return
-            }
-            log("Starting the service in < 26 Mode")
-            startService(it)
-        }
-    }
-        
+

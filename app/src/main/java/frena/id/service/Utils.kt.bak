@@ -1,6 +1,9 @@
 package frena.id.service
 
 import android.util.Log
+import frena.id.data.*
+import frena.id.data.model.FRinaLocationService
+
 
 fun log(msg: String) {
     Log.d("FRina Service: ", msg)

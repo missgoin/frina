@@ -1,4 +1,5 @@
-package frena.id.service
+package frena.id.data.model
+
 
 
 enum class Actions {

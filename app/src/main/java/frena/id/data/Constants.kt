@@ -5,7 +5,9 @@ package frena.id.data
 const val MANAGER_APP_PACKAGE_NAME = "frena.id"
 const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 
-// KEYS
+// SERVICE NOTIFICATION FRINA LOCATION
+const val name = "SPYSERVICE_KEY"
+const val key = "SPYSERVICE_STATE"
 
 // gojek
 const val KEY_USE_GOJEK_BYPASS_REG = "use_gobypassreg"

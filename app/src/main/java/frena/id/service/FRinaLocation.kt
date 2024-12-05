@@ -7,10 +7,15 @@ import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
 
+import frena.id.data.name
+import frena.id.data.key
+import frena.id.data.model.FRinaServiceAction
+
 import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.GojekUtil
 
+import android.util.Log
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -51,23 +56,23 @@ class FRinaService : Service() {
     private var isServiceStarted = false
 
     override fun onBind(intent: Intent): IBinder? {
-        log("Some component want to bind with the service")
+        Log.d("Some component want to bind with the service")
         // We don't provide binding, so return null
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        log("onStartCommand executed with startId: $startId")
+        Log.d("onStartCommand executed with startId: $startId")
         if (intent != null) {
             val action = intent.action
-            log("using an intent with action $action")
+            Log.d("using an intent with action $action")
             when (action) {
                 Actions.START.name -> startService()
                 Actions.STOP.name -> stopService()
-                else -> log("This should never happen. No action in the received intent")
+                else -> Log.d("This should never happen. No action in the received intent")
             }
         } else {
-            log(
+            Log.d(
                 "with a null intent. It has been probably restarted by the system."
             )
         }
@@ -77,14 +82,14 @@ class FRinaService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        log("The service has been created".toUpperCase())
+        Log.d("The service has been created".toUpperCase())
         val notification = createNotification()
         startForeground(1, notification)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        log("The service has been destroyed".toUpperCase())
+        Log.d("The service has been destroyed".toUpperCase())
         Toast.makeText(this, "Service destroyed", Toast.LENGTH_SHORT).show()
     }
 
@@ -100,7 +105,7 @@ class FRinaService : Service() {
     
     private fun startService() {
         if (isServiceStarted) return
-            log("Starting the foreground service task")
+            Log.d("Starting the foreground service task")
             Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
         setServiceState(this, ServiceState.STARTED)
@@ -121,12 +126,12 @@ class FRinaService : Service() {
                 }
                 delay(1 * 60 * 1000)
             }
-            log("End of the loop for the service")
+            Log.d("End of the loop for the service")
         }
     }
 
     private fun stopService() {
-        log("Stopping the foreground service")
+        Log.d("Stopping the foreground service")
         Toast.makeText(this, "Service stopping", Toast.LENGTH_SHORT).show()
         try {
             wakeLock?.let {
@@ -137,7 +142,7 @@ class FRinaService : Service() {
             stopForeground(true)
             stopSelf()
         } catch (e: Exception) {
-            log("Service stopped without being started: ${e.message}")
+            Log.d("Service stopped without being started: ${e.message}")
         }
         isServiceStarted = false
         setServiceState(this, ServiceState.STOPPED)
@@ -162,13 +167,13 @@ class FRinaService : Service() {
                 .response { _, _, result ->
                     val (bytes, error) = result
                     if (bytes != null) {
-                        log("[response bytes] ${String(bytes)}")
+                        Log.d("[response bytes] ${String(bytes)}")
                     } else {
-                        log("[response error] ${error?.message}")
+                        Log.d("[response error] ${error?.message}")
                     }
                 }
         } catch (e: Exception) {
-            log("Error making the request: ${e.message}")
+            Log.d("Error making the request: ${e.message}")
         }
     }
 

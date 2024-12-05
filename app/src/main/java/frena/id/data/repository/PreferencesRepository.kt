@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken
 import frena.id.data.*
 import frena.id.data.model.FavoriteLocation
 import frena.id.data.model.LastClickedLocation
+import frena.id.data.model.FRinaServiceState
+import frena.id.data.model.FRinaServiceAction
 
 class PreferencesRepository(context: Context) {
     private val tag = "Preferences Repository"
@@ -22,8 +24,29 @@ class PreferencesRepository(context: Context) {
 
     private val gson = Gson()
     
+
+/// FRINA SERVICE
+fun setServiceState(context: Context, state: ServiceState) {
+    //val sharedPrefs = getPreferences(context)
+    sharedPrefs.edit().let {
+        it.putString(key, state.name)
+        it.apply()
+    }
+}
+
+fun getServiceState(context: Context): ServiceState {
+    //val sharedPrefs = getPreferences(context)
+    val value = sharedPrefs.getString(key, ServiceState.STOPPED.name)
+    return ServiceState.valueOf(value)
+}
+
+//private fun getPreferences(context: Context): SharedPreferences {
+//    return context.getSharedPreferences(name, 0)
+//}
     
-    
+////
+        
+            
     // gojek bypass reguler
     fun saveUseGojekBypassReg(useGojekBypassReg: Boolean) {
         sharedPrefs.edit()
