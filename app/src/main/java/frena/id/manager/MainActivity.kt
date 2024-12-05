@@ -7,6 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 
+import frena.id.service.FRinaLocation
+import frena.id.service.Action
+import frena.id.service.Utils
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -58,21 +62,7 @@ class MainActivity : ComponentActivity() {
     }
     
 
-    fun actionOnService(action: Actions) {
-        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
-        Intent(this, FRinaLocation::class.java).also {
-            it.action = action.name
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                log("Starting the service in >=26 Mode")
-                startForegroundService(it)
-                return
-            }
-            log("Starting the service in < 26 Mode")
-            startService(it)
-        }
-    }
-    
-    
+
     
     
 
@@ -96,3 +86,19 @@ fun ErrorScreen() {
         dismissButton = null
     )
 }
+
+
+    fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, FRinaLocation::class.java).also {
+            it.action = action.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                log("Starting the service in >=26 Mode")
+                startForegroundService(it)
+                return
+            }
+            log("Starting the service in < 26 Mode")
+            startService(it)
+        }
+    }
+        
