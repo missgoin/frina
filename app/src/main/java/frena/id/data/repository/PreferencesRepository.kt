@@ -33,7 +33,12 @@ enum class ServiceState{
     STARTED,
     STOPPED;
     companion object {
-        fun random(): ServiceState = STOPPED
+        //fun random(): ServiceState = STOPPED
+        
+        fun getServiceState(context: Context): ServiceState {
+            val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.FRINA_SERVICE)
+            return ServiceState.(value)
+        }
     }
 }
 
@@ -44,10 +49,7 @@ fun setServiceState(context: Context, state: ServiceState) {
     }
 }
 
-fun getServiceState(context: Context): ServiceState {
-    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.FRINA_SERVICE)
-    return ServiceState.(value)
-}
+
 
 //private fun getPreferences(context: Context): SharedPreferences {
 //    return context.getSharedPreferences(name, 0)
