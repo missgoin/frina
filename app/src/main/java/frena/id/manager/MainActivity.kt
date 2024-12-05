@@ -27,6 +27,9 @@ import kotlin.system.exitProcess
 
 class MainActivity : ComponentActivity() {
     private val tag = "MainActivity"
+    
+    private val preferencesRepository = PreferencesRepository(application)
+
 
     @SuppressLint("WorldReadableFiles")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +72,7 @@ class MainActivity : ComponentActivity() {
     }
 
     fun actionOnService(action: Actions) {
-        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        if (preferencesRepository.getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
         Intent(this, FRinaLocation::class.java).also {
             it.action = action.name
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
