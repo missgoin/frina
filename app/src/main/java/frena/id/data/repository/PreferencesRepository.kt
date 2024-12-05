@@ -3,6 +3,8 @@ package frena.id.data.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
+
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -40,9 +42,9 @@ fun getServiceState(context: Context): ServiceState {
     return ServiceState.valueOf(value)
 }
 
-//private fun getPreferences(context: Context): SharedPreferences {
-//    return context.getSharedPreferences(name, 0)
-//}
+private fun getPreferences(context: Context): SharedPreferences {
+    return context.getSharedPreferences(name, 0)
+}
     
 ////
         
