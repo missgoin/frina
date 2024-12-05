@@ -15,6 +15,12 @@ object PreferencesUtil {
         reload()
     }
     
+    
+    fun getServiceState(): ServiceState? {
+        return getPreference<ServiceState>(KEY_USE_FRINA_SERVICE)
+    }
+    
+    
     // gojek
     fun getUseGojekBypassReg(): Boolean? {
         return getPreference<Boolean>(KEY_USE_GOJEK_BYPASS_REG)

@@ -6,8 +6,8 @@ const val MANAGER_APP_PACKAGE_NAME = "frena.id"
 const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 
 // SERVICE NOTIFICATION FRINA LOCATION
-//const val name = "SPYSERVICE_KEY"
-//const val key = "SPYSERVICE_STATE"
+const val name = "SPYSERVICE_KEY"
+const val KEY_USE_FRINA_SERVICE = "use_frina_service"
 
 // gojek
 const val KEY_USE_GOJEK_BYPASS_REG = "use_gobypassreg"
@@ -48,7 +48,10 @@ const val KEY_SPEED = "speed"
 const val KEY_USE_SPEED_ACCURACY = "use_speed_accuracy"
 const val KEY_SPEED_ACCURACY = "speed_accuracy"
 
+
  // DEFAULT VALUES
+ 
+const val DEFAULT_FRINA_SERVICE = STOPPED
  
  // gojek
 const val DEFAULT_USE_GOJEK_BYPASS_REG = true

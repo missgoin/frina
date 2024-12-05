@@ -76,11 +76,11 @@ class MainActivity : ComponentActivity() {
         Intent(this, FRinaLocation::class.java).also {
             it.action = action.name
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Log.d("Starting the service in >=26 Mode")
+            //    Log.d("Starting the service in >=26 Mode")
                 startForegroundService(it)
                 return
             }
-            Log.d("Starting the service in < 26 Mode")
+        //    Log.d("Starting the service in < 26 Mode")
             startService(it)
         }
     }

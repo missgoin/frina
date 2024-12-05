@@ -60,25 +60,23 @@ class FRinaService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        Log.d("Some component want to bind with the service")
+      //  Log.d("Some component want to bind with the service")
         // We don't provide binding, so return null
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("onStartCommand executed with startId: $startId")
+       // Log.d("onStartCommand executed with startId: $startId")
         if (intent != null) {
             val action = intent.action
-            Log.d("using an intent with action $action")
+        //    Log.d("using an intent with action $action")
             when (action) {
                 Actions.START.name -> startService()
                 Actions.STOP.name -> stopService()
                 else -> Log.d("This should never happen. No action in the received intent")
             }
         } else {
-            Log.d(
-                "with a null intent. It has been probably restarted by the system."
-            )
+        //    Log.d("with a null intent. It has been probably restarted by the system.")
         }
         // by returning this we make sure the service is restarted if the system kills the service
         return START_STICKY
@@ -86,14 +84,14 @@ class FRinaService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("The service has been created".toUpperCase())
+    //    Log.d("The service has been created".toUpperCase())
         val notification = createNotification()
         startForeground(1, notification)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("The service has been destroyed".toUpperCase())
+    //    Log.d("The service has been destroyed".toUpperCase())
         Toast.makeText(this, "Service destroyed", Toast.LENGTH_SHORT).show()
     }
 
@@ -109,7 +107,7 @@ class FRinaService : Service() {
     
     private fun startService() {
         if (isServiceStarted) return
-            Log.d("Starting the foreground service task")
+        //    Log.d("Starting the foreground service task")
             Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
         setServiceState(this, ServiceState.STARTED)
@@ -130,12 +128,12 @@ class FRinaService : Service() {
                 }
                 delay(1 * 60 * 1000)
             }
-            Log.d("End of the loop for the service")
+       //     Log.d("End of the loop for the service")
         }
     }
 
     private fun stopService() {
-        Log.d("Stopping the foreground service")
+     //   Log.d("Stopping the foreground service")
         Toast.makeText(this, "Service stopping", Toast.LENGTH_SHORT).show()
         try {
             wakeLock?.let {
@@ -146,7 +144,7 @@ class FRinaService : Service() {
             stopForeground(true)
             stopSelf()
         } catch (e: Exception) {
-            Log.d("Service stopped without being started: ${e.message}")
+       //     Log.d("Service stopped without being started: ${e.message}")
         }
         isServiceStarted = false
         setServiceState(this, ServiceState.STOPPED)
@@ -171,13 +169,13 @@ class FRinaService : Service() {
                 .response { _, _, result ->
                     val (bytes, error) = result
                     if (bytes != null) {
-                        Log.d("[response bytes] ${String(bytes)}")
+                 //       Log.d("[response bytes] ${String(bytes)}")
                     } else {
-                        Log.d("[response error] ${error?.message}")
+                //        Log.d("[response error] ${error?.message}")
                     }
                 }
         } catch (e: Exception) {
-            Log.d("Error making the request: ${e.message}")
+        //    Log.d("Error making the request: ${e.message}")
         }
     }
 
