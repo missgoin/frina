@@ -7,6 +7,7 @@ import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
 
+import frena.id.data.*
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 import frena.id.data.KEY_USE_FRINA_SERVICE
@@ -113,12 +114,12 @@ class FRinaService : Service() {
         //    Log.d("Starting the foreground service task")
             Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
-        PreferencesRepository.setServiceState(this, ServiceState.STARTED)
+        preferencesRepository.setServiceState(this, ServiceState.STARTED)
 
         // we need this lock so our service gets not affected by Doze Mode
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FRinaService::lock").apply {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FRinaLocation::lock").apply {
                     acquire()
                 }
             }
