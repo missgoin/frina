@@ -25,7 +25,7 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
-    
+    private val random = getServiceState()
 
 
 /// FRINA SERVICE
@@ -33,11 +33,7 @@ enum class ServiceState{
     STARTED,
     STOPPED;
     companion object {
-        //fun random(): ServiceState = STOPPED
-        val sharedPrefs = context.getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_WORLD_READABLE)
-        fun getServiceState(context: Context): ServiceState {
-            val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
-            return ServiceState.valueOf(value)
+        fun random(): ServiceState = STOPPED
         }
     }
 }
@@ -49,7 +45,9 @@ fun setServiceState(context: Context, state: ServiceState) {
     }
 }
 
-
+fun getServiceState(context: Context): ServiceState {
+    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
+        return ServiceState.valueOf(value)
 
 //private fun getPreferences(context: Context): SharedPreferences {
 //    return context.getSharedPreferences(name, 0)
