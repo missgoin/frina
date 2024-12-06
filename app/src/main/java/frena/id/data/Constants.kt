@@ -51,7 +51,7 @@ const val KEY_SPEED_ACCURACY = "speed_accuracy"
 
  // DEFAULT VALUES
  
-const val DEFAULT_FRINA_SERVICE = "STOPPED"
+const val DEFAULT_FRINA_SERVICE = "ServiceState.STOPPED"
  
  // gojek
 const val DEFAULT_USE_GOJEK_BYPASS_REG = true

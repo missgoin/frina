@@ -12,6 +12,7 @@ import frena.id.data.*
 import frena.id.data.model.FavoriteLocation
 import frena.id.data.model.LastClickedLocation
 import frena.id.data.KEY_USE_FRINA_SERVICE
+import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 
 class PreferencesRepository(context: Context) {
@@ -45,7 +46,7 @@ class PreferencesRepository(context: Context) {
     }
 
     fun getServiceState(): ServiceState {
-        val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
+        val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name, DEFAULT_FRINA_SERVICE)
         return ServiceState.valueOf(value)
     }
     
