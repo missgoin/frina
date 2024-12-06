@@ -32,19 +32,19 @@ class PreferencesRepository(context: Context) {
     enum class ServiceState{
         STARTED,
         STOPPED,
-//        companion object {
-//            fun random(): ServiceState = STOPPED
-//        }
+       // companion object {
+      //      fun random(): ServiceState = STOPPED
+       // }
     }
 
-    fun setServiceState(context: Context, state: ServiceState) {
+    fun setServiceState(state: ServiceState) {
         sharedPrefs.edit().let {
             it.putString(KEY_USE_FRINA_SERVICE, state.name)
             it.apply()
         }
     }
 
-    fun getServiceState(context: Context): ServiceState {
+    fun getServiceState(): ServiceState {
         val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
         return ServiceState.valueOf(value)
     }

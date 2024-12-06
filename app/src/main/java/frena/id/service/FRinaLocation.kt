@@ -76,7 +76,7 @@ class FRinaService : Service() {
             when (action) {
                 Actions.START.name -> startService()
                 Actions.STOP.name -> stopService()
-                else ->  Log.d("This should never happen. No action in the received intent")
+                else -> {}
             }
         } else {
         //    Log.d("with a null intent. It has been probably restarted by the system.")
@@ -113,7 +113,7 @@ class FRinaService : Service() {
         //    Log.d("Starting the foreground service task")
             Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
-        preferencesRepository.setServiceState(this, ServiceState.STARTED)
+        PreferencesRepository.setServiceState(this, ServiceState.STARTED)
 
         // we need this lock so our service gets not affected by Doze Mode
         wakeLock =
