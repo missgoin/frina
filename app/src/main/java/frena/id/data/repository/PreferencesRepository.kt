@@ -29,31 +29,31 @@ class PreferencesRepository(context: Context) {
 
 
 /// FRINA SERVICE
-enum class ServiceState{
-    STARTED,
-    STOPPED;
-    companion object {
-        fun random(): ServiceState = STOPPED
+    enum class ServiceState{
+        STARTED,
+        STOPPED;
+        companion object {
+            fun random(): ServiceState = STOPPED
         }
     }
-}
 
-fun setServiceState(context: Context, state: ServiceState) {
-    sharedPrefs.edit().let {
-        it.putString(KEY_USE_FRINA_SERVICE, state.name)
-        it.apply()
+    fun setServiceState(context: Context, state: ServiceState) {
+        sharedPrefs.edit().let {
+            it.putString(KEY_USE_FRINA_SERVICE, state.name)
+            it.apply()
+        }
     }
-}
 
-fun getServiceState(context: Context): ServiceState {
-    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
+    fun getServiceState(context: Context): ServiceState {
+        val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
         return ServiceState.valueOf(value)
-
-//private fun getPreferences(context: Context): SharedPreferences {
-//    return context.getSharedPreferences(name, 0)
-//}
+    }
     
-////
+    //private fun getPreferences(context: Context): SharedPreferences {
+    //    return context.getSharedPreferences(name, 0)
+    //}
+    
+    ////
 
 
     // gojek bypass reguler
@@ -77,7 +77,7 @@ fun getServiceState(context: Context): ServiceState {
 
     fun getGoBypassReg(): Boolean {
         return sharedPrefs.getBoolean(KEY_GOJEK_BYPASS_REG, DEFAULT_GOJEK_BYPASS_REG)
-  }
+    }
 
 
     // Is Playing
