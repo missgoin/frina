@@ -25,16 +25,16 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
-    private val random = getServiceState()
+ //   private val random = getServiceState()
 
 
 /// FRINA SERVICE
     enum class ServiceState{
         STARTED,
-        STOPPED;
-        companion object {
-            fun random(): ServiceState = STOPPED
-        }
+        STOPPED,
+//        companion object {
+//            fun random(): ServiceState = STOPPED
+//        }
     }
 
     fun setServiceState(context: Context, state: ServiceState) {
