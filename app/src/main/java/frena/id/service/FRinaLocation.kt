@@ -56,8 +56,6 @@ class FRinaService : Service() {
     private var wakeLock: PowerManager.WakeLock? = null
     private var isServiceStarted = false
     
-    private val preferencesRepository = PreferencesRepository(application)
-
     enum class Actions {
         START,
         STOP
@@ -114,7 +112,7 @@ class FRinaService : Service() {
         //    Log.d("Starting the foreground service task")
             Toast.makeText(this, "Service starting its task", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
-        preferencesRepository.setServiceState(this, ServiceState.STARTED)
+        setServiceState(this, ServiceState.STARTED)
 
         // we need this lock so our service gets not affected by Doze Mode
         wakeLock =
@@ -151,7 +149,7 @@ class FRinaService : Service() {
        //     Log.d("Service stopped without being started: ${e.message}")
         }
         isServiceStarted = false
-        preferencesRepository.setServiceState(this, ServiceState.STOPPED)
+        setServiceState(this, ServiceState.STOPPED)
     }
 
     private fun pingFakeServer() {
