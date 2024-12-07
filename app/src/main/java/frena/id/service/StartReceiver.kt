@@ -14,6 +14,11 @@ import frena.id.data.repository.PreferencesRepository
 
 class StartReceiver : BroadcastReceiver() {
 
+    enum class Actions {
+        START,
+        STOP
+    }
+
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED && getServiceState(context) == ServiceState.STARTED) {
             Intent(context, FRinaLocation::class.java).also {

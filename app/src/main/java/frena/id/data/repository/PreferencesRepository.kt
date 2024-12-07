@@ -34,14 +34,7 @@ class PreferencesRepository(context: Context) {
 
     private val gson = Gson()
     
-    fun main(args : Array<String>) {
-        println(ServiceState.valueOf("STARTED") == ServiceState.STARTED)
-        println(ServiceState.valueOf("STOPPED") == ServiceState.STOPPED)
-        println(ServiceState.values().toList())
-    }
-
-
-    fun setServiceState(context: Context, state: ServiceState) {
+    fun setServiceState(context: Context, state: ServiceState): String {
         sharedPrefs.edit().let {
             it.putString(key, state.name)
             it.apply()
@@ -49,8 +42,7 @@ class PreferencesRepository(context: Context) {
     }
 
     fun getServiceState(context: Context): ServiceState {
-        val default = ServiceState.valueOf("STOPPED")
-        val value = sharedPrefs.getString(key, default)
+        val value = sharedPrefs.getString(key, ServiceState.STOPPED.name)
         return ServiceState.valueOf(value)
     }
     
