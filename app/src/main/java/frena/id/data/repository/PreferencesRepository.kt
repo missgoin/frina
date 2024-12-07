@@ -32,17 +32,17 @@ class PreferencesRepository(context: Context) {
 /// FRINA SERVICE
     enum class ServiceState{
         STARTED,
-        STOPPED,
+        STOPPED
        // companion object {
       //      fun random(): ServiceState = STOPPED
        // }
     }
 
     fun setServiceState(state: ServiceState) {
-        sharedPrefs.edit().let {
-            it.putString(KEY_USE_FRINA_SERVICE, state.name)
-            it.apply()
-        }
+        sharedPrefs.edit()
+            .putString(KEY_USE_FRINA_SERVICE, state.name)
+            .apply()
+        
     }
 
     fun getServiceState(): ServiceState {
