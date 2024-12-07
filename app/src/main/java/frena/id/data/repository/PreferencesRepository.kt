@@ -29,7 +29,7 @@ class PreferencesRepository(context: Context) {
     private val gson = Gson()
 
 /// FRINA SERVICE
-    enum class ServiceState (val value: String) {
+    enum class ServiceState {
         STARTED,
         STOPPED,
     }
