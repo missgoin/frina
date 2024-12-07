@@ -38,9 +38,9 @@ class PreferencesRepository(context: Context) {
         
     fun setServiceState(context: Context, args: Array<String>) {        
         sharedPrefs.edit().let {
-            val state = STOPPED
+            val state = "STOPPED"
             val serviceState = ServiceState.valueOf(state.toUpperCase())
-            it.putString(key, serviceState)
+            it.putString(key, (serviceState))
             it.apply()
         }
     }
