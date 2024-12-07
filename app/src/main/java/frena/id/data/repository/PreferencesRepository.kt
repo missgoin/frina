@@ -14,6 +14,7 @@ import frena.id.data.model.LastClickedLocation
 import frena.id.data.key
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
+import frena.id.data.model.FRinaServiceState
 
 
 
@@ -35,16 +36,17 @@ class PreferencesRepository(context: Context) {
         STARTED,
         STOPPED
     }
-        
-    fun setServiceState(context: Context, args: Array<String>) {        
-        sharedPrefs.edit().let {
-            val state = "STOPPED"
-            val serviceState = ServiceState.valueOf(state.toUpperCase())
-            it.putString(key, (serviceState))
-            it.apply()
-        }
+    
+    fun setServiceState(context: Context, state: ServiceState) {
+        val serviceState = state.name
+        val json = gson.toJson(serviceState)
+        sharedPrefs.edit()
+            .putString(key, json)
+            .apply()
     }
-
+    
+    
+        
 //    fun getServiceState(context: Context): ServiceState {
 //        val value = sharedPrefs.getString(key, ?: ServiceState.STOPPED.name) 
         // ?: "ServiceState.STOPPED"
