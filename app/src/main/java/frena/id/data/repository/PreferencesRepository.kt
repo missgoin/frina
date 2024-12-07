@@ -36,18 +36,20 @@ class PreferencesRepository(context: Context) {
         STOPPED
     }
         
-    fun setServiceState(context: Context, state: ServiceState) {        
+    fun setServiceState(context: Context, args: Array<String>) {        
         sharedPrefs.edit().let {
-            it.putString(key, state.name)
+            val state = STOPPED
+            val serviceState = ServiceState.valueOf(state.toUpperCase())
+            it.putString(key, serviceState)
             it.apply()
         }
     }
 
-    fun getServiceState(context: Context): ServiceState {
-        val value = sharedPrefs.getString(key, ?: ServiceState.STOPPED.name) 
+//    fun getServiceState(context: Context): ServiceState {
+//        val value = sharedPrefs.getString(key, ?: ServiceState.STOPPED.name) 
         // ?: "ServiceState.STOPPED"
-        return ServiceState.valueOf(value)
-    }
+//        return ServiceState.valueOf(value)
+//    }
     
 
     // gojek bypass reguler
