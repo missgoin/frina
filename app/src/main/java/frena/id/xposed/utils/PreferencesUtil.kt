@@ -17,7 +17,7 @@ object PreferencesUtil {
     
     
     fun getServiceState(): ServiceState? {
-        return getPreference<ServiceState>(KEY_USE_FRINA_SERVICE)
+        return getPreference<ServiceState>(key)
     }
     
     
