@@ -44,7 +44,7 @@ class PreferencesRepository(context: Context) {
     }
 
     fun getServiceState(context: Context): ServiceState {
-        val value = sharedPrefs.getString(key, ServiceState.STOPPED.name) 
+        val value = sharedPrefs.getString(key, ?: ServiceState.STOPPED.name) 
         // ?: "ServiceState.STOPPED"
         return ServiceState.valueOf(value)
     }
