@@ -17,12 +17,6 @@ import frena.id.data.name
 
 class PreferencesRepository(context: Context) {
 
-/// FRINA SERVICE
-    enum class ServiceState{
-        STARTED,
-        STOPPED
-    }
-
     private val tag = "Preferences Repository"
     
     @SuppressLint("WorldReadableFiles")
@@ -33,6 +27,13 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
+
+/// FRINA SERVICE
+    enum class ServiceState{
+        STARTED,
+        STOPPED,
+    }
+
     
     fun setServiceState(context: Context, state: ServiceState) {
         sharedPrefs.edit().let {
