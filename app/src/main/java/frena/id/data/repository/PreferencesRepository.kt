@@ -15,8 +15,6 @@ import frena.id.data.key
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 
-import kotlinx.serialization.Serializable
-import kotlin.reflect.typeOf
 
 
 class PreferencesRepository(context: Context) {
@@ -33,24 +31,20 @@ class PreferencesRepository(context: Context) {
     private val gson = Gson()
 
 /// FRINA SERVICE
-    @Serializable
     enum class ServiceState {
         STARTED,
         STOPPED
     }
-    
-    
-    fun setServiceState(context: Context, state: ServiceState) {
-        val type = typeOf<ServiceState>()
         
+    fun setServiceState(context: Context, state: ServiceState) {        
         sharedPrefs.edit().let {
-            it.putString(key, type.enumValues())
+            it.putString(key, state.name)
             it.apply()
         }
     }
 
     fun getServiceState(context: Context): ServiceState {
-        val value = sharedPrefs.getString(key, ServiceState.STOPPED) 
+        val value = sharedPrefs.getString(key, ServiceState.STOPPED.name) 
         // ?: "ServiceState.STOPPED"
         return ServiceState.valueOf(value)
     }
