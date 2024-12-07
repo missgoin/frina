@@ -3,7 +3,7 @@ package frena.id.data.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
+//import android.content.SharedPreferences
 
 import android.util.Log
 import com.google.gson.Gson
@@ -16,6 +16,13 @@ import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 
 class PreferencesRepository(context: Context) {
+
+/// FRINA SERVICE
+    enum class ServiceState{
+        STARTED,
+        STOPPED,       
+    }
+
     private val tag = "Preferences Repository"
     
     @SuppressLint("WorldReadableFiles")
@@ -26,37 +33,20 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
- //   private val random = getServiceState()
 
 
-/// FRINA SERVICE
-    enum class ServiceState{
-        STARTED,
-        STOPPED;
-        companion object {
-            fun state(): ServiceState = STOPPED
+    fun setServiceState(state: ServiceState) {
+        sharedPrefs.edit().let {
+            it.putString(KEY_USE_FRINA_SERVICE, state.name)
+            it.apply()
         }
     }
 
-    fun setServiceState(state: ServiceState) {
-        sharedPrefs.edit()
-            .putString(KEY_USE_FRINA_SERVICE, state)
-            .apply()
-        
-    }
-
     fun getServiceState(): ServiceState {
-    //    val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, DEFAULT_FRINA_SERVICE)
-    //    return ServiceState.valueOf(value)
-          return sharedPrefs.getString(KEY_USE_FRINA_SERVICE, DEFAULT_FRINA_SERVICE)
+        val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
+        return ServiceState.valueOf(value)
     }
     
-    //private fun getPreferences(context: Context): SharedPreferences {
-    //    return context.getSharedPreferences(name, 0)
-    //}
-    
-    ////
-
 
     // gojek bypass reguler
     fun saveUseGojekBypassReg(useGojekBypassReg: Boolean) {
