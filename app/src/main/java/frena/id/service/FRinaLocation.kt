@@ -94,7 +94,7 @@ class FRinaService : Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        val restartServiceIntent = Intent(applicationContext, FRinaLocation::class.java).also {
+        val restartServiceIntent = Intent(applicationContext, FRinaService::class.java).also {
             it.setPackage(packageName)
         };
         val restartServicePendingIntent: PendingIntent = PendingIntent.getService(this, 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
