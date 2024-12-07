@@ -29,11 +29,11 @@ class PreferencesRepository(context: Context) {
     private val gson = Gson()
 
 /// FRINA SERVICE
-    enum class ServiceState{
+    enum class ServiceState (val value: String) {
         STARTED,
-        STOPPED
+        STOPPED,
     }
-
+    
     
     fun setServiceState(context: Context, state: ServiceState) {
         sharedPrefs.edit().let {
@@ -43,7 +43,8 @@ class PreferencesRepository(context: Context) {
     }
 
     fun getServiceState(context: Context): ServiceState {
-        val value = sharedPrefs.getString(key, ServiceState.name) ?: "ServiceState.STOPPED"
+        val value = sharedPrefs.getString(key, ServiceState.STOPPED.name) 
+        // ?: "ServiceState.STOPPED"
         return ServiceState.valueOf(value)
     }
     
