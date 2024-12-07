@@ -9,7 +9,7 @@ import frena.id.R
 import frena.id.data.*
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
-import frena.id.data.KEY_USE_FRINA_SERVICE
+import frena.id.data.key
 import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.GojekUtil
