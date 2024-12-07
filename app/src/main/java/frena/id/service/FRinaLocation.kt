@@ -6,16 +6,13 @@ import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
-
 import frena.id.data.*
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 import frena.id.data.KEY_USE_FRINA_SERVICE
-
 import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.GojekUtil
-
 import android.util.Log
 import android.app.Notification
 import android.app.NotificationChannel
@@ -33,7 +30,6 @@ import android.graphics.BitmapFactory
 //import frena.id.service.GeneralCalculations
 //import frena.id.service.Constants
 //import frena.id.xposed.utils.NotificationUtils
-
 import android.app.*
 import android.content.Context
 import android.content.Intent
