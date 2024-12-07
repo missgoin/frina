@@ -11,16 +11,17 @@ import com.google.gson.reflect.TypeToken
 import frena.id.data.*
 import frena.id.data.model.FavoriteLocation
 import frena.id.data.model.LastClickedLocation
-import frena.id.data.KEY_USE_FRINA_SERVICE
+import frena.id.data.key
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
+import frena.id.service.FRinaLocation
 
 class PreferencesRepository(context: Context) {
 
 /// FRINA SERVICE
     enum class ServiceState{
         STARTED,
-        STOPPED,       
+        STOPPED
     }
 
     private val tag = "Preferences Repository"
@@ -33,17 +34,23 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
+    
+    fun main(args : Array<String>) {
+        println(ServiceState.valueOf("STARTED") == ServiceState.STARTED)
+        println(ServiceState.valueOf("STOPPED") == ServiceState.STOPPED)
+        println(ServiceState.values().toList())
+    }
 
 
-    fun setServiceState(state: ServiceState) {
+    fun setServiceState(context: Context, state: ServiceState) {
         sharedPrefs.edit().let {
-            it.putString(KEY_USE_FRINA_SERVICE, state.name)
+            it.putString(key, state.name)
             it.apply()
         }
     }
 
-    fun getServiceState(): ServiceState {
-        val value = sharedPrefs.getString(KEY_USE_FRINA_SERVICE, ServiceState.STOPPED.name)
+    fun getServiceState(context: Context): ServiceState {
+        val value = sharedPrefs.getString(key, ServiceState.STOPPED.name)
         return ServiceState.valueOf(value)
     }
     
