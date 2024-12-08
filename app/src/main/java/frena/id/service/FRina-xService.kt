@@ -35,7 +35,7 @@ import android.content.ComponentName
 
 
 
-class MyForegroundService : Service() {
+class FRina-xService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
