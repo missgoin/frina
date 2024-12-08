@@ -10,7 +10,7 @@ import frena.id.data.name
 
 
 /// FRINA SERVICE
-enum class ServiceState {
+enum class ServiceState (context: Context) {
     STARTED, STOPPED;
 
     companion object {
