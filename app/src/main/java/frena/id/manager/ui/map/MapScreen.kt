@@ -3,6 +3,24 @@ package frena.id.manager.ui.map
 import frena.id.manager.MainActivity
 import frena.id.service.FRinaxService
 
+import android.os.Bundle
+import android.util.Log
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.os.Binder
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import android.graphics.Color
+import android.os.IBinder
+import android.os.PowerManager
+import android.os.SystemClock
+import android.provider.Settings
+
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
@@ -131,14 +149,14 @@ fun MapScreen(
                         if (isFabClickable) {
                             mapViewModel.togglePlaying()                            
                             if (mapViewModel.isPlaying.value) {
-                                Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
+                            //    Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
                                     Intent(applicationContext, FRinaxService::class.java).also{
                                         it.action = FRinaxService.Actions.START.toString()
                                         start(it)
                                     }
 
                             } else {
-                                Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
+                            //    Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
                                     Intent(applicationContext, FRinaxService::class.java).also{
                                         it.action = FRinaxService.Actions.STOP.toString()
                                         stopSelf(it)
