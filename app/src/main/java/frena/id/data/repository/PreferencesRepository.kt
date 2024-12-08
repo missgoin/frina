@@ -13,7 +13,6 @@ import frena.id.data.key
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 //import frena.id.data.model.FRinaServiceState
-import android.content.SharedPreferences
 
 
 class PreferencesRepository(context: Context) {
@@ -49,15 +48,13 @@ enum class ServiceState {
 
 
 fun setServiceState(context: Context, myEnum: ServiceState) {
-    val sp: SharedPreferences = context.getPreferences(Context.MODE_WORLD_READABLE)
-    val editor: SharedPreferences.Editor = sp.edit()
-    editor.putString("ServiceState", myEnum.toString())
-    editor.apply()
+    sharedPrefs.edit()
+    .putString("ServiceState", myEnum.toString())
+    .apply()
 }
 
 fun getServiceState(context: Context): ServiceState {
-    val sp: SharedPreferences = context.getPreferences(Context.MODE_WORLD_READABLE)
-    val myEnumString: String? = sp.getString("ServiceState", ServiceState.STOPPED.toString())
+    val myEnumString: String? = sharedPrefs.getString("ServiceState", ServiceState.STOPPED.toString())
     return ServiceState.toServiceState(myEnumString)
 }
     
