@@ -22,6 +22,8 @@ import frena.id.manager.ui.theme.frenaTheme
 import org.osmdroid.config.Configuration
 import kotlin.system.exitProcess
 
+//import frena.id.service.FRina-x
+
 class MainActivity : ComponentActivity() {
     private val tag = "MainActivity"
     
@@ -62,9 +64,7 @@ class MainActivity : ComponentActivity() {
         }
     }
     
-    
-    
-    
+
 
 }
 

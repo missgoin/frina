@@ -6,7 +6,7 @@ import frena.id.data.*
 import frena.id.data.model.LastClickedLocation
 import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
-import frena.id.service.ServiceTracker
+
 
 object PreferencesUtil {
     private const val TAG = "[Preferences Util]"
@@ -16,10 +16,6 @@ object PreferencesUtil {
         reload()
     }
     
-    
-    fun getServiceState(): ServiceState? {
-        return getPreference<ServiceState>(key)
-    }
     
     
     // gojek
