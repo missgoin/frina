@@ -26,6 +26,34 @@ class PreferencesRepository(context: Context) {
     }
 
     private val gson = Gson()
+    
+    
+enum class ServiceState {
+    STARTED, STOPPED;
+
+    companion object {
+        fun toServiceState(myEnumString: String): ServiceState {
+            return try {
+                valueOf(myEnumString)
+            } catch (ex: Exception) {
+                // For error cases
+                STOPPED
+            }
+        }
+    }
+}
+
+    fun setServiceState(context: Context, myEnum: ServiceState) {
+        sharedPrefs.edit()
+        .putString(key, myEnum.toString())
+        .apply()
+    }
+
+    fun getServiceState(context: Context): ServiceState {
+        val myEnumString: String? = sharedPrefs.getString(key, ServiceState.STOPPED.toString())
+        return ServiceState.toServiceState(myEnumString)
+    }    
+    
 
     // gojek bypass reguler
     fun saveUseGojekBypassReg(useGojekBypassReg: Boolean) {

@@ -113,7 +113,7 @@ class FRinaService : Service() {
         // we need this lock so our service gets not affected by Doze Mode
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FRinaLocation::lock").apply {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FRinaService::lock").apply {
                     acquire()
                 }
             }
