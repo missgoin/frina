@@ -35,7 +35,7 @@ import android.content.ComponentName
 
 
 
-class FRina-xService : Service() {
+class FRinaxService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null

@@ -1,7 +1,7 @@
 package frena.id.manager.ui.map
 
 import frena.id.manager.MainActivity
-import frena.id.service.FRina-xService
+import frena.id.service.FRinaxService
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -132,16 +132,16 @@ fun MapScreen(
                             mapViewModel.togglePlaying()                            
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    Intent(applicationContext, FRina-xService::class.java).also{
-                                        it.action = FRina-xService.Actions.START.toString()
-                                        startService(it)
+                                    Intent(applicationContext, FRinaxService::class.java).also{
+                                        it.action = FRinaxService.Actions.START.toString()
+                                        start(it)
                                     }
 
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    Intent(applicationContext, FRina-xService::class.java).also{
-                                        it.action = FRina-xService.Actions.STOP.toString()
-                                        startService(it)
+                                    Intent(applicationContext, FRinaxService::class.java).also{
+                                        it.action = FRinaxService.Actions.STOP.toString()
+                                        stopSelf(it)
                                     }
                             }
                         }

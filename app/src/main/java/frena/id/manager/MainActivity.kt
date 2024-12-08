@@ -22,7 +22,7 @@ import frena.id.manager.ui.theme.frenaTheme
 import org.osmdroid.config.Configuration
 import kotlin.system.exitProcess
 
-//import frena.id.service.FRina-xService
+//import frena.id.service.FRinaxService
 
 class MainActivity : ComponentActivity() {
     private val tag = "MainActivity"
