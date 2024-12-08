@@ -1,5 +1,6 @@
 package frena.id.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import frena.id.data.*
@@ -9,7 +10,6 @@ import frena.id.data.name
 
 
 /// FRINA SERVICE
-
 enum class ServiceState {
     STARTED, STOPPED;
 
@@ -35,12 +35,12 @@ enum class ServiceState {
 
 fun setServiceState(context: Context, myEnum: ServiceState) {
     sharedPrefs.edit()
-    .putString("ServiceState", myEnum.toString())
+    .putString(key, myEnum.toString())
     .apply()
 }
 
 fun getServiceState(context: Context): ServiceState {
-    val myEnumString: String? = sharedPrefs.getString("ServiceState", ServiceState.STOPPED.toString())
+    val myEnumString: String? = sharedPrefs.getString(key, ServiceState.STOPPED.toString())
     return ServiceState.toServiceState(myEnumString)
 }
 
