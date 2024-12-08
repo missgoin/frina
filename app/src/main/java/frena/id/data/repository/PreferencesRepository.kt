@@ -13,6 +13,8 @@ import frena.id.data.key
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 //import frena.id.data.model.FRinaServiceState
+import android.content.SharedPreferences
+
 
 class PreferencesRepository(context: Context) {
 
@@ -28,32 +30,36 @@ class PreferencesRepository(context: Context) {
     private val gson = Gson()
 
 /// FRINA SERVICE
-    enum class ServiceState {
-        STARTED,
-        STOPPED
-    }
-    
-    fun setServiceState(context: Context, state: ServiceState) {
-        val serviceState = state.name
-        val json = gson.toJson(serviceState)
-        sharedPrefs.edit()
-            .putString(key, json)
-            .apply()
-    }
-    
-    
-        
-    fun getServiceState(context: Context): ServiceState {
-        val json = sharedPrefs.getString(key, null) 
-        return if (json != null) {
-            gson.fromJson(json, ServiceState.STOPPED.name)
-        } else {
-            null
+
+enum class ServiceState {
+    STARTED, STOPPED;
+
+    companion object {
+        fun toServiceState(myEnumString: String): ServiceState {
+            return try {
+                valueOf(myEnumString)
+            } catch (ex: Exception) {
+                // For error cases
+                STOPPED
+            }
         }
-    }    
-        // ?: "ServiceState.STOPPED"
-//        return ServiceState.valueOf(value)
-//    }
+    }
+}
+
+
+
+fun setServiceState(context: Context, myEnum: ServiceState) {
+    val sp: SharedPreferences = context.getPreferences(Context.MODE_WORLD_READABLE)
+    val editor: SharedPreferences.Editor = sp.edit()
+    editor.putString("ServiceState", myEnum.toString())
+    editor.apply()
+}
+
+fun getServiceState(context: Context): ServiceState {
+    val sp: SharedPreferences = context.getPreferences(Context.MODE_WORLD_READABLE)
+    val myEnumString: String? = sp.getString("ServiceState", ServiceState.STOPPED.toString())
+    return ServiceState.toServiceState(myEnumString)
+}
     
 
     // gojek bypass reguler
