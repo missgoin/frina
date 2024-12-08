@@ -10,6 +10,7 @@ import android.os.PowerManager
 import android.os.SystemClock
 import android.provider.Settings
 import android.widget.Toast
+import frena.id.R
 
 import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
@@ -43,25 +44,29 @@ class FRinaxService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        startForegroundService()
-    }
-
-
-// This is triggered when another android component sends an Intent to this running service
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-// Do the work that the service needs to do here
-        When (intent?.action) {
-            Actions.START.toString() -> start()
-            Actions.STOP.toString() -> stopSelf()
-        }
-
-        return super.onStartCommand(intent, flags, startId)
+        startForeground()
     }
 
     enum class Actions {
         START, STOP
     }
+    
+// This is triggered when another android component sends an Intent to this running service
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        if (intent != null) {
+            val action = intent?.action
+            // Do the work that the service needs to do here
+            when (action) {
+                Actions.START.toString() -> start()
+                Actions.STOP.toString() -> stopSelf()
+            }
+            else {
+            }
+        }
+        return super.onStartCommand(intent, flags, startId)
+    }
+
 
     private fun start() {
 

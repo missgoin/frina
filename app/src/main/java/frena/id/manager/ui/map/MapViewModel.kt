@@ -5,6 +5,19 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.os.Binder
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import android.graphics.Color
+import android.os.IBinder
+import android.os.PowerManager
+import android.os.SystemClock
+import android.provider.Settings
+
 import android.app.Application
 import androidx.compose.runtime.*
 import androidx.lifecycle.AndroidViewModel
@@ -201,6 +214,32 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     // Clear AddToFavorites inputs
     fun clearAddToFavoritesInputs() {
         addToFavoritesState.value = FavoritesInputState() // Reset to the default state with empty fields
+    }
+    
+    
+        // Create the notification channel (required for Android 8.0 and above)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "ForegroundServiceChannelId",
+                "Foreground Service Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+        // service provided by Android Operating system to show notification outside of our app
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+        }
+    
+    fun SetService () {
+        Intent(applicationContext, FRinaxService::class.java).also{
+            it.action = FRinaxService.Actions.START.toString()
+            start(it)
+        }           
+        
+        Intent(applicationContext, FRinaxService::class.java).also{
+            it.action = FRinaxService.Actions.STOP.toString()
+            stopSelf(it)
+        }
+    
     }
     
 }

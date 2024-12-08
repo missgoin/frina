@@ -147,20 +147,16 @@ fun MapScreen(
                 FloatingActionButton(
                     onClick = {
                         if (isFabClickable) {
-                            mapViewModel.togglePlaying()                            
+                            mapViewModel.togglePlaying()
+                            mapViewModel.SetService() 
                             if (mapViewModel.isPlaying.value) {
-                            //    Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    Intent(applicationContext, FRinaxService::class.java).also{
-                                        it.action = FRinaxService.Actions.START.toString()
-                                        start(it)
-                                    }
+                                Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
+                                    start(it)
 
                             } else {
-                            //    Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    Intent(applicationContext, FRinaxService::class.java).also{
-                                        it.action = FRinaxService.Actions.STOP.toString()
-                                        stopSelf(it)
-                                    }
+                                Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
+                                    stopSelf(it)
+                                    
                             }
                         }
                         

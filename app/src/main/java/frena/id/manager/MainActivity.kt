@@ -50,18 +50,6 @@ class MainActivity : ComponentActivity() {
 
         var isXposedModuleEnabled = true
         
-        // Create the notification channel (required for Android 8.0 and above)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "ForegroundServiceChannelId",
-                "Foreground Service Channel",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-        // service provided by Android Operating system to show notification outside of our app
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-        }        
-
         // If the module is not enabled then the app won't have permission to use MODE_WORLD_READABLE.
         try {
             Configuration.getInstance().load(this, getPreferences(MODE_WORLD_READABLE))
