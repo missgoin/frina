@@ -59,7 +59,7 @@
             android:value="true" />
             
         <service
-            android:name=".service.FRina-xService"
+            android:name=".service.FRinaxService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false"
