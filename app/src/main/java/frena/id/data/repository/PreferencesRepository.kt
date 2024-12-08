@@ -3,8 +3,6 @@ package frena.id.data.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
-//import android.content.SharedPreferences
-
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -14,9 +12,7 @@ import frena.id.data.model.LastClickedLocation
 import frena.id.data.key
 import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
-import frena.id.data.model.FRinaServiceState
-
-
+//import frena.id.data.model.FRinaServiceState
 
 class PreferencesRepository(context: Context) {
 
