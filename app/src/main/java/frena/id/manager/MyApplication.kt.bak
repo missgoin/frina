@@ -32,7 +32,6 @@ import androidx.core.app.NotificationManagerCompat
 import android.content.ComponentName
 
 
-
 Class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
