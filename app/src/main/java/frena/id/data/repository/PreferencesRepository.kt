@@ -46,7 +46,7 @@ class PreferencesRepository(context: Context) {
     fun getServiceState(context: Context): ServiceState {
         val json = sharedPrefs.getString(key, null) 
         return if (json != null) {
-            gson.fromJson(json, ServiceState::class.java)
+            gson.fromJson(json, ServiceState.STOPPED.name)
         } else {
             null
         }
