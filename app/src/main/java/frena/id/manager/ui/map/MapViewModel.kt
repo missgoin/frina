@@ -43,10 +43,10 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferencesRepository = PreferencesRepository(application)
     
-    private var shouldUnbind: Boolean = false
-    //private var positioningService = HEREBackgroundPositioningService()
-    private lateinit var context: Context
-    private lateinit var activity: Activity
+    var shouldUnbind: Boolean = false
+    var HERE = HEREBackgroundPositioningService()
+    var context: Context
+    var activity: Activity
 
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
@@ -75,8 +75,8 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
         get() = lastClickedLocation.value != null
 
     // Toggle the play/stop status
-    fun togglePlaying() {
-        HEREBackgroundPositioningService().setStateRunning()
+    fun togglePlaying() {        
+        HERE.setStateRunning()
         isPlaying.value = !isPlaying.value
         if (!isPlaying.value) {
             updateClickedLocation(null)
@@ -239,7 +239,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     
 private val connection = object : ServiceConnection {
     override fun onServiceConnected(className: ComponentName, service: IBinder) {
-        positioningService = (service as HEREBackgroundPositioningService.LocalBinder).getService()
+        positioningService = HERE.LocalBinder.getService()
         positioningService.registerListener(object : BackgroundServiceListener {
             override fun onStateUpdate(state: HEREBackgroundPositioningService.State) {
               //  Log.i(TAG, "onStateUpdate: $state")
