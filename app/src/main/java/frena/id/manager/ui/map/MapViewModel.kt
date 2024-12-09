@@ -4,6 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.app.Activity
+import android.app.Dialog
+import android.content.ComponentName
+import android.content.DialogInterface
+import android.content.ServiceConnection
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -36,6 +41,11 @@ import frena.id.service.cinta
 class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferencesRepository = PreferencesRepository(application)
+    
+    private var shouldUnbind: Boolean = false
+    private lateinit var positioningService: HEREBackgroundPositioningService
+    private lateinit var context: Context
+    private lateinit var activity: Activity
 
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
@@ -68,8 +78,10 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
         isPlaying.value = !isPlaying.value
         if (!isPlaying.value) {
             updateClickedLocation(null)
-            setStateRunning()
-        }
+            positioningService.startForegroundService()
+        } else {
+            positioningService.stopForegroundService()
+            }
         preferencesRepository.saveIsPlaying(isPlaying.value)
     }
 
@@ -219,8 +231,64 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     fun clearAddToFavoritesInputs() {
         addToFavoritesState.value = FavoritesInputState() // Reset to the default state with empty fields
     }
+
+
     
     
+private val connection = object : ServiceConnection {
+    override fun onServiceConnected(className: ComponentName, service: IBinder) {
+        positioningService = (service as HEREBackgroundPositioningService.LocalBinder).getService()
+        positioningService.registerListener(object : BackgroundServiceListener {
+            override fun onStateUpdate(state: HEREBackgroundPositioningService.State) {
+                Log.i(TAG, "onStateUpdate: $state")
+            }
+
+            override fun togglePlaying() {
+                preferencesRepository.saveIsPlaying(isPlaying.value)
+            }
+        })
+    }
+
+    override fun onServiceDisconnected(className: ComponentName) {
+        positioningService = null
+    }
+}
+
+fun startForegroundService() {
+    // Starts service and connect a binder.
+    HEREBackgroundPositioningService.start(context)
+    openBinder()
+}
+
+fun stopForegroundService() {
+    // Stops service and closes binder.
+    HEREBackgroundPositioningService.stop(context)
+    closeBinder()
+}
+
+private fun openBinder() {
+    val intent = Intent(activity, HEREBackgroundPositioningService::class.java)
+    if (activity.bindService(intent, connection, Context.BIND_NOT_FOREGROUND)) {
+        shouldUnbind = true
+    } else {
+        createErrorDialog(R.string.dialog_msg_service_connection_failed, android.R.string.ok) { dialog, _ ->
+            dialog.dismiss()
+            activity.finish()
+        }.show()
+    }
+}
+
+private fun closeBinder() {
+    if (shouldUnbind) {
+        activity.unbindService(connection)
+        shouldUnbind = false
+    }
+}
+
+private fun createErrorDialog(messageId: Int, buttonId: Int, clickListener: DialogInterface.OnClickListener): Dialog {
+    val builder = android.app.AlertDialog.Builder(context)
+    return builder.setMessage(messageId).setPositiveButton(buttonId, clickListener).create()
+}
 
     
     

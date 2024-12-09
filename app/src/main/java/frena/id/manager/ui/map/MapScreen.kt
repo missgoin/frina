@@ -1,7 +1,7 @@
 package frena.id.manager.ui.map
 
 import frena.id.manager.MainActivity
-import frena.id.service.FRinaxService
+import frena.id.service.cinta
 
 import android.os.Bundle
 import android.util.Log
@@ -148,14 +148,11 @@ fun MapScreen(
                     onClick = {
                         if (isFabClickable) {
                             mapViewModel.togglePlaying()
-                            mapViewModel.SetService() 
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    start(it)
 
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    stopSelf(it)
                                     
                             }
                         }

@@ -88,7 +88,7 @@ override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 override fun onDestroy() {
     super.onDestroy()
     // The service is no longer used and is being destroyed
-    stopLocating()
+    if (PreferencesUtil.getIsPlaying() != true) return
     running = false
 }
 
@@ -103,17 +103,18 @@ private val binder = LocalBinder()
 // Returns start flags, which will be passed to OS
 private fun startForegroundService(): Int {
     notificationUtils.setupNotificationChannel()
-    setStateValue(State.STARTING)
+    setStateValue(State.RUNNING)
     startForeground(
         NotificationUtils.getNotificationId(),
         notificationUtils.createNotification(
             R.drawable.update_notification_status_bar,
-            R.string.status_yellow_title,
-            R.string.status_yellow
+            R.string.status_green_title,
+            R.string.status_green
         )
     )
-    handleConsent()
-    if (!startLocating()) {
+  //  handleConsent()
+ //   if (!startLocating()) {
+      if (PreferencesUtil.getIsPlaying() != true) {
         setStateStopped()
         stopSelf()
     }
