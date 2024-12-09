@@ -44,7 +44,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     private val preferencesRepository = PreferencesRepository(application)
     
     private var shouldUnbind: Boolean = false
-    private var positioningService = HEREBackgroundPositioningService()
+    //private var positioningService = HEREBackgroundPositioningService()
     private lateinit var context: Context
     private lateinit var activity: Activity
 
@@ -76,13 +76,13 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     // Toggle the play/stop status
     fun togglePlaying() {
-        positioningService.setStateRunning()
+        HEREBackgroundPositioningService().setStateRunning()
         isPlaying.value = !isPlaying.value
         if (!isPlaying.value) {
             updateClickedLocation(null)
-            positioningService.startForegroundService()
+            startForegroundService()
         } else {
-            positioningService.stopForegroundService()
+            stopForegroundService()
             }
         preferencesRepository.saveIsPlaying(isPlaying.value)
     }
@@ -258,13 +258,13 @@ private val connection = object : ServiceConnection {
 
 fun startForegroundService() {
     // Starts service and connect a binder.
-    positioningService.start(context)
+    HEREBackgroundPositioningService().start(context)
     openBinder()
 }
 
 fun stopForegroundService() {
     // Stops service and closes binder.
-    positioningService.stop(context)
+    HEREBackgroundPositioningService().stop(context)
     closeBinder()
 }
 
