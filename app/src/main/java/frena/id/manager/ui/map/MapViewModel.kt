@@ -76,6 +76,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     // Toggle the play/stop status
     fun togglePlaying() {
+        positioningService.setStateRunning()
         isPlaying.value = !isPlaying.value
         if (!isPlaying.value) {
             updateClickedLocation(null)
