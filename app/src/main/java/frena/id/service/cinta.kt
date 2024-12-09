@@ -22,6 +22,7 @@ import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
+import frena.id.xposed.utils.PreferencesUtil
 
 import java.util.List
 
@@ -80,7 +81,7 @@ fun stop(context: Context) {
 override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     // The service is starting, due to a call to startService()
     running = true
-    val contentIntent = intent?.getParcelableExtra<PendingIntent>(KEY_CONTENT_INTENT)
+    val contentIntent = intent.getParcelableExtra<PendingIntent>(KEY_CONTENT_INTENT)
     notificationUtils = NotificationUtils(applicationContext, contentIntent)
     return startForegroundService()
 }
