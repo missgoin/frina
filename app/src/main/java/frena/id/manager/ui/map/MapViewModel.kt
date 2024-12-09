@@ -42,11 +42,11 @@ import frena.id.service.NotificationUtils
 class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferencesRepository = PreferencesRepository(application)
+    private val HERE = HEREBackgroundPositioningService(service)
     
     var shouldUnbind: Boolean = false
-    var HERE = HEREBackgroundPositioningService()
-    var context: Context
-    var activity: Activity
+    lateinit var context: Context
+    lateinit var activity: Activity
 
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
@@ -258,13 +258,13 @@ private val connection = object : ServiceConnection {
 
 fun startForegroundService() {
     // Starts service and connect a binder.
-    HEREBackgroundPositioningService().start(context)
+    HERE.start(context)
     openBinder()
 }
 
 fun stopForegroundService() {
     // Stops service and closes binder.
-    HEREBackgroundPositioningService().stop(context)
+    HERE.stop(context)
     closeBinder()
 }
 
