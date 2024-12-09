@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
 import frena.id.service.cinta
+import frena.id.service.NotificationUtils
 
 
 class MapViewModel(application: Application) : AndroidViewModel(application) {
@@ -43,7 +44,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     private val preferencesRepository = PreferencesRepository(application)
     
     private var shouldUnbind: Boolean = false
-    private lateinit var positioningService: HEREBackgroundPositioningService
+    private lateinit var positioningService: HEREBackgroundPositioningService()
     private lateinit var context: Context
     private lateinit var activity: Activity
 
@@ -240,7 +241,7 @@ private val connection = object : ServiceConnection {
         positioningService = (service as HEREBackgroundPositioningService.LocalBinder).getService()
         positioningService.registerListener(object : BackgroundServiceListener {
             override fun onStateUpdate(state: HEREBackgroundPositioningService.State) {
-                Log.i(TAG, "onStateUpdate: $state")
+              //  Log.i(TAG, "onStateUpdate: $state")
             }
 
             override fun togglePlaying() {
@@ -256,13 +257,13 @@ private val connection = object : ServiceConnection {
 
 fun startForegroundService() {
     // Starts service and connect a binder.
-    HEREBackgroundPositioningService.start(context)
+    positioningService.start(context)
     openBinder()
 }
 
 fun stopForegroundService() {
     // Stops service and closes binder.
-    HEREBackgroundPositioningService.stop(context)
+    positioningService.stop(context)
     closeBinder()
 }
 
