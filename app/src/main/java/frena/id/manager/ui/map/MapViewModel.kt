@@ -44,7 +44,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     private val preferencesRepository = PreferencesRepository(application)
     
     private var shouldUnbind: Boolean = false
-    private lateinit var positioningService: HEREBackgroundPositioningService()
+    private var positioningService = HEREBackgroundPositioningService()
     private lateinit var context: Context
     private lateinit var activity: Activity
 
