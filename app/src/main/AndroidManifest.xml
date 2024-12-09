@@ -58,7 +58,7 @@
             android:value="true" />
             
         <service
-            android:name=".service.FRinaxService"
+            android:name=".service.cinta"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false"
