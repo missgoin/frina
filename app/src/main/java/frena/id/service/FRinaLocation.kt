@@ -2,7 +2,6 @@ package frena.id.service
 
 import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
-import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.data.*
@@ -34,6 +33,18 @@ import android.provider.Settings
 import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
+
+import android.app.Application
+import androidx.compose.runtime.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import frena.id.data.model.FavoriteLocation
+import frena.id.data.repository.PreferencesRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import org.osmdroid.util.GeoPoint
 
 class FRinaLocation : Service(), LocationUpdatesCallBack {
     private val TAG = FRinaLocation::class.java.simpleName
