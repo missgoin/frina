@@ -35,18 +35,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
-import frena.id.service.HEREBackgroundPositioningService
-import frena.id.service.NotificationUtils
+//import frena.id.service.HEREBackgroundPositioningService
+//import frena.id.service.NotificationUtils
 
 
 class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferencesRepository = PreferencesRepository(application)
-    private val HERE = HEREBackgroundPositioningService()
-    
-    var shouldUnbind: Boolean = false
-    lateinit var context: Context
-    lateinit var activity: Activity
 
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
@@ -76,14 +71,11 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     // Toggle the play/stop status
     fun togglePlaying() {        
-        HERE.setStateRunning()
         isPlaying.value = !isPlaying.value
         if (!isPlaying.value) {
             updateClickedLocation(null)
-            startForegroundService()
-        } else {
-            stopForegroundService()
-            }
+
+        }
         preferencesRepository.saveIsPlaying(isPlaying.value)
     }
 
@@ -236,62 +228,6 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
 
     
-    
-private val connection = object : ServiceConnection {
-    override fun onServiceConnected(className: ComponentName, service: IBinder) {
-        positioningService = HERE.LocalBinder().getService()
-        positioningService.registerListener(object : BackgroundServiceListener {
-            override fun onStateUpdate(state: HEREBackgroundPositioningService.State) {
-              //  Log.i(TAG, "onStateUpdate: $state")
-            }
-
-            fun togglePlaying() {
-                preferencesRepository.saveIsPlaying(isPlaying.value)
-            }
-        })
-    }
-
-    override fun onServiceDisconnected(className: ComponentName) {
-        positioningService = null
-    }
-}
-
-fun startForegroundService() {
-    // Starts service and connect a binder.
-    HERE.start(context)
-    openBinder()
-}
-
-fun stopForegroundService() {
-    // Stops service and closes binder.
-    HERE.stop(context)
-    closeBinder()
-}
-
-private fun openBinder() {
-    val intent = Intent(activity, HEREBackgroundPositioningService::class.java)
-    if (activity.bindService(intent, connection, Context.BIND_NOT_FOREGROUND)) {
-        shouldUnbind = true
-    } else {
-        createErrorDialog(R.string.dialog_msg_service_connection_failed, android.R.string.ok) { dialog, _ ->
-            dialog.dismiss()
-            activity.finish()
-        }.show()
-    }
-}
-
-private fun closeBinder() {
-    if (shouldUnbind) {
-        activity.unbindService(connection)
-        shouldUnbind = false
-    }
-}
-
-private fun createErrorDialog(messageId: Int, buttonId: Int, clickListener: DialogInterface.OnClickListener): Dialog {
-    val builder = android.app.AlertDialog.Builder(context)
-    return builder.setMessage(messageId).setPositiveButton(buttonId, clickListener).create()
-}
-
     
     
     

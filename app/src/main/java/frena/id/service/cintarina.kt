@@ -17,13 +17,14 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 import frena.id.manager.MainActivity
+import frena.id.manager.MyApp
 import frena.id.manager.ui.map.*
 import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.R
 import frena.id.xposed.utils.PreferencesUtil
-
+import frena.id.xposed.utils.LocationUtil
 import java.util.List
 
 
@@ -41,7 +42,7 @@ class LocationService : Service() {
         super.onCreate()
         locationClient = DefaultLocationClient(
             applicationContext,
-            LocationServices.getFusedLocationProviderClient(applicationContext)
+            LocationUtil.createFakeLocation()
         )
     }
 
@@ -68,11 +69,11 @@ class LocationService : Service() {
             .setOngoing(true)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        locationClient.getLocationUpdates(10000L)
+        LocationUtil.UpdateLocation()
             .catch { e -> e.printStackTrace() }
             .onEach { location ->
                 val updatedNotification = notification.setContentText(
-                    "Location: (${location.latitude}, ${location.longitude})"
+                    "Location: (${latitude}, ${longitude})"
                 )
                 notificationManager.notify(1, updatedNotification.build())
             }

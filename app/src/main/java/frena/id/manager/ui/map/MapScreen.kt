@@ -1,7 +1,7 @@
 package frena.id.manager.ui.map
 
 import frena.id.manager.MainActivity
-import frena.id.service.HEREBackgroundPositioningService
+//import frena.id.service.HEREBackgroundPositioningService
 
 import android.os.Bundle
 import android.util.Log
