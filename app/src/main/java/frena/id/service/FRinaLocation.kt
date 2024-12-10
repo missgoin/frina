@@ -42,7 +42,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     private val TAG = FRinaLocation::class.java.simpleName
 
     //private lateinit var locationUtil: LocationUtil
-    private var locationUtil = LocationUtil(application)
+    private val locationUtil = LocationUtil(application)
     private var notification: NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
 
@@ -108,8 +108,8 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     override fun onLocationUpdate() {
         //PreferencesUtil.getUseRandomize() == true
         locationUtil.updateLocation()
-        val latitude = it.latitude
-        val longitude = it.longitude
+        val latitude = latitude
+        val longitude = longitude
         val updatedNotification = notification?.setContentText(
             "Coordinate: (${latitude}, ${longitude})"
         )
