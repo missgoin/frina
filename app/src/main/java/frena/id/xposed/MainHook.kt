@@ -41,8 +41,8 @@ class MainHook : IXposedHookLoadPackage {
 
             GojekUtil.gojekVersionCode(lpparam)
             //GojekApiHooks().hookBypassReguler(lpparam)
-            //GojekApiHooks().hookGojekVirtual(lpparam)            
-            GojekApiHooks().hookGojekLocation(lpparam)
+            GojekApiHooks().hookGojekVirtual(lpparam)            
+            //GojekApiHooks().hookGojekLocation(lpparam)
             GojekApiHooks().hookServerLocationManager(lpparam)
 
         } else {

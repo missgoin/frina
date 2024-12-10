@@ -73,29 +73,64 @@ class GojekApiHooks{
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
             
-            val gojekcourirClass = XposedHelpers.findClass("com.gojek.driver.location.ping.courier.model.CourierPingRequestProto\$CourierPingRequest", lpparam.classLoader)            
-                        
+            val gojeklocationClass = XposedHelpers.findClass("android.location.Location", lpparam.classLoader)
+            
             XposedHelpers.findAndHookMethod(
-                gojekcourirClass,
+                gojeklocationClass,
                 "getLatitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
-                        param.result =  LocationUtil.latitude
-                                               
-                     //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
+                    //    XposedBridge.log("$tag Leaving method getLatitude()")
+                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
+                        param.result = LocationUtil.latitude
+                    //    XposedBridge.log("\t Modified to: ${LocationUtil.latitude}")
                     }
                 })
 
             XposedHelpers.findAndHookMethod(
-                gojekcourirClass,
+                gojeklocationClass,
                 "getLongitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {                       
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getLongitude()")
+                    //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
                         param.result =  LocationUtil.longitude
-                                               
-                    //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
+                    //    XposedBridge.log("\t Modified to: ${LocationUtil.longitude}")
+                    }
+                })
+
+            XposedHelpers.findAndHookMethod(
+                gojeklocationClass,
+                "getAccuracy",
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        LocationUtil.updateLocation()
+                    //    XposedBridge.log("$tag Leaving method getAccuracy()")
+                    //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
+                        if (PreferencesUtil.getUseAccuracy() == true) {
+                            param.result =  LocationUtil.accuracy
+                    //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
+                        }
+                    }
+                })
+                    
+            val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", lpparam.classLoader)
+           
+            XposedHelpers.findAndHookMethod(
+                gojeklocationManagerClass,
+                "getLastKnownLocation",
+                String::class.java,
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                    //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
+                    //    XposedBridge.log("\t Original location: ${param.result as? Location}")
+                        val provider = param.args[0] as String
+                    //    XposedBridge.log("\t Requested data from: $provider")
+                        val fakeLocation =  LocationUtil.createFakeLocation(provider = provider)
+                        param.result = fakeLocation
+                    //    XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
                 
