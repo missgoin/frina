@@ -46,7 +46,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     override fun onCreate() {
         super.onCreate()
       //  locationUtil = LocationUtil()
-        mapViewModel.updateClickedLocation()
+        mapViewModel.updateClickedLocation(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -68,7 +68,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
 
     private fun startService() {
-        mapViewModel.updateClickedLocation()
+        mapViewModel.updateClickedLocation(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "geoPoint",
@@ -104,9 +104,9 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
     override fun onLocationUpdate() {
         //PreferencesUtil.getUseRandomize() == true
-        mapViewModel.updateClickedLocation()
-        val latitude = LocationUtil.latitude
-        val longitude = LocationUtil.longitude
+        mapViewModel.updateClickedLocation(this)
+        val latitude = it.latitude
+        val longitude = it.longitude
         val updatedNotification = notification?.setContentText(
             "Coordinate: ($latitude, $longitude)"
         )

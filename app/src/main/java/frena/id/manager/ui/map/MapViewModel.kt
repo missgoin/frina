@@ -86,7 +86,6 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     // Update the last clicked location
     fun updateClickedLocation(geoPoint: GeoPoint?) {
-        this.geoPoint = geoPoint
         lastClickedLocation.value = geoPoint
         geoPoint?.let {
             preferencesRepository.saveLastClickedLocation(
@@ -94,6 +93,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
                 it.longitude
             )
         } ?: preferencesRepository.clearLastClickedLocation()
+        this.geoPoint = geoPoint
     }
 
     fun addFavoriteLocation(favoriteLocation: FavoriteLocation) {
