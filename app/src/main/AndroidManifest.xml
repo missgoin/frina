@@ -59,7 +59,7 @@
             android:value="true" />
             
         <service
-            android:name=".service.FRinamodule"
+            android:name=".service.FRinaLocation"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false"
