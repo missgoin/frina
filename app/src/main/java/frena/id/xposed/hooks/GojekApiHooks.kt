@@ -73,13 +73,14 @@ class GojekApiHooks{
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
             
-            val gojeklocationClass = XposedHelpers.findClass("android.location.Location", lpparam.classLoader)
+            val gojeklocationClass = XposedHelpers.findClass("com.gojek.driver.location.CurrentLocation", lpparam.classLoader)
             
             XposedHelpers.findAndHookMethod(
                 gojeklocationClass,
-                "getLatitude",
+                "setAutoFocusEnable",
+                Double::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
+                    override fun afterHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
@@ -90,49 +91,17 @@ class GojekApiHooks{
 
             XposedHelpers.findAndHookMethod(
                 gojeklocationClass,
-                "getLongitude",
+                "PermissionActivity",
+                Double::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
+                    override fun afterHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
                         param.result =  LocationUtil.longitude
                     //    XposedBridge.log("\t Modified to: ${LocationUtil.longitude}")
                     }
-                })
-
-            XposedHelpers.findAndHookMethod(
-                gojeklocationClass,
-                "getAccuracy",
-                object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getAccuracy()")
-                    //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
-                        if (PreferencesUtil.getUseAccuracy() == true) {
-                            param.result =  LocationUtil.accuracy
-                    //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
-                        }
-                    }
-                })
-                    
-            val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", lpparam.classLoader)
-           
-            XposedHelpers.findAndHookMethod(
-                gojeklocationManagerClass,
-                "getLastKnownLocation",
-                String::class.java,
-                object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                    //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
-                    //    XposedBridge.log("\t Original location: ${param.result as? Location}")
-                        val provider = param.args[0] as String
-                    //    XposedBridge.log("\t Requested data from: $provider")
-                        val fakeLocation =  LocationUtil.createFakeLocation(provider = provider)
-                        param.result = fakeLocation
-                    //    XposedBridge.log("\t Fake location: $fakeLocation")
-                    }
-                })
+                })                                
                 
             val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
 
