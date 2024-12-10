@@ -41,7 +41,8 @@ import java.util.*
 class FRinaLocation : Service(), LocationUpdatesCallBack {
     private val TAG = FRinaLocation::class.java.simpleName
 
-    private lateinit var locationUtil: LocationUtil
+    //private lateinit var locationUtil: LocationUtil
+    private var locationUtil = LocationUtil(application)
     private var notification: NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
 
@@ -85,7 +86,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
             .setContentTitle("Tracking location...")
             .setContentText("Searching...")
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setOngoing(true)
 
         notificationManager =
@@ -107,6 +108,8 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     override fun onLocationUpdate() {
         //PreferencesUtil.getUseRandomize() == true
         locationUtil.updateLocation()
+        val latitude = it.latitude
+        val longitude = it.longitude
         val updatedNotification = notification?.setContentText(
             "Coordinate: (${latitude}, ${longitude})"
         )
