@@ -6,6 +6,7 @@ import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.data.*
+import frena.id.R
 import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.LocationUtil
@@ -26,7 +27,6 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.location.Location
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
@@ -70,7 +70,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
 
     private fun startService() {
-        locationUtil.updateLocation(applicationContext)
+        locationUtil.updateLocation()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "location",
@@ -105,8 +105,8 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 //    }
 
     override fun onLocationUpdate() {
-        PreferencesUtil.getUseRandomize() == true
-        locationUtil.updateLocation(applicationContext)
+        //PreferencesUtil.getUseRandomize() == true
+        locationUtil.updateLocation()
         val updatedNotification = notification?.setContentText(
             "Coordinate: (${latitude}, ${longitude})"
         )
