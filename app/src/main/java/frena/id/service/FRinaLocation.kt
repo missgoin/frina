@@ -7,10 +7,8 @@ import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.data.*
 import frena.id.R
-import frena.id.xposed.hooks.GojekApiHooks
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.xposed.utils.LocationUtil
-import frena.id.xposed.utils.GojekUtil
 
 import android.util.Log
 import android.app.Notification
@@ -36,20 +34,18 @@ import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-
 class FRinaLocation : Service(), LocationUpdatesCallBack {
     private val TAG = FRinaLocation::class.java.simpleName
 
     //private lateinit var locationUtil: LocationUtil
-    private val locationUtil = LocationUtil(application)
+   // private val locationUtil = LocationUtil(application)
     private var notification: NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
 
     override fun onCreate() {
         super.onCreate()
-        locationUtil = LocationUtil()
-        locationUtil.createFakeLocation(this)
+      //  locationUtil = LocationUtil()
+        LocationUtil.createFakeLocation(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -71,7 +67,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
 
     private fun startService() {
-        locationUtil.updateLocation()
+        LocationUtil.updateLocation()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "location",
@@ -96,7 +92,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     }
 
     private fun stopService() {
-        locationUtil.createFakeLocation(null)
+        LocationUtil.createFakeLocation(null)
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
@@ -107,11 +103,11 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
     override fun onLocationUpdate() {
         //PreferencesUtil.getUseRandomize() == true
-        locationUtil.updateLocation()
-        val latitude = latitude
-        val longitude = longitude
+        LocationUtil.updateLocation()
+        val latitude = LocationUtil.latitude
+        val longitude = LocationUtil.longitude
         val updatedNotification = notification?.setContentText(
-            "Coordinate: (${latitude}, ${longitude})"
+            "Coordinate: ($latitude, $longitude)"
         )
         notificationManager?.notify(1, updatedNotification?.build())
     }
