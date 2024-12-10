@@ -102,11 +102,11 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 //        Log.d(TAG, message)
 //    }
 
-    override fun onLocationUpdate() {
+    override fun onLocationUpdate(geoPoint: GeoPoint) {
         //PreferencesUtil.getUseRandomize() == true
-        mapViewModel.updateClickedLocation(this)
-        val latitude = it.latitude
-        val longitude = it.longitude
+       // mapViewModel.updateClickedLocation()
+        val latitude = LocationUtil.latitude
+        val longitude = LocationUtil.longitude
         val updatedNotification = notification?.setContentText(
             "Coordinate: ($latitude, $longitude)"
         )

@@ -15,7 +15,7 @@ import frena.id.xposed.utils.GojekUtil
 
 
 interface LocationUpdatesCallBack {
-    fun onLocationUpdate()
+    fun onLocationUpdate(geoPoint: GeoPoint)
  //   fun locationException(message: String)
 }
 
