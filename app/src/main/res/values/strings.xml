@@ -1,13 +1,4 @@
 <resources>
     <string name="app_name">frena</string>
     
-    <string name="status_grey">Connecting</string>
-    <string name="status_grey_title">Connecting to the service</string>
-    <string name="status_green_title">Running</string>
-    <string name="status_green">Positioning service is active</string>
-    <string name="status_yellow_title">Setup</string>
-    <string name="status_yellow">Positioning service is setting up</string>
-    <string name="status_red_title">Stopped</string>
-    <string name="status_red">Positioning service is not running</string>
-
 </resources>
