@@ -25,6 +25,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.location.Location
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
@@ -38,14 +39,14 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     private val TAG = FRinaLocation::class.java.simpleName
 
     //private lateinit var locationUtil: LocationUtil
-   // private val locationUtil = LocationUtil(application)
+    private val mapViewModel = MapViewModel(application)
     private var notification: NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
 
     override fun onCreate() {
         super.onCreate()
       //  locationUtil = LocationUtil()
-        LocationUtil.createFakeLocation(this)
+        mapViewModel.updateClickedLocation()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -67,18 +68,18 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
 
     private fun startService() {
-        LocationUtil.updateLocation()
+        mapViewModel.updateClickedLocation()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                "location",
-                "Location",
+                "geoPoint",
+                "GeoPoint",
                 NotificationManager.IMPORTANCE_HIGH
             )
             val notificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-        notification = NotificationCompat.Builder(this, "location")
+        notification = NotificationCompat.Builder(this, "geoPoint")
             .setContentTitle("Tracking location...")
             .setContentText("Searching...")
             .setSmallIcon(R.drawable.ic_launcher_background)
@@ -92,7 +93,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
     }
 
     private fun stopService() {
-        LocationUtil.createFakeLocation(null)
+        mapViewModel.updateClickedLocation(null)
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
@@ -103,7 +104,7 @@ class FRinaLocation : Service(), LocationUpdatesCallBack {
 
     override fun onLocationUpdate() {
         //PreferencesUtil.getUseRandomize() == true
-        LocationUtil.updateLocation()
+        mapViewModel.updateClickedLocation()
         val latitude = LocationUtil.latitude
         val longitude = LocationUtil.longitude
         val updatedNotification = notification?.setContentText(
