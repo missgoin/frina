@@ -22,7 +22,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.frena"
-        tools:targetApi="31">
+        tools:targetApi="31"
+
+        >
                 
         <activity
             android:name=".manager.MainActivity"
@@ -58,7 +60,7 @@
             android:value="true" />
             
         <service
-            android:name=".service.cinta"
+            android:name=".service.HEREBackgroundPositioningService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false"

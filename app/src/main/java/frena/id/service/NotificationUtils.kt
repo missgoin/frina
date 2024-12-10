@@ -28,14 +28,10 @@ class NotificationUtils(private val context: Context, private val contentIntent:
 
     fun setupNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notification_channel_name = "FRina Location"
-            val notification_channel_description = "Location foreground service"
             val notificationChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
-                context.getText(R.string.notification_channel_name),
+                NOTIFICATION_CHANNEL_ID,                
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = context.getString(R.string.notification_channel_description)
                 lightColor = Color.YELLOW
                 enableLights(true)
                 enableVibration(false)

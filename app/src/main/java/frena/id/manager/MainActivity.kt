@@ -41,9 +41,6 @@ import android.widget.Toast
 class MainActivity : ComponentActivity() {
     private val tag = "MainActivity"
     
-    private val preferencesRepository = PreferencesRepository(application)
-
-
     @SuppressLint("WorldReadableFiles")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +73,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        
+        
+
+        
     }
     
 
