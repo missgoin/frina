@@ -29,7 +29,7 @@ class NotificationUtils(private val context: Context, private val contentIntent:
     fun setupNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,                
+                "FRina Foreground",                
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 lightColor = Color.YELLOW

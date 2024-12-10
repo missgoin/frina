@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
-import frena.id.service.cinta
+import frena.id.service.HEREBackgroundPositioningService
 import frena.id.service.NotificationUtils
 
 
