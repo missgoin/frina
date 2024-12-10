@@ -239,13 +239,13 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
     
 private val connection = object : ServiceConnection {
     override fun onServiceConnected(className: ComponentName, service: IBinder) {
-        positioningService = HERE.LocalBinder.getService()
+        positioningService = HERE.LocalBinder().getService()
         positioningService.registerListener(object : BackgroundServiceListener {
             override fun onStateUpdate(state: HEREBackgroundPositioningService.State) {
               //  Log.i(TAG, "onStateUpdate: $state")
             }
 
-            override fun togglePlaying() {
+            fun togglePlaying() {
                 preferencesRepository.saveIsPlaying(isPlaying.value)
             }
         })
