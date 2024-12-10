@@ -42,7 +42,7 @@ import frena.id.service.NotificationUtils
 class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferencesRepository = PreferencesRepository(application)
-    private val HERE = HEREBackgroundPositioningService(service)
+    private val HERE = HEREBackgroundPositioningService()
     
     var shouldUnbind: Boolean = false
     lateinit var context: Context

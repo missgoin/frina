@@ -38,8 +38,8 @@ class HEREBackgroundPositioningService : Service() {
     private val KEY_CONTENT_INTENT = "contentIntent"
     private var running: Boolean = false
     private lateinit var notificationUtils: NotificationUtils
-    private var serviceListener: BackgroundServiceListener? = null
-    private var serviceState: State = State.STOPPED
+    var serviceListener: BackgroundServiceListener? = null
+    var serviceState: State = State.STOPPED
 
 
     /**
@@ -98,11 +98,11 @@ override fun onBind(intent: Intent?): IBinder {
 }
 
 // This is the object that receives interactions from clients.
-private val binder = LocalBinder()
+val binder = LocalBinder()
 
 // Start foreground service.
 // Returns start flags, which will be passed to OS
-private fun startForegroundService(): Int {
+fun startForegroundService(): Int {
     notificationUtils.setupNotificationChannel()
     setStateValue(State.RUNNING)
     startForeground(
@@ -125,7 +125,7 @@ private fun startForegroundService(): Int {
 
 
 // Sets service state to STOPPED and updates notification.
-private fun setStateStopped() {
+fun setStateStopped() {
     if (!setStateValue(State.STOPPED)) {
         return
     }
@@ -138,7 +138,7 @@ private fun setStateStopped() {
 
 
 // Sets service state to RUNNING and updates notification.
-private fun setStateRunning() {
+fun setStateRunning() {
     if (!setStateValue(State.RUNNING)) {
         return
     }
@@ -150,7 +150,7 @@ private fun setStateRunning() {
 }
 
 // Set service state and report to registered listener if the state changes.
-private fun setStateValue(state: State): Boolean {
+fun setStateValue(state: State): Boolean {
     if (serviceState == state) {
         return false
     }
@@ -160,7 +160,7 @@ private fun setStateValue(state: State): Boolean {
 }
 
 // Reports service state to registered listener.
-private fun reportStateValue() {
+fun reportStateValue() {
     val listener = serviceListener
     listener?.onStateUpdate(serviceState)
 }
