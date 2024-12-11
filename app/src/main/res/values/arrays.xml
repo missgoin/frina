@@ -1,6 +1,7 @@
 <resources>
     <string-array name="xposedscope" >
-        <item>net.aleksandre.android.whereami</item>
-         <item>com.gojek.partner</item>
+        <item>android</item>
+        <item>com.gojek.partner</item>
+        <item>com.grabtaxi.driver2</item>
     </string-array>
 </resources>

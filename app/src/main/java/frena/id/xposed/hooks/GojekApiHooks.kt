@@ -7,7 +7,8 @@ import android.location.LocationRequest
 import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
-
+import frena.id.manager.ui.map.MapScreen
+import frena.id.manager.ui.map.MapViewModel
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
 
@@ -63,7 +64,35 @@ class GojekApiHooks{
         }
         
     }
+    
+    fun autokillGojek(lpparam: XC_LoadPackage.LoadPackageParam) {
 
+        try {
+            if (lpparam.packageName == "com.gojek.partner") {
+            
+            if (PreferencesUtil.getIsPlaying() != true) return
+            XposedBridge.log("$tag: initializing autokill service")
+            
+            val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
+            
+            XposedBridge.hookAllConstructors(
+                gojekautokillClass,
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                    
+                        MapViewModel.togglePlaying()
+                        val autokilled = MapViewModel.isPlaying.value(false)
+                        param.result = autokilled
+                            //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
+                        XposedBridge.log("$tag: autokilled success")
+                    }
+                })
+            }
+        } catch (e: Exception) {
+            XposedBridge.log("$tag: Error autokill service - ${e.message}")
+                }
+
+    }
 
     fun hookGojekVirtual(lpparam: XC_LoadPackage.LoadPackageParam) {
 
