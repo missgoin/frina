@@ -7,7 +7,6 @@ import android.location.LocationRequest
 import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
-import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
@@ -34,6 +33,7 @@ import java.lang.reflect.Field
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
+    private val mapViewModel = MapViewModel(application)
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
@@ -80,8 +80,8 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
-                        MapViewModel.togglePlaying()
-                        val autokilled = MapViewModel.isPlaying.value(false)
+                        mapViewModel.togglePlaying()
+                        val autokilled = mapViewModel.isPlaying.value(false)
                         param.result = autokilled
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
                         XposedBridge.log("$tag: autokilled success")
