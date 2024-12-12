@@ -44,8 +44,7 @@ import org.osmdroid.util.GeoPoint
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
-    
-    mapviewModel: MapViewModel
+    val mapviewModel = MapViewModel()
                
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
