@@ -44,7 +44,7 @@ import org.osmdroid.util.GeoPoint
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
-    private val mapViewModel = MapViewModel(application)
+   // private val mapViewModel = MapViewModel(application)
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
@@ -91,15 +91,17 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
-                        mapViewModel.togglePlaying()
+                        MapViewModel.togglePlaying()
                         val isPlaying = mutableStateOf(false)
-                        val autokilled = mapViewModel.isPlaying.value
+                        val autokilled = MapViewModel.isPlaying.value
                         //param.args[0] = false
                         param.result = autokilled
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
                         XposedBridge.log("$tag: autokilled success")
                     }
-                    if (PreferencesUtil.getIsPlaying() != true) return
+                    if (PreferencesUtil.getIsPlaying() != true) {
+                        return
+                    }
                 })
             }
         } catch (e: Exception) {
