@@ -44,8 +44,7 @@ import org.osmdroid.util.GeoPoint
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
-   // private val mapViewModel = MapViewModel(application)
-            
+               
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
     //    GojekUtil.gojekVersionCode()        
@@ -84,6 +83,9 @@ class GojekApiHooks{
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing autokill service")
             
+            val mapViewModel = MapViewModel(application)
+            val isPlaying = mutableStateOf(false)
+
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
             
             XposedBridge.hookAllConstructors(
@@ -91,16 +93,13 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
-                        MapViewModel.togglePlaying()
-                        val isPlaying = mutableStateOf(false)
+                        mapViewModel.togglePlaying()
+                        
                         val autokilled = MapViewModel.isPlaying.value
                         //param.args[0] = false
                         param.result = autokilled
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
                         XposedBridge.log("$tag: autokilled success")
-                    }
-                    if (PreferencesUtil.getIsPlaying() != true) {
-                        return
                     }
                 })
             }
