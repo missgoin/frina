@@ -30,10 +30,21 @@ import java.io.File
 import java.lang.reflect.Method
 import java.lang.reflect.Field
 
+import androidx.compose.runtime.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import frena.id.data.model.FavoriteLocation
+import frena.id.data.repository.PreferencesRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import org.osmdroid.util.GeoPoint
+
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
-    private val mapViewModel = MapViewModel()
+    private val mapViewModel = MapViewModel(application)
             
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
@@ -81,8 +92,9 @@ class GojekApiHooks{
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
                         mapViewModel.togglePlaying()
-                        val autokilled = mapViewModel.isPlaying.value(param.args[0] as? Boolean)
-                        param.args[0] = false
+                        val isPlaying = mutableStateOf(false)
+                        val autokilled = mapViewModel.isPlaying.value
+                        //param.args[0] = false
                         param.result = autokilled
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
                         XposedBridge.log("$tag: autokilled success")
