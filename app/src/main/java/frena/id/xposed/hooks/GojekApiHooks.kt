@@ -78,8 +78,6 @@ class GojekApiHooks{
     
     fun toggleplaying (mapviewModel: MapViewModel) {
         val isPlaying by mapviewModel.isPlaying
-    // Observe state from ViewModel
-        val togglePlaying by mapviewModel.togglePlaying()    
     }
     
     fun autokillGojek(lpparam: XC_LoadPackage.LoadPackageParam) {
@@ -88,8 +86,7 @@ class GojekApiHooks{
             if (lpparam.packageName == "com.gojek.partner") {
             
             if (PreferencesUtil.getIsPlaying() != true) return
-            XposedBridge.log("$tag: initializing autokill service")                        
-            
+            XposedBridge.log("$tag: initializing autokill service")
 
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
             
@@ -97,10 +94,9 @@ class GojekApiHooks{
                 gojekautokillClass,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                    
-                     
+ 
                         val isPlaying = mutableStateOf(false)
-                        val autokilled = togglePlaying.isPlaying.value
+                        val autokilled = isPlaying.value
                         //param.args[0] = false
                         param.result = autokilled
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
