@@ -8,6 +8,7 @@ import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 import frena.id.manager.ui.map.MapViewModel
+import frena.id.manager.ui.map.components.MapViewContainer
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
 
@@ -44,7 +45,7 @@ import org.osmdroid.util.GeoPoint
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
-    val mapviewModel = MapViewModel(togglePlaying)
+    val mapviewModel = MapViewModel.togglePlaying()
                
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
@@ -98,7 +99,7 @@ class GojekApiHooks{
                     
                         //mapviewModel.togglePlaying()
                         val isPlaying = mutableStateOf(false)
-                        val autokilled = mapviewModel.isPlaying.value
+                        val autokilled = isPlaying.value
                         //param.args[0] = false
                         param.result = autokilled
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
