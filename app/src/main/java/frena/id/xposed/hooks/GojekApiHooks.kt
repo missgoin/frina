@@ -45,8 +45,7 @@ import org.osmdroid.util.GeoPoint
 class GojekApiHooks{
     private val tag = "[FRina API.gp]"
     var versiGopartner : Int = 4186
-    val mapviewModel = MapViewModel.togglePlaying()
-               
+                   
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
     //    GojekUtil.gojekVersionCode()        
@@ -77,11 +76,15 @@ class GojekApiHooks{
         
     }
     
-    fun autokillGojek(lpparam: XC_LoadPackage.LoadPackageParam) {
-
+    fun toggleplaying (mapviewModel: MapViewModel) {
+        val isPlaying by mapviewModel.isPlaying
     // Observe state from ViewModel
-    val isPlaying by mapViewModel.isPlaying
+        val togglePlaying by mapviewModel.togglePlaying
 
+    
+    }
+    
+    fun autokillGojek(lpparam: XC_LoadPackage.LoadPackageParaml) {
 
         try {
             if (lpparam.packageName == "com.gojek.partner") {
@@ -97,7 +100,7 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                     
-                        //mapviewModel.togglePlaying()
+                        togglePlaying()
                         val isPlaying = mutableStateOf(false)
                         val autokilled = isPlaying.value
                         //param.args[0] = false
