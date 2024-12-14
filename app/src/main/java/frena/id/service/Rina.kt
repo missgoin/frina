@@ -46,13 +46,11 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
+class Rina (mapviewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
+    private val TAG = Rina::class.java.simpleName
 
-class Rina (mapviewModel: MapViewModel) : Service() {
-
- //   private lateinit var locationManager: LocationManager
- //   private val geocoder by lazy { Geocoder(this, Locale.getDefault()) }
- //   private var job: Job? = null
-    
+    private var notification: NotificationCompat.Builder? = null
+    private var notificationManager: NotificationManager? = null
     private val preferencesRepository = PreferencesRepository(application)
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
@@ -61,57 +59,83 @@ class Rina (mapviewModel: MapViewModel) : Service() {
 
     override fun onCreate() {
         super.onCreate()
-    //    locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+      //  locationUtil = LocationUtil()
+        mapviewModel.updateClickedLocation(GeoPoint)
     }
-
-    override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
-            Actions.START.toString() -> startForegroundServiceWithNotification()
-            Actions.STOP.toString() -> stopSelf()
+            ACTION_SERVICE_START -> startService()
+            ACTION_SERVICE_STOP -> stopService()
         }
-        return START_STICKY
+        return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun startForegroundServiceWithNotification() {
-        val notification = buildNotification("Starting location tracking...")
-        startForeground(NOTIFICATION_ID, notification)
-        lastclickedLocation()
-    }
-
-    private fun buildNotification(content: String) =
-        NotificationCompat.Builder(this, Rina.CHANNEL_ID)
-            .setContentTitle("Location Tracker")
-            .setContentText(content)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .build()
-
-
-    fun lastclickedLocation() {
-        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
-            GeoPoint(it.latitude, it.longitude)   
-    }
-
-
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-    //    locationManager.removeUpdates { }
-        stopSelf()
-        
+    override fun onBind(p0: Intent?): IBinder? {
+        return null
     }
 
     companion object {
-        const val NOTIFICATION_ID = 1
+        const val ACTION_SERVICE_START = "ACTION_START"
+        const val ACTION_SERVICE_STOP = "ACTION_STOP"
+    }
+    
+    fun lastclickedLocation() {
+        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
+            GeoPoint(it.latitude, it.longitude)  } 
     }
 
-    enum class Actions {
-        START, STOP
+    private fun startService() {
+        mapviewModel.updateClickedLocation(GeoPoint)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "geoPoint",
+                "GeoPoint",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+        notification = NotificationCompat.Builder(this, "geoPoint")
+            .setContentTitle("Tracking location...")
+            .setContentText("Searching...")
+            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setOngoing(true)
+
+        notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        startForeground(1, notification?.build())
     }
+
+    private fun stopService() {
+        mapviewModel.updateClickedLocation(null)
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
+    }
+
+//    override fun locationException(message: String) {
+//        Log.d(TAG, message)
+//    }
+
+
+    override fun onLocationUpdate() {
+        //PreferencesUtil.getUseRandomize() == true
+       // mapViewModel.updateClickedLocation()
+        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
+            GeoPoint(it.latitude, it.longitude)
+        }
+        val updatedNotification = notification?.setContentText(
+            "Coordinate: ($latitude, $longitude)"
+        )
+        notificationManager?.notify(1, updatedNotification?.build())
+    }
+
+
+
 }
-
 
 
 

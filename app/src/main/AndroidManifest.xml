@@ -23,7 +23,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.frena"
         tools:targetApi="31"
-        android:name=".manager.MyApplication"
         >
                 
         <activity

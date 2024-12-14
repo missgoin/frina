@@ -1,7 +1,7 @@
 package frena.id.manager.ui.map
 
 import frena.id.manager.MainActivity
-import frena.id.manager.MyApplication
+//import frena.id.manager.MyApplication
 import frena.id.service.Rina
 
 import android.os.Bundle
@@ -151,11 +151,11 @@ fun MapScreen(
                             mapViewModel.togglePlaying()
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
-                                    startLocationService()
+                                    
 
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    stopLocationService()
+                                    
                             }
                         }
                         
@@ -231,20 +231,6 @@ fun MapScreen(
         }
     }
     
-    
-    fun startLocationService() {
-        val startIntent = Intent(this, Rina::class.java).apply {
-            action = Rina.Actions.START.toString()
-        }
-        startService(startIntent)
-    }
-
-    fun stopLocationService() {
-        val stopIntent = Intent(this, Rina::class.java).apply {
-            action = Rina.Actions.STOP.toString()
-        }
-        startService(stopIntent)
-    }        
     
     
     
