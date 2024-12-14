@@ -46,7 +46,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
-class Rina (mapviewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
+class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     private val TAG = Rina::class.java.simpleName
 
     private var notification: NotificationCompat.Builder? = null
@@ -55,12 +55,13 @@ class Rina (mapviewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
     val userLocation = mutableStateOf<GeoPoint?>(null)
+    val updateClickedLocation by mapViewModel.updateClickedLocation
 
 
     override fun onCreate() {
         super.onCreate()
       //  locationUtil = LocationUtil()
-        mapviewModel.updateClickedLocation(GeoPoint)
+        updateClickedLocation(geoPoint: GeoPoint)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -86,7 +87,7 @@ class Rina (mapviewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     }
 
     private fun startService() {
-        mapviewModel.updateClickedLocation(GeoPoint)
+        updateClickedLocation(geoPoint: GeoPoint)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "geoPoint",
@@ -111,7 +112,7 @@ class Rina (mapviewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     }
 
     private fun stopService() {
-        mapviewModel.updateClickedLocation(null)
+        updateClickedLocation(null)
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
