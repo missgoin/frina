@@ -230,7 +230,7 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
 
     
     
-    
+
     
     
     

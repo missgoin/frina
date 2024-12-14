@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.frena"
         tools:targetApi="31"
+        android:name=".manager.MyApplication"
         >
                 
         <activity
@@ -59,7 +60,7 @@
             android:value="true" />
             
         <service
-            android:name=".service.FRinaLocation"
+            android:name=".service.Rina"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false"

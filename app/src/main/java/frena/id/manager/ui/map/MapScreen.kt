@@ -1,7 +1,8 @@
 package frena.id.manager.ui.map
 
 import frena.id.manager.MainActivity
-//import frena.id.service.HEREBackgroundPositioningService
+import frena.id.manager.MyApplication
+import frena.id.service.Rina
 
 import android.os.Bundle
 import android.util.Log
@@ -61,7 +62,7 @@ fun MapScreen(
     // BackHandler to close the drawer when open
     BackHandler(enabled = drawerState.isOpen) {
         scope.launch { drawerState.close() }
-    }        
+    }
 
     // Scaffold with drawer
     ModalNavigationDrawer(
@@ -150,10 +151,11 @@ fun MapScreen(
                             mapViewModel.togglePlaying()
                             if (mapViewModel.isPlaying.value) {
                                 Toast.makeText(context, "Location Start", Toast.LENGTH_SHORT).show()
+                                    startLocationService()
 
                             } else {
                                 Toast.makeText(context, "Location Stop", Toast.LENGTH_SHORT).show()
-                                    
+                                    stopLocationService()
                             }
                         }
                         
@@ -228,5 +230,23 @@ fun MapScreen(
             )
         }
     }
+    
+    
+    private fun startLocationService() {
+        val startIntent = Intent(this, Rina::class.java).apply {
+            action = Rina.Actions.START.toString()
+        }
+        startService(startIntent)
+    }
+
+    private fun stopLocationService() {
+        val stopIntent = Intent(this, Rina::class.java).apply {
+            action = Rina.Actions.STOP.toString()
+        }
+        startService(stopIntent)
+    }        
+    
+    
+    
 }
 

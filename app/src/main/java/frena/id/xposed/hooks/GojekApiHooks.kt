@@ -76,10 +76,6 @@ class GojekApiHooks{
         
     }
     
-    fun toggleplaying (mapviewModel: MapViewModel) {
-        val isPlaying by mapviewModel.isPlaying
-    }
-    
     fun autokillGojek(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         try {

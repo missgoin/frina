@@ -32,21 +32,26 @@ import androidx.core.app.NotificationManagerCompat
 import android.content.ComponentName
 
 
-class MyApp : Application() {
+class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                "location",
-                "Location",
-                NotificationManager.IMPORTANCE_HIGH
+                CHANNEL_ID,
+                "Location Tracking",
+                NotificationManager.IMPORTANCE_LOW // Low importance to avoid disturbing the user
             )
-
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+            val manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
         }
     }
+
+    companion object {
+        const val CHANNEL_ID = "location_channel"
+    }
 }
-
-
 
