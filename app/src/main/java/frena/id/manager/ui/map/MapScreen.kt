@@ -232,14 +232,14 @@ fun MapScreen(
     }
     
     
-    private fun startLocationService() {
+    fun startLocationService() {
         val startIntent = Intent(this, Rina::class.java).apply {
             action = Rina.Actions.START.toString()
         }
         startService(startIntent)
     }
 
-    private fun stopLocationService() {
+    fun stopLocationService() {
         val stopIntent = Intent(this, Rina::class.java).apply {
             action = Rina.Actions.STOP.toString()
         }

@@ -77,26 +77,20 @@ class Rina (mapviewModel: MapViewModel) : Service() {
     private fun startForegroundServiceWithNotification() {
         val notification = buildNotification("Starting location tracking...")
         startForeground(NOTIFICATION_ID, notification)
-        updateClickedLocation()
+        lastclickedLocation()
     }
 
     private fun buildNotification(content: String) =
-        NotificationCompat.Builder(this, LocationTrackerApp.CHANNEL_ID)
+        NotificationCompat.Builder(this, Rina.CHANNEL_ID)
             .setContentTitle("Location Tracker")
             .setContentText(content)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
 
 
-    fun updateClickedLocation(geoPoint: GeoPoint?) {
-        lastClickedLocation.value = geoPoint
-        val geoPoint = geoPoint
-        geoPoint?.let {
-            preferencesRepository.saveLastClickedLocation(
-                it.latitude,
-                it.longitude
-            )
-        } ?: preferencesRepository.clearLastClickedLocation()    
+    fun lastclickedLocation() {
+        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
+            GeoPoint(it.latitude, it.longitude)   
     }
 
 
