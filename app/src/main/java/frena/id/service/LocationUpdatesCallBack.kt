@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
 interface LocationUpdatesCallBack {
-    fun onLocationUpdate()
+    fun onLocationUpdate(GeoPoint)
  //   fun locationException(message: String)
 }
 

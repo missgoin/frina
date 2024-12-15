@@ -53,16 +53,28 @@ class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     private var notificationManager: NotificationManager? = null
     private val preferencesRepository = PreferencesRepository(application)
     val isPlaying = mutableStateOf(false)
-    val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
+   // val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
     val userLocation = mutableStateOf<GeoPoint?>(null)
-    val updateClickedLocation by mapViewModel.updateClickedLocation(lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
-            GeoPoint(it.latitude, it.longitude)  })
+
+
+    private var locationUpdatesCallBack: LocationUpdatesCallBack? = null
+
+    fun setLocationUpdatesCallBack(locationUpdatesCallBack: LocationUpdatesCallBack?) {
+        this.locationUpdatesCallBack = locationUpdatesCallBack
+    }
+    
+    val locationCallback = object : lastclickedLocation() {        
+                result.locations.lastOrNull()?.let { GeoPoint ->
+                    locationUpdatesCallBack?.onLocationUpdate()
+                }
+            }
+    }
+
 
 
     override fun onCreate() {
         super.onCreate()
-      //  locationUtil = LocationUtil()
-        updateClickedLocation()
+        setLocationUpdatesCallBack(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -88,7 +100,7 @@ class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     }
 
     private fun startService() {
-        updateClickedLocation(geoPoint: GeoPoint)
+        lastclickedLocation(geoPoint: GeoPoint)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "geoPoint",
@@ -113,7 +125,7 @@ class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     }
 
     private fun stopService() {
-        updateClickedLocation(null)
+        setLocationUpdatesCallBack(null)
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
@@ -130,7 +142,7 @@ class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
             GeoPoint(it.latitude, it.longitude)
         }
         val updatedNotification = notification?.setContentText(
-            "Coordinate: ($latitude, $longitude)"
+            "Coordinate: ($it.latitude, $it.longitude)"
         )
         notificationManager?.notify(1, updatedNotification?.build())
     }
