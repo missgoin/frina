@@ -55,13 +55,14 @@ class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
     val isPlaying = mutableStateOf(false)
     val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
     val userLocation = mutableStateOf<GeoPoint?>(null)
-    val updateClickedLocation by mapViewModel.updateClickedLocation
+    val updateClickedLocation by mapViewModel.updateClickedLocation(lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
+            GeoPoint(it.latitude, it.longitude)  })
 
 
     override fun onCreate() {
         super.onCreate()
       //  locationUtil = LocationUtil()
-        updateClickedLocation(geoPoint: GeoPoint)
+        updateClickedLocation()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
