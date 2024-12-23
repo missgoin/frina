@@ -46,110 +46,88 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
-class Rina (mapViewModel: MapViewModel) : Service(), LocationUpdatesCallBack {
-    private val TAG = Rina::class.java.simpleName
 
-    private var notification: NotificationCompat.Builder? = null
-    private var notificationManager: NotificationManager? = null
-    private val preferencesRepository = PreferencesRepository(application)
-    val isPlaying = mutableStateOf(false)
-   // val lastClickedLocation = mutableStateOf<GeoPoint?>(null)
-    val userLocation = mutableStateOf<GeoPoint?>(null)
-
-
-    private var locationUpdatesCallBack: LocationUpdatesCallBack? = null
-
-    fun setLocationUpdatesCallBack(locationUpdatesCallBack: LocationUpdatesCallBack?) {
-        this.locationUpdatesCallBack = locationUpdatesCallBack
-    }
-    
-    val locationCallback = object : lastclickedLocation() {        
-                result.locations.lastOrNull()?.let { GeoPoint ->
-                    locationUpdatesCallBack?.onLocationUpdate()
-                }
-            }
-    }
+import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
+import android.widget.RemoteViews
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
 
 
-
-    override fun onCreate() {
-        super.onCreate()
-        setLocationUpdatesCallBack(this)
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when (intent?.action) {
-            ACTION_SERVICE_START -> startService()
-            ACTION_SERVICE_STOP -> stopService()
-        }
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onBind(p0: Intent?): IBinder? {
+class Rina : Service() {
+    val notification_channel="Insta"
+    val service_id=404
+    lateinit var notification: Notification
+    lateinit var nortificationManager:NotificationManager
+    val handler:Handler= Handler(Looper.getMainLooper())
+    var count=0
+    var requstcount=0
+    override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
-    companion object {
-        const val ACTION_SERVICE_START = "ACTION_START"
-        const val ACTION_SERVICE_STOP = "ACTION_STOP"
-    }
-    
-    fun lastclickedLocation() {
-        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
-            GeoPoint(it.latitude, it.longitude)  } 
+    override fun onCreate() {
+        super.onCreate()
+        createchannel()
+        createnotification()
     }
 
-    private fun startService() {
-        lastclickedLocation(geoPoint: GeoPoint)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "geoPoint",
-                "GeoPoint",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            val notificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+    @SuppressLint("ForegroundServiceType")
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val toastrunnable=object :Runnable{
+            override fun run() {
+                Toast.makeText(this@Rina, "$count", Toast.LENGTH_SHORT).show()
+                count++
+                handler.postDelayed(this,1000)
+            }
+
         }
-        notification = NotificationCompat.Builder(this, "geoPoint")
-            .setContentTitle("Tracking location...")
-            .setContentText("Searching...")
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setOngoing(true)
-
-        notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        startForeground(1, notification?.build())
+        handler.postDelayed(toastrunnable,1000)
+        startForeground(service_id,notification)
+        return START_STICKY
     }
+    fun createchannel(){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
+        {
+            val channel=NotificationChannel(notification_channel,"Rina",NotificationManager.IMPORTANCE_HIGH)
+            nortificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nortificationManager.createNotificationChannel(channel)
 
-    private fun stopService() {
-        setLocationUpdatesCallBack(null)
-        stopForeground(STOP_FOREGROUND_REMOVE)
-        stopSelf()
-    }
-
-//    override fun locationException(message: String) {
-//        Log.d(TAG, message)
-//    }
-
-
-    override fun onLocationUpdate() {
-        //PreferencesUtil.getUseRandomize() == true
-       // mapViewModel.updateClickedLocation()
-        lastClickedLocation.value = preferencesRepository.getLastClickedLocation()?.let {
-            GeoPoint(it.latitude, it.longitude)
         }
-        val updatedNotification = notification?.setContentText(
-            "Coordinate: ($it.latitude, $it.longitude)"
-        )
-        notificationManager?.notify(1, updatedNotification?.build())
     }
+    @SuppressLint("RemoteViewLayout")
+    fun createnotification(){
+        val remoteview=RemoteViews(packageName,R.layout.noti)
+        remoteview.setTextViewText(R.id.text1,"title")
+        remoteview.setTextViewText(R.id.text2,"sub")
+        remoteview.setOnClickPendingIntent(R.id.btn1,getintent("button1"))
+        remoteview.setOnClickPendingIntent(R.id.btn2,getintent("button2"))
+        remoteview.setOnClickPendingIntent(R.id.btn3,getintent("button3"))
+        val build=NotificationCompat.Builder(this,notification_channel)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContent(remoteview)
+        notification=build.build()
 
 
-
+    }
+    fun getintent(msg:Any):PendingIntent{
+        val intent=Intent(this,buttonrecevier::class.java).apply {
+            action="BUUTTENACCTION"
+            putExtra("msg","$msg")
+        }
+        requstcount++
+  return  PendingIntent.getBroadcast(this,requstcount,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 }
-
 
 
