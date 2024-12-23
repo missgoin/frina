@@ -46,22 +46,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
-
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Handler
-import android.os.IBinder
 import android.os.Looper
 import android.widget.RemoteViews
-import android.widget.Toast
-import androidx.core.app.NotificationCompat
 
 
 class Rina : Service() {
