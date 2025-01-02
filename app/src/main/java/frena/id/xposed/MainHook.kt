@@ -44,8 +44,8 @@ class MainHook : IXposedHookLoadPackage {
             //GojekApiHooks().hookBypassReguler(lpparam)
             //GojekApiHooks().hookGojekVirtual(lpparam)
            // GojekApiHooks().hookGojekLocation(lpparam)
-            GojekApiHooks().hookServerLocationManager(lpparam)
-            GojekApiHooks().autokillGojek(lpparam)           
+           // GojekApiHooks().hookServerLocationManager(lpparam)
+           // GojekApiHooks().autokillGojek(lpparam)           
             
             XposedHelpers.findAndHookMethod(
             "android.app.Instrumentation",
@@ -59,6 +59,8 @@ class MainHook : IXposedHookLoadPackage {
                         Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
                     }
                     GojekApiHooks().hookGojekLocation(lpparam)
+                    GojekApiHooks().hookServerLocationManager(lpparam)
+                    GojekApiHooks().autokillGojek(lpparam)
                 }
             })
 

@@ -81,7 +81,7 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            if (PreferencesUtil.getIsPlaying() != true) return
+            //if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing autokill service")
 
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
@@ -201,7 +201,7 @@ class GojekApiHooks{
                 gojeklocationClass,
                 "getLatitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
@@ -214,7 +214,7 @@ class GojekApiHooks{
                 gojeklocationClass,
                 "getLongitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
@@ -227,7 +227,7 @@ class GojekApiHooks{
                 gojeklocationClass,
                 "getAccuracy",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getAccuracy()")
                     //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
@@ -245,7 +245,7 @@ class GojekApiHooks{
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                     //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
                     //    XposedBridge.log("\t Original location: ${param.result as? Location}")
                         val provider = param.args[0] as String
