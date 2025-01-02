@@ -42,7 +42,7 @@ class MainHook : IXposedHookLoadPackage {
 //        || (lpparam.packageName == "com.shopee.foody.driver.id") 
 //        || (lpparam.packageName == "net.aleksandre.android.whereami")){
 
-            GojekUtil.gojekVersionCode(lpparam)
+           // GojekUtil.gojekVersionCode(lpparam)
             //GojekApiHooks().hookBypassReguler(lpparam)
             //GojekApiHooks().hookGojekVirtual(lpparam)
            // GojekApiHooks().hookGojekLocation(lpparam)
@@ -59,10 +59,12 @@ class MainHook : IXposedHookLoadPackage {
     fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
       //  lateinit var context: Context
       
+      if (lpparam.packageName == "com.gojek.partner") {
+      
             XposedHelpers.findAndHookMethod(
-            "android.app.Instrumentation",
+            "android.app.Application",
             lpparam.classLoader,
-            "callApplicationOnCreate",
+            "onCreate",
             Application::class.java,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
@@ -75,6 +77,8 @@ class MainHook : IXposedHookLoadPackage {
                     GojekApiHooks().autokillGojek(lpparam)
                 }
             })
+            
+      }
                   
     }
 
