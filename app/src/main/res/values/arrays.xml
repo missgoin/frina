@@ -1,6 +1,5 @@
 <resources>
     <string-array name="xposedscope" >
-        <item>android</item>
         <item>com.gojek.partner</item>
         <item>com.grabtaxi.driver2</item>
     </string-array>
