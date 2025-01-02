@@ -29,6 +29,7 @@ import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
+    lateinit var context: Context
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         // Avoid hooking own app to prevent recursion
@@ -42,9 +43,24 @@ class MainHook : IXposedHookLoadPackage {
             GojekUtil.gojekVersionCode(lpparam)
             //GojekApiHooks().hookBypassReguler(lpparam)
             //GojekApiHooks().hookGojekVirtual(lpparam)
-            GojekApiHooks().hookGojekLocation(lpparam)
+           // GojekApiHooks().hookGojekLocation(lpparam)
             GojekApiHooks().hookServerLocationManager(lpparam)
             GojekApiHooks().autokillGojek(lpparam)           
+            
+            XposedHelpers.findAndHookMethod(
+            "android.app.Instrumentation",
+            lpparam.classLoader,
+            "callApplicationOnCreate",
+            Application::class.java,
+            object : XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam) {
+                    context = (param.args[0] as Application).applicationContext.also {
+                        //XposedBridge.log("$tag Target App's context has been acquired successfully.")
+                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
+                    }
+                    GojekApiHooks().hookGojekLocation(lpparam)
+                }
+            })
 
         } else {
             initHooking(lpparam)
