@@ -33,12 +33,14 @@ class MainHook : IXposedHookLoadPackage {
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         // Avoid hooking own app to prevent recursion
-        //if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
+        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-      if ((lpparam.packageName == "com.gojek.partner") 
-        || (lpparam.packageName == "com.grabtaxi.driver2") 
-        || (lpparam.packageName == "com.shopee.foody.driver.id") 
-        || (lpparam.packageName == "net.aleksandre.android.whereami")){
+        if (PreferencesUtil.getIsPlaying() != true) return
+        
+//      if ((lpparam.packageName == "com.gojek.partner") 
+//        || (lpparam.packageName == "com.grabtaxi.driver2") 
+//        || (lpparam.packageName == "com.shopee.foody.driver.id") 
+//        || (lpparam.packageName == "net.aleksandre.android.whereami")){
 
             GojekUtil.gojekVersionCode(lpparam)
             //GojekApiHooks().hookBypassReguler(lpparam)
@@ -47,6 +49,16 @@ class MainHook : IXposedHookLoadPackage {
            // GojekApiHooks().hookServerLocationManager(lpparam)
            // GojekApiHooks().autokillGojek(lpparam)           
             
+
+
+//        } else {
+            initHooking(lpparam)
+//            }
+      }
+ 
+    fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
+      //  lateinit var context: Context
+      
             XposedHelpers.findAndHookMethod(
             "android.app.Instrumentation",
             lpparam.classLoader,
@@ -63,14 +75,7 @@ class MainHook : IXposedHookLoadPackage {
                     GojekApiHooks().autokillGojek(lpparam)
                 }
             })
-
-        } else {
-            initHooking(lpparam)
-            }
-      }
- 
-    fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
-      //  lateinit var context: Context
+                  
     }
 
 
