@@ -2,7 +2,7 @@ package frena.id.manager.ui.map
 
 import frena.id.manager.MainActivity
 //import frena.id.manager.MyApplication
-import frena.id.service.Rina
+//import frena.id.service.Rina
 
 import android.os.Bundle
 import android.util.Log
