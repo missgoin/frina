@@ -190,7 +190,6 @@ class GojekApiHooks{
     fun hookGojekLocation(lpparam: XC_LoadPackage.LoadPackageParam) {
 
         try {
-            if (lpparam.packageName == "com.gojek.partner") {
             
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing location")
@@ -255,7 +254,7 @@ class GojekApiHooks{
                     //    XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
-            }
+            
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
                 }

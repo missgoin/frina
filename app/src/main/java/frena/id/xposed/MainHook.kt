@@ -35,7 +35,7 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if (PreferencesUtil.getIsPlaying() != true) return
+       // if (PreferencesUtil.getIsPlaying() != true) return
         
         if (lpparam != null) {
             when (lpparam.packageName) {
