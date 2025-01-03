@@ -39,6 +39,11 @@ class MainHook : IXposedHookLoadPackage {
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
        // if (PreferencesUtil.getIsPlaying() != true) return
+       
+       // Hook system services if user asked for system wide hooks
+      //  if (lpparam.packageName == "android") {
+      //      systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
+      //  }
         
         if (lpparam != null) {
             when (lpparam.packageName) {
@@ -51,8 +56,8 @@ class MainHook : IXposedHookLoadPackage {
                     "onCreate",
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            context = (param.args[0] as Application).applicationContext
-                            fakexHooks = FakexHooks(lpparam)
+                            context = (param.args[0] as Application).applicationContext.also
+                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             GojekApiHooks().autokillGojek(lpparam)
                         }

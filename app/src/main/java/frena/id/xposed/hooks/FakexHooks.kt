@@ -47,7 +47,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
 
     fun fakexLocationAPI() {
         hookGojekLocation(appLpparam.classLoader)
-        hookServerLocationManager(appLpparam.classLoader)
+     //   hookServerLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
@@ -57,7 +57,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing FX location")
 
-            val gojeklocationClass = XposedHelpers.findClass("android.location.Location", lpparam.classLoader)
+            val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             
             XposedHelpers.findAndHookMethod(
                 gojeklocationClass,
@@ -103,7 +103,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                     }
                 })
                     
-            val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", lpparam.classLoader)
+            val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
            
             XposedHelpers.findAndHookMethod(
                 gojeklocationManagerClass,
@@ -131,12 +131,11 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     private fun hookServerLocationManager(classLoader: ClassLoader) {
                 
         try {
-            if (lpparam.packageName == "android") {
             
             if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing FX system location")
             
-            val serverLocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", lpparam.classLoader)
+            val serverLocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", classLoader)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 XposedHelpers.findAndHookMethod(
@@ -173,7 +172,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
             }
 
             XposedHelpers.findAndHookMethod(
-                XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", lpparam.classLoader),
+                XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", classLoader),
                 "callLocationChangedLocked",
                 Location::class.java,
                 object : XC_MethodHook() {
@@ -186,7 +185,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                     }
                 })
                     
-            }
+            
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
             }
