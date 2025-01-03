@@ -201,6 +201,7 @@ class GojekApiHooks{
                 "getLatitude",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
+                        super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
@@ -214,6 +215,7 @@ class GojekApiHooks{
                 "getLongitude",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
+                        super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
@@ -227,6 +229,7 @@ class GojekApiHooks{
                 "getAccuracy",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
+                        super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getAccuracy()")
                     //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
@@ -245,6 +248,7 @@ class GojekApiHooks{
                 String::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
+                        super.beforeHookedMethod(param)
                     //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
                     //    XposedBridge.log("\t Original location: ${param.result as? Location}")
                         val provider = param.args[0] as String
@@ -279,6 +283,7 @@ class GojekApiHooks{
                     String::class.java,
                     object : XC_MethodHook() {
                         override fun beforeHookedMethod(param: MethodHookParam) {
+                            super.beforeHookedMethod(param)
                             XposedBridge.log("$tag: System hook location")
                         //    XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
                             val fakeLocation = LocationUtil.createFakeLocation()
@@ -310,6 +315,7 @@ class GojekApiHooks{
                 Location::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
+                        super.beforeHookedMethod(param)
                         XposedBridge.log("$tag: System hook callLocationChangedLocked")
                         val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
                         param.args[0] = fakeLocation
