@@ -12,6 +12,7 @@ import frena.id.data.MANAGER_APP_PACKAGE_NAME
 import frena.id.xposed.hooks.LocationApiHooks
 import frena.id.xposed.hooks.SystemServicesHooks
 import frena.id.xposed.hooks.GojekApiHooks
+import frena.id.xposed.hooks.FakexHooks
 //import frena.id.xposed.hooks.VersionCodeHooks
 import frena.id.xposed.utils.PreferencesUtil
 //import frena.id.xposed.utils.NotificationUtils
@@ -29,7 +30,9 @@ import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
-  //  lateinit var context: Context
+    lateinit var context: Context
+    
+    private var fakexHooks: FakexHooks? = null
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         // Avoid hooking own app to prevent recursion
@@ -48,13 +51,10 @@ class MainHook : IXposedHookLoadPackage {
                     "onCreate",
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                     //   context = (param.args[0] as Application).applicationContext.also {
-                        //XposedBridge.log("$tag Target App's context has been acquired successfully.")
-                     //   Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
-                   // }
-                        GojekApiHooks().hookGojekLocation(lpparam)
-                        GojekApiHooks().hookServerLocationManager(lpparam)
-                        GojekApiHooks().autokillGojek(lpparam)
+                            context = (param.args[0] as Application).applicationContext
+                            fakexHooks = FakexHooks(lpparam)
+                            //FakexHooks().hookServerLocationManager(lpparam)
+                            GojekApiHooks().autokillGojek(lpparam)
                         }
                     })
                 
