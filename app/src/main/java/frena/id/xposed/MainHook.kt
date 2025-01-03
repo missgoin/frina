@@ -58,12 +58,14 @@ class MainHook : IXposedHookLoadPackage {
                         }
                     })
                 
-                }            
+                } catch (e: Exception) {
+                        XposedBridge.log("$tag: gojek error $e")
+                    }
             }
             
             
             
-            }                
+            }
         }
             
     }
