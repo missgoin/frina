@@ -43,18 +43,14 @@ import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
 class FakexHooks(val appLpparam: LoadPackageParam) {
-    private val tag = "[FRina FX]"
-    
-    if (PreferencesUtil.getIsPlaying() != true) return
+    private val tag = "[FRina FX]"    
 
-    fun fakexLocationAPI() {
-        if (PreferencesUtil.getIsPlaying() = true)
+    fun fakexLocationAPI() {        
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
-    //    if (PreferencesUtil.getIsPlaying() = true) 
 
         try {
                        
@@ -114,7 +110,6 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     
     
     private fun hookGojekLocationManager(classLoader: ClassLoader) {
-    //    if (PreferencesUtil.getIsPlaying() = true)
 
         try {
                     
