@@ -47,7 +47,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
 
     fun fakexLocationAPI() {
         hookGojekLocation(appLpparam.classLoader)
-     //   hookServerLocationManager(appLpparam.classLoader)
+        hookServerLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
@@ -63,8 +63,8 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 gojeklocationClass,
                 "getLatitude",
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        super.beforeHookedMethod(param)
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                      //  super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
@@ -77,8 +77,8 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 gojeklocationClass,
                 "getLongitude",
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        super.beforeHookedMethod(param)
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                      //  super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
@@ -91,8 +91,8 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 gojeklocationClass,
                 "getAccuracy",
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        super.beforeHookedMethod(param)
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                     //   super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getAccuracy()")
                     //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
@@ -110,8 +110,8 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
-                    override fun beforeHookedMethod(param: MethodHookParam) {
-                        super.beforeHookedMethod(param)
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                     //   super.beforeHookedMethod(param)
                     //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
                     //    XposedBridge.log("\t Original location: ${param.result as? Location}")
                         val provider = param.args[0] as String
