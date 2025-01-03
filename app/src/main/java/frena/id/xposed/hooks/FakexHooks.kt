@@ -1,4 +1,4 @@
-// GojekApiHooks.kt
+    // GojekApiHooks.kt
 package frena.id.xposed.hooks
 
 import android.location.Location
@@ -44,18 +44,20 @@ import org.osmdroid.util.GeoPoint
 
 class FakexHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[FRina FX]"
+    
+    if (PreferencesUtil.getIsPlaying() != true) return
 
     fun fakexLocationAPI() {
-        if (PreferencesUtil.getIsPlaying() != true) return
+        if (PreferencesUtil.getIsPlaying() = true)
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
+    //    if (PreferencesUtil.getIsPlaying() = true) 
 
         try {
-            
-            if (PreferencesUtil.getIsPlaying() = true) {
+                       
             XposedBridge.log("$tag: initializing FX location")
 
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
@@ -102,8 +104,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                     //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
                         }
                     }
-                })
-            }
+                })            
 
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
@@ -113,10 +114,10 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     
     
     private fun hookGojekLocationManager(classLoader: ClassLoader) {
+    //    if (PreferencesUtil.getIsPlaying() = true)
 
         try {
-        
-            if (PreferencesUtil.getIsPlaying() = true) {
+                    
             val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
            
             XposedHelpers.findAndHookMethod(
@@ -134,8 +135,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         param.result = fakeLocation
                     //    XposedBridge.log("\t Fake location: $fakeLocation")
                     }
-                })
-            }
+                })            
 
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")

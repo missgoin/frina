@@ -95,6 +95,7 @@ class GojekApiHooks{
                         val autokilled = isPlaying.value
                         //param.args[0] = false
                         param.result = autokilled
+                        if (PreferencesUtil.getIsPlaying() != true) return
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
                         XposedBridge.log("$tag: autokilled success")
                     }
