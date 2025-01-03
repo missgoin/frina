@@ -111,69 +111,32 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            if (PreferencesUtil.getIsPlaying() != true) return
+           // if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
             
-            val gojeklocationClass = XposedHelpers.findClass("com.gojek.driver.location.CurrentLocation", lpparam.classLoader)
-            
-            XposedBridge.hookAllConstructors(
-                gojeklocationClass,
+            val gojekcourirClass = XposedHelpers.findClass("com.gojek.driver.location.ping.courier.model.CourierPingRequestProto\$CourierPingRequest", lpparam.classLoader)            
+                        
+            XposedHelpers.findAndHookMethod(
+                gojekcourirClass,
+                "setLatitude",
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-    
-                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
-                        lat.isAccessible = true                       
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.latitude
-                        lat.set(param.thisObject, win)
+                        param.result =  LocationUtil.latitude
                                                
                      //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
                     }
                 })
 
-            XposedBridge.hookAllConstructors(
-                gojeklocationClass,
+            XposedHelpers.findAndHookMethod(
+                gojekcourirClass,
+                "setLongitude",
+                Double::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        
-                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
-                        lon.isAccessible = true
+                    override fun afterHookedMethod(param: MethodHookParam) {                       
                         LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude                        
-                        lon.set(param.thisObject, win)
-                                               
-                    //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
-                    }
-                })
-                                  
-                
-            val gojekvirtualClass = XposedHelpers.findClass("dark.onConnectFailed", lpparam.classLoader)            
-
-            XposedBridge.hookAllConstructors(
-                gojekvirtualClass,
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-    
-                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo")
-                        lat.isAccessible = true                       
-                        LocationUtil.updateLocation()
-                        val win = LocationUtil.latitude
-                        lat.set(param.thisObject, win)
-                                               
-                     //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
-                    }
-                })
-
-            XposedBridge.hookAllConstructors(
-                gojekvirtualClass,
-                object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-                        
-                        val lon = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
-                        lon.isAccessible = true
-                        LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude                        
-                        lon.set(param.thisObject, win)
+                        param.result =  LocationUtil.longitude
                                                
                     //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
