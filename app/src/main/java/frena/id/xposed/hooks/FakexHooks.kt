@@ -54,7 +54,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
 
         try {        
             
-            if (PreferencesUtil.getIsPlaying() != true) return
+          //  if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing FX location")
 
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
@@ -132,7 +132,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 
         try {
             
-            if (PreferencesUtil.getIsPlaying() != true) return
+           // if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing FX system location")
             
             val serverLocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", classLoader)

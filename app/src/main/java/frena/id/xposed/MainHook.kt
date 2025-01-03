@@ -30,7 +30,7 @@ import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
-    lateinit var context: Context
+    //lateinit var context: Context
     
     private var fakexHooks: FakexHooks? = null
    
@@ -57,7 +57,7 @@ class MainHook : IXposedHookLoadPackage {
                     Application::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            context = (param.args[0] as Application).applicationContext
+                          //  context = (param.args[0] as Application).applicationContext
                             fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             GojekApiHooks().autokillGojek(lpparam)
