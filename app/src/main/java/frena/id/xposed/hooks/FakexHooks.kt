@@ -47,12 +47,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
 
     fun fakexLocationAPI() {
         hookGojekLocation(appLpparam.classLoader)
-        hookServerLocationManager(appLpparam.classLoader)
+        hookGojekLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
 
-        try {        
+        try {
             
           //  if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing FX location")
@@ -101,8 +101,19 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                     //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
                         }
                     }
-                })
-                    
+                })                    
+
+        } catch (e: Exception) {
+            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+                }
+
+    }
+    
+    
+    private fun hookGojekLocationManager(classLoader: ClassLoader) {
+
+        try {
+        
             val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
            
             XposedHelpers.findAndHookMethod(
@@ -120,13 +131,15 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         param.result = fakeLocation
                     //    XposedBridge.log("\t Fake location: $fakeLocation")
                     }
-                })
+                })            
 
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
                 }
 
     }
+    
+                                            
     
     private fun hookServerLocationManager(classLoader: ClassLoader) {
                 
