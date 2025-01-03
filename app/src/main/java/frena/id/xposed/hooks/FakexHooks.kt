@@ -46,6 +46,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[FRina FX]"
 
     fun fakexLocationAPI() {
+        if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
     }
