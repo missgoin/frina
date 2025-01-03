@@ -51,9 +51,10 @@ class MainHook : IXposedHookLoadPackage {
             "com.gojek.partner" -> {
                 try {
                     XposedHelpers.findAndHookMethod(
-                    "android.app.Application",
+                    "android.app.Instrumentation",
                     lpparam.classLoader,
-                    "onCreate",
+                    "callApplicationOnCreate",
+                    Application::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             context = (param.args[0] as Application).applicationContext
