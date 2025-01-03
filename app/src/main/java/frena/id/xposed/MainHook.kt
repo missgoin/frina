@@ -37,50 +37,27 @@ class MainHook : IXposedHookLoadPackage {
         
         if (PreferencesUtil.getIsPlaying() != true) return
         
-//      if ((lpparam.packageName == "com.gojek.partner") 
-//        || (lpparam.packageName == "com.grabtaxi.driver2") 
-//        || (lpparam.packageName == "com.shopee.foody.driver.id") 
-//        || (lpparam.packageName == "net.aleksandre.android.whereami")){
-
-           // GojekUtil.gojekVersionCode(lpparam)
-            //GojekApiHooks().hookBypassReguler(lpparam)
-            //GojekApiHooks().hookGojekVirtual(lpparam)
-           // GojekApiHooks().hookGojekLocation(lpparam)
-           // GojekApiHooks().hookServerLocationManager(lpparam)
-           // GojekApiHooks().autokillGojek(lpparam)           
+        if (lpparam != null) {
+            when (lpparam.packageName) {
             
-
-
-//        } else {
-            initHooking(lpparam)
-//            }
-      }
- 
-    fun initHooking(lpparam: XC_LoadPackage.LoadPackageParam) {
-      //  lateinit var context: Context
-      
-      if (lpparam.packageName == "com.gojek.partner") {
-      
-            XposedHelpers.findAndHookMethod(
-            "android.app.Instrumentation",
-            lpparam.classLoader,
-            "callApplicationOnCreate",
-            Application::class.java,
-            object : XC_MethodHook() {
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    context = (param.args[0] as Application).applicationContext.also {
-                        //XposedBridge.log("$tag Target App's context has been acquired successfully.")
-                        Toast.makeText(it, "Fake Location Is Active!", Toast.LENGTH_SHORT).show()
-                    }
+            "com.gojek.partner" -> {
+                try {
                     GojekApiHooks().hookGojekLocation(lpparam)
                     GojekApiHooks().hookServerLocationManager(lpparam)
                     GojekApiHooks().autokillGojek(lpparam)
-                }
-            })
+                    } catch (e: Exception) {
+                        XposedBridge.log("$tag: gojek error $e")
+                    }
+            }
             
-      }
-                  
+            
+            
+            }
+        }
+            
     }
+ 
+ 
 
 
 }
