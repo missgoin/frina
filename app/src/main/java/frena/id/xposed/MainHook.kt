@@ -56,7 +56,7 @@ class MainHook : IXposedHookLoadPackage {
                     "onCreate",
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            context = (param.args[0] as Application).applicationContext.also
+                            context = (param.args[0] as Application).applicationContext
                             fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             GojekApiHooks().autokillGojek(lpparam)
