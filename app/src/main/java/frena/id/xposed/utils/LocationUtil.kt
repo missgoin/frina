@@ -138,8 +138,8 @@ object LocationUtil {
 
                 if (DEBUG) {
 //                    XposedBridge.log("$TAG Updated fake location values to:")
-                    XposedBridge.log("\tCoordinates: (latitude = $latitude, longitude = $longitude)")
-//                    XposedBridge.log("\tAccuracy: $accuracy")
+                    XposedBridge.log("\tKoordinat: (latitude = $latitude, longitude = $longitude)")
+                    XposedBridge.log("\tAkurasi: $accuracy")
 //                    XposedBridge.log("\tAltitude: $altitude")
 //                    XposedBridge.log("\tVertical Accuracy: $verticalAccuracy")
 
@@ -147,7 +147,7 @@ object LocationUtil {
 //                    XposedBridge.log("\tSpeed: $speed")
 //                    XposedBridge.log("\tSpeed Accuracy: $speedAccuracy")
                 }
-            } ?: //XposedBridge.log("$TAG fake location tidak mendukung aplikasi tersebut.")
+            } ?: XposedBridge.log("$TAG: hook location belum berjalan")
         } catch (e: Exception) {
             XposedBridge.log("$TAG Error - ${e.message}")
         }

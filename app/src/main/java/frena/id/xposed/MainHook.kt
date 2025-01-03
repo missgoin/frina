@@ -33,6 +33,7 @@ class MainHook : IXposedHookLoadPackage {
     //lateinit var context: Context
     
     private var fakexHooks: FakexHooks? = null
+    private var systemServicesHooks: SystemServicesHooks? = null
    
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         // Avoid hooking own app to prevent recursion
@@ -70,6 +71,15 @@ class MainHook : IXposedHookLoadPackage {
                     }
             }
             
+            
+            "android" -> {
+                try {
+                systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
+                
+                } catch (e: Exception) {
+                        XposedBridge.log("$tag: gojek error $e")
+                    }           
+            }
             
             
             }

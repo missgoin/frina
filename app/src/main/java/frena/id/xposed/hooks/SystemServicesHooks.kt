@@ -12,7 +12,7 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
 class SystemServicesHooks(val appLpparam: LoadPackageParam) {
-    private val tag = "[FRina-SystemAPI]"
+    private val tag = "[FRina SystemAPI]"
 
     fun initHooks() {
         hookSystemServices(appLpparam.classLoader)
@@ -35,7 +35,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                         //    XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
                             val fakeLocation = LocationUtil.createFakeLocation()
                             param.result = fakeLocation
-                            XposedBridge.log("\t Fake location: $fakeLocation")
+                       //     XposedBridge.log("\t Fake location: $fakeLocation")
                         }
                     })
             } else {
@@ -62,10 +62,10 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                 Location::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
-                        XposedBridge.log("$tag: System hook callLocationChangedLocked")
+                    //    XposedBridge.log("$tag: System hook callLocationChangedLocked")
                         val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
                         param.args[0] = fakeLocation
-                        XposedBridge.log("\t Fake location: $fakeLocation")
+                    //    XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
 
