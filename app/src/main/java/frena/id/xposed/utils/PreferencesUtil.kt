@@ -121,7 +121,7 @@ object PreferencesUtil {
                         null
                     }
                 } else {
-                    XposedBridge.log("$TAG $key not found in preferences.")
+                //    XposedBridge.log("$TAG $key not found in preferences.")
                     null
                 }
             }

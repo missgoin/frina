@@ -147,7 +147,7 @@ object LocationUtil {
 //                    XposedBridge.log("\tSpeed: $speed")
 //                    XposedBridge.log("\tSpeed Accuracy: $speedAccuracy")
                 }
-            } ?: XposedBridge.log("$TAG fake location tidak mendukung aplikasi tersebut.")
+            } ?: //XposedBridge.log("$TAG fake location tidak mendukung aplikasi tersebut.")
         } catch (e: Exception) {
             XposedBridge.log("$TAG Error - ${e.message}")
         }
