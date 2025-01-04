@@ -39,7 +39,7 @@ class MainHook : IXposedHookLoadPackage {
         // Avoid hooking own app to prevent recursion
         if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
         
-        if (PreferencesUtil.getIsPlaying() != true) return
+        //if (PreferencesUtil.getIsPlaying() != true) return
        
        // Hook system services if user asked for system wide hooks
       //  if (lpparam.packageName == "android") {
@@ -59,10 +59,10 @@ class MainHook : IXposedHookLoadPackage {
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                           //  context = (param.args[0] as Application).applicationContext
-                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
+                            //fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             GojekApiHooks().autokillGojek(lpparam)
-                          //  GojekApiHooks().hookGojekVirtual(lpparam)
+                            GojekApiHooks().hookGojekVirtual(lpparam)
                         }
                     })
                 

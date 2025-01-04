@@ -81,7 +81,6 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            //if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing autokill service")
 
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
@@ -109,35 +108,40 @@ class GojekApiHooks{
 
     fun hookGojekVirtual(lpparam: XC_LoadPackage.LoadPackageParam) {
 
+        if (PreferencesUtil.getIsPlaying() != true) return
+        
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-           // if (PreferencesUtil.getIsPlaying() != true) return
             XposedBridge.log("$tag: initializing virtual location")
             
-            val gojekcourirClass = XposedHelpers.findClass("com.gojek.driver.location.ping.courier.model.CourierPingRequestProto\$CourierPingRequest", lpparam.classLoader)            
+            val gojekvirtualClass = XposedHelpers.findClass("dark.MediaBrowserServiceCompat\$ServiceBinderImpl\$3", lpparam.classLoader)            
                         
-            XposedHelpers.findAndHookMethod(
-                gojekcourirClass,
-                "setLatitude",
-                Double::class.java,
+            XposedBridge.hookAllConstructors(
+                gojekvirtualClass,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
+    
+                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
+                        lat.isAccessible = true                       
                         LocationUtil.updateLocation()
-                        param.result =  LocationUtil.latitude
+                        val win = LocationUtil.latitude
+                        lat.set(param.thisObject, win)
                                                
                      //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
                     }
                 })
 
-            XposedHelpers.findAndHookMethod(
-                gojekcourirClass,
-                "setLongitude",
-                Double::class.java,
+            XposedBridge.hookAllConstructors(
+                gojekvirtualClass,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {                       
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        
+                        val lon = param.thisObject.javaClass.getDeclaredField("O0o00")
+                        lon.isAccessible = true
                         LocationUtil.updateLocation()
-                        param.result =  LocationUtil.longitude
+                        val win = LocationUtil.longitude                        
+                        lon.set(param.thisObject, win)
                                                
                     //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
@@ -153,10 +157,11 @@ class GojekApiHooks{
 
     fun hookGojekLocation(lpparam: XC_LoadPackage.LoadPackageParam) {
 
+        if (PreferencesUtil.getIsPlaying() != true) return
+        
         try {        
             if (lpparam.packageName == "com.gojek.partner") {
-            
-            if (PreferencesUtil.getIsPlaying() != true) return
+                        
             XposedBridge.log("$tag: initializing location")
 
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", lpparam.classLoader)
@@ -232,10 +237,11 @@ class GojekApiHooks{
     
     fun hookServerLocationManager(lpparam: XC_LoadPackage.LoadPackageParam) {
                 
+        if (PreferencesUtil.getIsPlaying() != true) return
+        
         try {
-            if (lpparam.packageName == "android") {
-            
-            if (PreferencesUtil.getIsPlaying() != true) return
+            if (lpparam.packageName == "android") {            
+
             XposedBridge.log("$tag: initializing system location")
             
             val serverLocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", lpparam.classLoader)
