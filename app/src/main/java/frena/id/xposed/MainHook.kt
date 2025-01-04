@@ -70,12 +70,9 @@ class MainHook : IXposedHookLoadPackage {
                         XposedBridge.log("$tag: Hook gojek error $e")
                     }
             }
+                        
             
-            if (PreferencesUtil.getIsPlaying() != true) return
-            
-            "android" -> {
-            
-              if (PreferencesUtil.getIsPlaying() == true) {
+            "android" -> {                          
 
                 try {
                 systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }

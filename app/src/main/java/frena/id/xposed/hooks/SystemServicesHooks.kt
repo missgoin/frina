@@ -15,11 +15,13 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[FRina SystemAPI]"
 
     fun initHooks() {
+        if (PreferencesUtil.getIsPlaying() != true) return
         hookSystemServices(appLpparam.classLoader)
     //    XposedBridge.log("$tag Instantiated hooks successfully")
     }
 
     private fun hookSystemServices(classLoader: ClassLoader) {
+      if (PreferencesUtil.getIsPlaying() == true) {
         try {
             val locationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", classLoader)
 
@@ -73,5 +75,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
             XposedBridge.log("$tag Error hooking system services")
             XposedBridge.log(e)
         }
+        
+      }
     }
 }
