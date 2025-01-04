@@ -58,7 +58,7 @@ class MainHook : IXposedHookLoadPackage {
                     Application::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                          //  context = (param.args[0] as Application).applicationContext
+                            context = (param.args[0] as Application).applicationContext
                             fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             GojekApiHooks().autokillGojek(lpparam)
@@ -82,6 +82,28 @@ class MainHook : IXposedHookLoadPackage {
                     }
             }
             
+            
+            "net.aleksandre.android.whereami" -> {
+                try {
+                    XposedHelpers.findAndHookMethod(
+                    "android.app.Instrumentation",
+                    lpparam.classLoader,
+                    "callApplicationOnCreate",
+                    Application::class.java,
+                    object : XC_MethodHook() {
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            context = (param.args[0] as Application).applicationContext
+                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
+                            //FakexHooks().hookServerLocationManager(lpparam)
+                            //GojekApiHooks().autokillGojek(lpparam)
+                            //GojekApiHooks().hookGojekVirtual(lpparam)
+                        }
+                    })
+                
+                } catch (e: Exception) {
+                        XposedBridge.log("$tag: Hook gojek error $e")
+                    }
+            }
             
             
             }
