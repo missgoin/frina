@@ -8,7 +8,6 @@ import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
 import android.os.Build
-import frena.id.xposed.utils.LocationUtil
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
