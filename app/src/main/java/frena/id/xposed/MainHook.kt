@@ -30,7 +30,7 @@ import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
-    //lateinit var context: Context
+    lateinit var context: Context
     
     private var fakexHooks: FakexHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null
