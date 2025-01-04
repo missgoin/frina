@@ -45,13 +45,16 @@ import org.osmdroid.util.GeoPoint
 class FakexHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[FRina FX]"    
 
-    fun fakexLocationAPI() {        
+    fun fakexLocationAPI() {
+        if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
 
+      if (PreferencesUtil.getIsPlaying() == true) {
+        
         try {
                        
             XposedBridge.log("$tag: initializing FX location")
@@ -105,11 +108,15 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
                 }
+      
+      }
 
     }
     
     
     private fun hookGojekLocationManager(classLoader: ClassLoader) {
+
+      if (PreferencesUtil.getIsPlaying() == true) {
 
         try {
                     
@@ -135,6 +142,8 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
                 }
+
+      }
 
     }
     

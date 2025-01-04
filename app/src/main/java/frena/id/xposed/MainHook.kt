@@ -59,10 +59,10 @@ class MainHook : IXposedHookLoadPackage {
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                           //  context = (param.args[0] as Application).applicationContext
-                            //fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
+                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             GojekApiHooks().autokillGojek(lpparam)
-                            GojekApiHooks().hookGojekVirtual(lpparam)
+                            //GojekApiHooks().hookGojekVirtual(lpparam)
                         }
                     })
                 
@@ -71,14 +71,19 @@ class MainHook : IXposedHookLoadPackage {
                     }
             }
             
+            if (PreferencesUtil.getIsPlaying() != true) return
             
             "android" -> {
+            
+              if (PreferencesUtil.getIsPlaying() == true) {
+
                 try {
                 systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
                 
                 } catch (e: Exception) {
                         XposedBridge.log("$tag: Hook system error $e")
-                    }           
+                    }
+              }
             }
             
             
