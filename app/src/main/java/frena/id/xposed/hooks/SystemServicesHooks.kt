@@ -3,6 +3,10 @@ package frena.id.xposed.hooks
 
 import android.location.Location
 import android.location.LocationRequest
+
+import frena.id.xposed.utils.LocationUtil
+import frena.id.xposed.utils.GojekUtil
+import frena.id.xposed.utils.PreferencesUtil
 import android.os.Build
 import frena.id.xposed.utils.LocationUtil
 import de.robv.android.xposed.XC_MethodHook

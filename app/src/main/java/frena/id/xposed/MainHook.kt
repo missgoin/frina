@@ -72,7 +72,7 @@ class MainHook : IXposedHookLoadPackage {
             }
                         
             
-            "android" -> {                          
+            "android" -> {
 
                 try {
                 systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
@@ -80,8 +80,8 @@ class MainHook : IXposedHookLoadPackage {
                 } catch (e: Exception) {
                         XposedBridge.log("$tag: Hook system error $e")
                     }
-              }
             }
+            
             
             
             }
