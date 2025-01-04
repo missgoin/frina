@@ -12,6 +12,12 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    
+    <queries>
+        <package android:name="com.shopee.foody.driver.id" />
+        <package android:name="com.gojek.partner" />
+        <package android:name="com.grabtaxi.driver2" />
+    </queries>
 
     <application
         android:forceQueryable="true"
@@ -43,7 +49,7 @@
         <!-- Introduction to the module (shown in the framework) -->
         <meta-data
             android:name="xposeddescription"
-            android:value="FRina-module app for Indonesia" />
+            android:value="[FRina] Module Pembebasan!" />
         <!-- The minimum supported Api version of the module is usually 54. -->
         <meta-data
             android:name="xposedminversion"

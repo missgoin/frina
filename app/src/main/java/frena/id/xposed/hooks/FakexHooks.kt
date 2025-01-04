@@ -65,7 +65,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 gojeklocationClass,
                 "getLatitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
@@ -79,7 +79,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 gojeklocationClass,
                 "getLongitude",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
@@ -93,7 +93,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 gojeklocationClass,
                 "getAccuracy",
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                      //   super.beforeHookedMethod(param)
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getAccuracy()")
@@ -127,7 +127,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
                      //   super.beforeHookedMethod(param)
                     //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
                     //    XposedBridge.log("\t Original location: ${param.result as? Location}")

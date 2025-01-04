@@ -55,8 +55,8 @@ class MainHook : IXposedHookLoadPackage {
                     XposedHelpers.findAndHookMethod(
                     "android.app.Instrumentation",
                     lpparam.classLoader,
-                    "callApplicationOnCreate",
-                    Application::class.java,
+                    "onCreate",
+                  //  Application::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             context = (param.args[0] as Application).applicationContext
