@@ -2,6 +2,7 @@
 package frena.id.xposed
 
 import android.app.Application
+import android.app.Instrumentation
 import android.app.Activity
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo

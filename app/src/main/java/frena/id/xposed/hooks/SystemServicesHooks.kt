@@ -24,7 +24,9 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
     }
 
     private fun hookSystemServices(classLoader: ClassLoader) {
+    
       if (PreferencesUtil.getIsPlaying() == true) {
+      
         try {
             val locationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", classLoader)
 
