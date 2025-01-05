@@ -58,6 +58,7 @@ class MainHook : IXposedHookLoadPackage {
                     "android.app.Instrumentation",
                     lpparam.classLoader,
                     "newActivity",
+                    Activity::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             //context = (param.args[0] as Activity).activityContext
