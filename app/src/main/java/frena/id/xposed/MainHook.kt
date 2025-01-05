@@ -67,7 +67,7 @@ class MainHook : IXposedHookLoadPackage {
                             
                             GojekApiHooks().autokillGojek(lpparam)
                             //GojekApiHooks().hookGojekVirtual(lpparam)
-                            fakexHooks.context = FakexHooks(lpparam).also { it.fakexLocationAPI() }
+                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             
                         }
