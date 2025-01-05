@@ -64,9 +64,9 @@ class MainHook : IXposedHookLoadPackage {
                     //Application::class.java,
                     object : XC_MethodHook() {
                         override fun beforeHookedMethod(param: MethodHookParam) {
-                          //  context = (param.args[0] as Application).applicationContext
+                            context = (param.args[0] as Application).applicationContext
                             
-                            context(param.thisObject as? Application ?: return)
+                           // callback(param.thisObject as? Application ?: return)
                                         
                             GojekApiHooks().autokillGojek(lpparam)
                             //GojekApiHooks().hookGojekVirtual(lpparam)
