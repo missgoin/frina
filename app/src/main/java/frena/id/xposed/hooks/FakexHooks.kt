@@ -54,10 +54,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     private fun hookGojekLocation(classLoader: ClassLoader) {
 
       if (PreferencesUtil.getIsPlaying() == true) {
+      
+        XposedBridge.log("$tag: initializing service FX......")
         
         try {
                        
-            XposedBridge.log("$tag: initializing FX location")
+            XposedBridge.log("$tag: starting FX location......")
 
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             

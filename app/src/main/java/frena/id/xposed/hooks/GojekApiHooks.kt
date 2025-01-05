@@ -81,7 +81,7 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            XposedBridge.log("$tag: initializing autokill service")
+            XposedBridge.log("$tag: starting autokill service......")
 
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
             
@@ -96,7 +96,7 @@ class GojekApiHooks{
                         param.result = autokilled
                         if (PreferencesUtil.getIsPlaying() != true) return
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
-                        XposedBridge.log("$tag: autokilled success")
+                        XposedBridge.log("$tag: autokilled success......")
                     }
                 })
             }
@@ -108,15 +108,33 @@ class GojekApiHooks{
 
     fun hookGojekVirtual(lpparam: XC_LoadPackage.LoadPackageParam) {
 
-        if (PreferencesUtil.getIsPlaying() != true) return
+      if (PreferencesUtil.getIsPlaying() != true) return
+      
+      XposedBridge.log("$tag: initializing service virtual......")
+        
+      if (PreferencesUtil.getIsPlaying() == true) {
         
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            XposedBridge.log("$tag: initializing virtual location")
+            XposedBridge.log("$tag: starting virtual location......")
             
             val gojekvirtualClass = XposedHelpers.findClass("dark.MediaBrowserServiceCompat\$ServiceBinderImpl\$3", lpparam.classLoader)            
                         
+            
+            val methodsToReplace = arrayOf(
+                "equals"
+            )
+
+            for (methodName in methodsToReplace) {
+                XposedHelpers.findAndHookMethod(
+                    gojekvirtualClass,
+                    methodName,
+                    XC_MethodReplacement.returnConstant(true)
+                )
+            }
+            
+            
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 object : XC_MethodHook() {
@@ -145,12 +163,14 @@ class GojekApiHooks{
                                                
                     //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
                     }
-                })
+                })                                                
             
             }
         } catch (e: Exception) {
             XposedBridge.log("$tag: Error hooking virtual class - ${e.message}")
                 }
+                
+      }
 
     }
 

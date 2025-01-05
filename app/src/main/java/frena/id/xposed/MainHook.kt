@@ -55,10 +55,10 @@ class MainHook : IXposedHookLoadPackage {
                     XposedHelpers.findAndHookMethod(
                     "android.app.Instrumentation",
                     lpparam.classLoader,
-                    "onCreate",
+                    "callApplicationOnCreate",
                     Application::class.java,
                     object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
+                        override fun beforeHookedMethod(param: MethodHookParam) {
                             context = (param.args[0] as Application).applicationContext
                             fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
@@ -105,6 +105,30 @@ class MainHook : IXposedHookLoadPackage {
                         XposedBridge.log("$tag: Hook gojek error $e")
                     }
             }
+            
+            
+            
+            "com.gojek.app" -> {
+                try {
+                    XposedHelpers.findAndHookMethod(
+                    "android.app.Instrumentation",
+                    lpparam.classLoader,
+                    "callApplicationOnCreate",
+                    Application::class.java,
+                    object : XC_MethodHook() {
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            context = (param.args[0] as Application).applicationContext
+                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
+                            //FakexHooks().hookServerLocationManager(lpparam)
+                            //GojekApiHooks().autokillGojek(lpparam)
+                            //GojekApiHooks().hookGojekVirtual(lpparam)
+                        }
+                    })
+                
+                } catch (e: Exception) {
+                        XposedBridge.log("$tag: Hook gojek error $e")
+                    }
+            }            
             
             
             }
