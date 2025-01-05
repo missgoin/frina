@@ -26,13 +26,16 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
+import de.robv.android.xposed.callbacks.XC_InitPackageResources
+import de.robv.android.xposed.callbacks.XC_LoadPackage
+
 import java.lang.Exception
 import java.io.File
 
 class MainHook : IXposedHookLoadPackage {
     val tag = "[FRina]"
     lateinit var context: Context
-    lateinit var callback: Callback
+    //lateinit var callback: Callback
     
     private var fakexHooks: FakexHooks? = null
     private var systemServicesHooks: SystemServicesHooks? = null
@@ -55,9 +58,12 @@ class MainHook : IXposedHookLoadPackage {
                 try {
                     XposedHelpers.findAndHookMethod(
                     "android.content.ContextWrapper",
+                    //"android.app.Instrumentation",
                     lpparam.classLoader,
                     "attachBaseContext",
+                    //"callActivityOnCreate",
                     Context::class.java,
+                    //Application::class.java,
                     object : XC_MethodHook() {
                         override fun beforeHookedMethod(param: MethodHookParam) {
                           //  context = (param.args[0] as Application).applicationContext
