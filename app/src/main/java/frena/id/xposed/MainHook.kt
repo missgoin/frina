@@ -54,11 +54,11 @@ class MainHook : IXposedHookLoadPackage {
             
             "com.gojek.partner" -> {
                 try {
-                    XposedBridge.hookAllMethods(
+                    XposedHelpers.findAndHookMethod(
                     "android.app.Activity",
                     lpparam.classLoader,
                     "onCreate",
-                    //Activity::class.java,
+                    Activity::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
                             //context = (param.args[0] as Activity).activityContext
@@ -67,7 +67,7 @@ class MainHook : IXposedHookLoadPackage {
                             
                             GojekApiHooks().autokillGojek(lpparam)
                             //GojekApiHooks().hookGojekVirtual(lpparam)
-                            fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
+                            fakexHooks.context = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             
                         }
