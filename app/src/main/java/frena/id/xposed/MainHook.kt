@@ -26,8 +26,6 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
-import de.robv.android.xposed.callbacks.XC_InitPackageResources
-import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 import java.lang.Exception
 import java.io.File
@@ -68,7 +66,7 @@ class MainHook : IXposedHookLoadPackage {
                         override fun beforeHookedMethod(param: MethodHookParam) {
                           //  context = (param.args[0] as Application).applicationContext
                             
-                            callback(param.thisObject as? Application ?: return)
+                            context(param.thisObject as? Application ?: return)
                                         
                             GojekApiHooks().autokillGojek(lpparam)
                             //GojekApiHooks().hookGojekVirtual(lpparam)
