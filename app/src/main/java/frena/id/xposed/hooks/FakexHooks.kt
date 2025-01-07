@@ -48,23 +48,25 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     fun fakexLocationAPI() {
         if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
-        hookGojekLocationManager(appLpparam.classLoader)
+        //hookGojekLocationManager(appLpparam.classLoader)
     }
 
     private fun hookGojekLocation(classLoader: ClassLoader) {
 
       if (PreferencesUtil.getIsPlaying() == true) {
       
-        XposedBridge.log("$tag: initializing service FX......")
+        XposedBridge.log("$tag initializing service FX......")
         
         try {
                        
             XposedBridge.log("$tag: starting FX location......")
 
-            val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
+            //val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             
             XposedHelpers.findAndHookMethod(
-                gojeklocationClass,
+                //gojeklocationClass
+                "android.location.Location",
+                classLoader,
                 "getLatitude",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
@@ -78,7 +80,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 })
 
             XposedHelpers.findAndHookMethod(
-                gojeklocationClass,
+                //gojeklocationClass,
+                "android.location.Location",
+                classLoader,
                 "getLongitude",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
@@ -92,7 +96,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 })
 
             XposedHelpers.findAndHookMethod(
-                gojeklocationClass,
+                //gojeklocationClass,
+                "android.location.Location",
+                classLoader,
                 "getAccuracy",
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
@@ -108,7 +114,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 })            
 
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
                 }
       
       }
@@ -122,10 +128,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
 
         try {
                     
-            val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
+            //val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
            
             XposedHelpers.findAndHookMethod(
-                gojeklocationManagerClass,
+                //gojeklocationManagerClass,
+                "android.location.LocationManager",
+                classLoader,
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
@@ -142,7 +150,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 })            
 
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
                 }
 
       }
@@ -156,7 +164,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
         try {
             
            // if (PreferencesUtil.getIsPlaying() != true) return
-            XposedBridge.log("$tag: initializing FX system location")
+            XposedBridge.log("$tag initializing FX system location")
             
             val serverLocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", classLoader)
 
@@ -177,7 +185,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         }
                     })
             } else {
-                XposedBridge.log("$tag: versi Android OS terlalu rendah, minimal OS 12.")
+                XposedBridge.log("$tag versi Android OS terlalu rendah, minimal OS 12.")
             }
 
             val methodsToReplace = arrayOf(
@@ -210,7 +218,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                     
             
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
             }
     }
 

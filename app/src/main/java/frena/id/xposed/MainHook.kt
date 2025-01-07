@@ -55,15 +55,16 @@ class MainHook : IXposedHookLoadPackage {
             "com.gojek.partner" -> {
                 try {
                     XposedHelpers.findAndHookMethod(
-                    "android.app.Activity",
+                    "android.app.Instrumentation",
                     lpparam.classLoader,
-                    "onCreate",
-                    Activity::class.java,
+                    "callApplicationOnCreate",
+                    Application::class.java,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
+                            context = (param.args[0] as Application).applicationContext
                             //context = (param.args[0] as Activity).activityContext
                             //mCurrentActivity = param.result as Activity
-                            context = param.thisObject as Context
+                            //context = param.thisObject as Context
                             
                             GojekApiHooks().autokillGojek(lpparam)
                             //GojekApiHooks().hookGojekVirtual(lpparam)
@@ -74,7 +75,7 @@ class MainHook : IXposedHookLoadPackage {
                     })
                 
                 } catch (e: Exception) {
-                        XposedBridge.log("$tag: Hook gojek error $e")
+                        XposedBridge.log("$tag Hook gojek error $e")
                     }
             }
                         
@@ -85,7 +86,7 @@ class MainHook : IXposedHookLoadPackage {
                 systemServicesHooks = SystemServicesHooks(lpparam).also { it.initHooks() }
                 
                 } catch (e: Exception) {
-                        XposedBridge.log("$tag: Hook system error $e")
+                        XposedBridge.log("$tag Hook system error $e")
                     }
             }
             
@@ -108,7 +109,7 @@ class MainHook : IXposedHookLoadPackage {
                     })
                 
                 } catch (e: Exception) {
-                        XposedBridge.log("$tag: Hook gojek error $e")
+                        XposedBridge.log("$tag Hook gojek error $e")
                     }
             }
             
@@ -132,7 +133,7 @@ class MainHook : IXposedHookLoadPackage {
                     })
                 
                 } catch (e: Exception) {
-                        XposedBridge.log("$tag: Hook gojek error $e")
+                        XposedBridge.log("$tag Hook gojek error $e")
                     }
             }            
             

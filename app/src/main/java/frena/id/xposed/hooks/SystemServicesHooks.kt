@@ -38,7 +38,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                     String::class.java,
                     object : XC_MethodHook() {
                         override fun beforeHookedMethod(param: MethodHookParam) {
-                            XposedBridge.log("$tag: System hook location")
+                            XposedBridge.log("$tag System hook location")
                         //    XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
                             val fakeLocation = LocationUtil.createFakeLocation()
                             param.result = fakeLocation
@@ -46,7 +46,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                         }
                     })
             } else {
-                XposedBridge.log("$tag: versi Android OS terlalu rendah, minimal OS 12.")
+                XposedBridge.log("$tag versi Android OS terlalu rendah, minimal OS 12.")
             }
 
             val methodsToReplace = arrayOf(

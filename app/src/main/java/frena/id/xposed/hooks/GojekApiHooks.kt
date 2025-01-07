@@ -81,7 +81,7 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            XposedBridge.log("$tag: starting autokill service......")
+            XposedBridge.log("$tag starting autokill service......")
 
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
             
@@ -96,12 +96,12 @@ class GojekApiHooks{
                         param.result = autokilled
                         if (PreferencesUtil.getIsPlaying() != true) return
                             //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
-                        XposedBridge.log("$tag: autokilled success......")
+                        XposedBridge.log("$tag autokilled success......")
                     }
                 })
             }
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error autokill service - ${e.message}")
+            XposedBridge.log("$tag Error autokill service - ${e.message}")
                 }
 
     }
@@ -110,14 +110,14 @@ class GojekApiHooks{
 
       if (PreferencesUtil.getIsPlaying() != true) return
       
-      XposedBridge.log("$tag: initializing service virtual......")
+      XposedBridge.log("$tag initializing service virtual......")
         
       if (PreferencesUtil.getIsPlaying() == true) {
         
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
-            XposedBridge.log("$tag: starting virtual location......")
+            XposedBridge.log("$tag starting virtual location......")
             
             val gojekvirtualClass = XposedHelpers.findClass("dark.MediaBrowserServiceCompat\$ServiceBinderImpl\$3", lpparam.classLoader)            
                         
@@ -167,7 +167,7 @@ class GojekApiHooks{
             
             }
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking virtual class - ${e.message}")
+            XposedBridge.log("$tag Error hooking virtual class - ${e.message}")
                 }
                 
       }
@@ -182,7 +182,7 @@ class GojekApiHooks{
         try {        
             if (lpparam.packageName == "com.gojek.partner") {
                         
-            XposedBridge.log("$tag: initializing location")
+            XposedBridge.log("$tag initializing location")
 
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", lpparam.classLoader)
             
@@ -250,7 +250,7 @@ class GojekApiHooks{
                 })
             }
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
                 }
 
     }
@@ -262,7 +262,7 @@ class GojekApiHooks{
         try {
             if (lpparam.packageName == "android") {            
 
-            XposedBridge.log("$tag: initializing system location")
+            XposedBridge.log("$tag initializing system location")
             
             val serverLocationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", lpparam.classLoader)
 
@@ -283,7 +283,7 @@ class GojekApiHooks{
                         }
                     })
             } else {
-                XposedBridge.log("$tag: versi Android OS terlalu rendah, minimal OS 12.")
+                XposedBridge.log("$tag versi Android OS terlalu rendah, minimal OS 12.")
             }
 
             val methodsToReplace = arrayOf(
@@ -316,7 +316,7 @@ class GojekApiHooks{
                     
             }
         } catch (e: Exception) {
-            XposedBridge.log("$tag: Error hooking Location class - ${e.message}")
+            XposedBridge.log("$tag Error hooking Location class - ${e.message}")
             }
     }
 
