@@ -11,13 +11,18 @@ import android.os.SystemClock
 import android.provider.Settings
 import android.widget.Toast
 
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import java.util.LinkedList
+
 import frena.id.manager.MainActivity
 import frena.id.manager.ui.map.*
 import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapScreen
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.data.*
-import frena.id.data.DEFAULT_FRINA_SERVICE
+//import frena.id.data.DEFAULT_FRINA_SERVICE
 import frena.id.data.name
 import frena.id.data.key
 import frena.id.xposed.utils.PreferencesUtil

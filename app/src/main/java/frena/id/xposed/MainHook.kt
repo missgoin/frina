@@ -54,14 +54,14 @@ class MainHook : IXposedHookLoadPackage {
             
             "com.gojek.partner" -> {
                 try {
-                    XposedHelpers.findAndHookMethod(
-                    "android.app.Instrumentation",
-                    lpparam.classLoader,
-                    "callApplicationOnCreate",
-                    Application::class.java,
-                    object : XC_MethodHook() {
-                        override fun afterHookedMethod(param: MethodHookParam) {
-                            context = (param.args[0] as Application).applicationContext
+                //    XposedHelpers.findAndHookMethod(
+                //    "android.app.Instrumentation",
+                //    lpparam.classLoader,
+                //    "callApplicationOnCreate",
+                //    Application::class.java,
+                //    object : XC_MethodHook() {
+                //        override fun afterHookedMethod(param: MethodHookParam) {
+                //            context = (param.args[0] as Application).applicationContext
                             //context = (param.args[0] as Activity).activityContext
                             //mCurrentActivity = param.result as Activity
                             //context = param.thisObject as Context
@@ -71,8 +71,8 @@ class MainHook : IXposedHookLoadPackage {
                             fakexHooks = FakexHooks(lpparam).also { it.fakexLocationAPI() }
                             //FakexHooks().hookServerLocationManager(lpparam)
                             
-                        }
-                    })
+                //        }
+                //    })
                 
                 } catch (e: Exception) {
                         XposedBridge.log("$tag Hook gojek error $e")

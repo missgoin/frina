@@ -59,7 +59,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
         
         try {
                        
-            XposedBridge.log("$tag: starting FX location......")
+            XposedBridge.log("$tag starting FX location......")
 
             //val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             
