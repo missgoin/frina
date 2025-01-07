@@ -57,6 +57,8 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
       
         XposedBridge.log("$tag initializing service FX......")
         
+        GojekUtil.res()
+        
         try {
                        
             XposedBridge.log("$tag starting FX location......")
