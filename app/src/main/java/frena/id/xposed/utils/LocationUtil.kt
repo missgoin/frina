@@ -46,7 +46,7 @@ object LocationUtil {
             Location(provider).apply {
                 //mLastUpdated = System.currentTimeMillis()
                 //time = (System.currentTimeMillis() - mLastUpdated > 200
-                time = System.currentTimeMillis() +  200
+                time = System.currentTimeMillis() - 300
             }
         } else {
             Location(originalLocation.provider).apply {

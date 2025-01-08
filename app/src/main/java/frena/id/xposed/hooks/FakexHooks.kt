@@ -64,13 +64,14 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                        
             XposedBridge.log("$tag starting FX location......")
 
-            //val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
+            val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             
             XposedHelpers.findAndHookMethod(
-                //gojeklocationClass
-                "android.location.Location",
-                classLoader,
+                gojeklocationClass
+                //"android.location.Location",
+                //classLoader,
                 "getLatitude",
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
@@ -83,10 +84,11 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 })
 
             XposedHelpers.findAndHookMethod(
-                //gojeklocationClass,
-                "android.location.Location",
-                classLoader,
+                gojeklocationClass,
+                //"android.location.Location",
+                //classLoader,
                 "getLongitude",
+                Double::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
@@ -99,10 +101,11 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 })
 
             XposedHelpers.findAndHookMethod(
-                //gojeklocationClass,
-                "android.location.Location",
-                classLoader,
+                gojeklocationClass,
+                //"android.location.Location",
+                //classLoader,
                 "getAccuracy",
+                Float::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                      //   super.beforeHookedMethod(param)
@@ -114,7 +117,22 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                     //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
                         }
                     }
-                })            
+                })
+                
+            XposedHelpers.findAndHookMethod(
+                gojeklocationClass,
+                //"android.location.LocationManager",
+                //classLoader,
+                "set",
+                Location::class.java,
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                     //   super.beforeHookedMethod(param)
+                        val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
+                        param.args[0] = fakeLocation
+                    //    XposedBridge.log("\t Fake location: $fakeLocation")
+                    }
+                })
 
         } catch (e: Exception) {
             XposedBridge.log("$tag Error hooking Location class - ${e.message}")
@@ -131,12 +149,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
 
         try {
                     
-            //val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
+            val gojeklocationManagerClass = XposedHelpers.findClass("android.location.LocationManager", classLoader)
            
             XposedHelpers.findAndHookMethod(
-                //gojeklocationManagerClass,
-                "android.location.LocationManager",
-                classLoader,
+                gojeklocationManagerClass,
+                //"android.location.LocationManager",
+                //classLoader,
                 "getLastKnownLocation",
                 String::class.java,
                 object : XC_MethodHook() {
