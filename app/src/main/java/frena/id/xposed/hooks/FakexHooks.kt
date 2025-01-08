@@ -71,7 +71,6 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 //"android.location.Location",
                 //classLoader,
                 "getLatitude",
-                Double::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
@@ -88,7 +87,6 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 //"android.location.Location",
                 //classLoader,
                 "getLongitude",
-                Double::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
@@ -105,7 +103,6 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 //"android.location.Location",
                 //classLoader,
                 "getAccuracy",
-                Float::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                      //   super.beforeHookedMethod(param)
