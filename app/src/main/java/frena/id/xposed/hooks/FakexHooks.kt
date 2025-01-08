@@ -57,9 +57,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     private fun update() {
         try {
             mLastUpdated = System.currentTimeMillis()
-            latitude = LocationUtil.latitude
-            longitude = LocationUtil.longitude
-            accuracy = LocationUtil.accuracy
+            LocationUtil.latitude
+            LocationUtil.longitude
+            LocationUtil.accuracy
 
         } catch (e: Exception) {
             //Timber.tag("GPS Setter").e(e, "Failed to get XposedSettings for %s", context.packageName)
