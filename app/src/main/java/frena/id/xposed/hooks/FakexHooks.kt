@@ -45,12 +45,26 @@ import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
 class FakexHooks(val appLpparam: LoadPackageParam) {
-    private val tag = "[FRina FX]"    
+    private val tag = "[FRina FX]"
+    var mLastUpdated: Long = 0
 
     fun fakexLocationAPI() {
         if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
+    }
+
+    private fun update() {
+        try {
+            mLastUpdated = System.currentTimeMillis()
+            latitude = LocationUtil.latitude
+            longitude = LocationUtil.longitude
+            accuracy = LocationUtil.accuracy
+
+        } catch (e: Exception) {
+            //Timber.tag("GPS Setter").e(e, "Failed to get XposedSettings for %s", context.packageName)
+            XposedBridge.log("$tag error - ${e.message}")
+          }
     }
 
 
@@ -74,6 +88,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLatitude()")
                     //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
@@ -90,6 +107,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                       //  super.beforeHookedMethod(param)
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getLongitude()")
                     //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
@@ -106,6 +126,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                      //   super.beforeHookedMethod(param)
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
                         LocationUtil.updateLocation()
                     //    XposedBridge.log("$tag Leaving method getAccuracy()")
                     //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
@@ -125,6 +148,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                      //   super.beforeHookedMethod(param)
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
                         val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
                         param.args[0] = fakeLocation
                     //    XposedBridge.log("\t Fake location: $fakeLocation")
