@@ -30,12 +30,6 @@ object GojekUtil {
   //  var versiGopartner : Int = 4186
     var versiGopartner : Int = 0
     
-    private const val MILLISECONDS_PER_SECOND = 1
-    private val UPDATE_INTERVAL = MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS
-    private const val FASTEST_INTERVAL_IN_SECONDS = 1
-    private val FASTEST_INTERVAL = MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS
-
-    
     @Synchronized
     fun gojekVersionCode(lpparam: XC_LoadPackage.LoadPackageParam): Int {
     
@@ -91,15 +85,7 @@ object GojekUtil {
     }
     
     
-    @Synchronized
-    fun res() {
-        val localLocationRequest = LocationRequest.create().apply {
-            interval = UPDATE_INTERVAL_IN_SECONDS
-            fastestInterval = FASTEST_INTERVAL_IN_SECONDS
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            smallestDisplacement = 0.0F
-        }
-    }
+
 
 
 

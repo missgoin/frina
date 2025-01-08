@@ -38,12 +38,15 @@ object LocationUtil {
 
     var speed: Float = 0F
     var speedAccuracy: Float = 0F
+    var mLastUpdated: Long = 0
 
     @Synchronized
     fun createFakeLocation(originalLocation: Location? = null, provider: String = LocationManager.GPS_PROVIDER): Location {
         val fakeLocation = if (originalLocation == null) {
             Location(provider).apply {
-                time = System.currentTimeMillis() - 300
+                mLastUpdated = System.currentTimeMillis()
+                time = System.currentTimeMillis() - mLastUpdated > 200
+                //time = System.currentTimeMillis() -  300
             }
         } else {
             Location(originalLocation.provider).apply {

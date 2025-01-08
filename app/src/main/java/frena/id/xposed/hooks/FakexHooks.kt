@@ -2,6 +2,8 @@
 package frena.id.xposed.hooks
 
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.location.LocationRequest
 
 import frena.id.xposed.utils.LocationUtil
@@ -48,16 +50,15 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     fun fakexLocationAPI() {
         if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
-        //hookGojekLocationManager(appLpparam.classLoader)
+        hookGojekLocationManager(appLpparam.classLoader)
     }
 
-    private fun hookGojekLocation(classLoader: ClassLoader) {
+
+    private fun hookGojekLocation(classLoader: ClassLoader) {    
 
       if (PreferencesUtil.getIsPlaying() == true) {
       
-        XposedBridge.log("$tag initializing service FX......")
-        
-        GojekUtil.res()
+        XposedBridge.log("$tag initializing service FX......")        
         
         try {
                        
