@@ -67,7 +67,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             
             XposedHelpers.findAndHookMethod(
-                gojeklocationClass
+                gojeklocationClass,
                 //"android.location.Location",
                 //classLoader,
                 "getLatitude",
