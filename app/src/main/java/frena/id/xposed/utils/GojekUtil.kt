@@ -6,8 +6,6 @@ import frena.id.data.DEFAULT_USE_GOJEK_BYPASS_REG
 import frena.id.data.DEFAULT_USE_GOJEK_BYPASS_ACE
 import frena.id.xposed.utils.PreferencesUtil
 
-import com.google.android.gms.location.LocationRequest
-
 import android.app.Application
 import android.app.Activity
 import android.content.pm.ApplicationInfo
