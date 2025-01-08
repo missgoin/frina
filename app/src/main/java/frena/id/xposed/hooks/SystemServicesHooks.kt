@@ -2,6 +2,8 @@
 package frena.id.xposed.hooks
 
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.location.LocationRequest
 
 import frena.id.xposed.utils.LocationUtil
@@ -16,11 +18,24 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
 class SystemServicesHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[FRina SystemAPI]"
+    var mLastUpdated: Long = 0
 
     fun initHooks() {
         if (PreferencesUtil.getIsPlaying() != true) return
         hookSystemServices(appLpparam.classLoader)
     //    XposedBridge.log("$tag Instantiated hooks successfully")
+    }
+    
+    private fun update() {
+        try {
+            mLastUpdated = System.currentTimeMillis()
+            LocationUtil.latitude
+            LocationUtil.longitude
+
+        } catch (e: Exception) {
+            //Timber.tag("GPS Setter").e(e, "Failed to get XposedSettings for %s", context.packageName)
+            XposedBridge.log("$tag error - ${e.message}")
+          }
     }
 
     private fun hookSystemServices(classLoader: ClassLoader) {
@@ -38,11 +53,14 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                     String::class.java,
                     object : XC_MethodHook() {
                         override fun beforeHookedMethod(param: MethodHookParam) {
+                            if (System.currentTimeMillis() - mLastUpdated > 200) {
+                                update()
+                            }
                             XposedBridge.log("$tag System hook location")
-                        //    XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
+                        //  XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
                             val fakeLocation = LocationUtil.createFakeLocation()
                             param.result = fakeLocation
-                       //     XposedBridge.log("\t Fake location: $fakeLocation")
+                       //   XposedBridge.log("\t Fake location: $fakeLocation")
                         }
                     })
             } else {
@@ -69,10 +87,13 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                 Location::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
-                    //    XposedBridge.log("$tag: System hook callLocationChangedLocked")
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
+                    //  XposedBridge.log("$tag: System hook callLocationChangedLocked")
                         val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
                         param.args[0] = fakeLocation
-                    //    XposedBridge.log("\t Fake location: $fakeLocation")
+                    //  XposedBridge.log("\t Fake location: $fakeLocation")
                     }
                 })
 
