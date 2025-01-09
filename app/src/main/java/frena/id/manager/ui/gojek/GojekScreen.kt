@@ -38,8 +38,8 @@ fun GojekScreen(
             setValue = true            
         ),
         // Gojek FX Location
-        GojekData(
-            title = "FX Location,
+        DoubleGojekData(
+            title = "FX Location",
             useValueState = gojekViewModel.useFxLocation.collectAsState(),
             setUseValue = gojekViewModel::setUseFxLocation
         )
