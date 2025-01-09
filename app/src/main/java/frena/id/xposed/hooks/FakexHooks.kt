@@ -49,7 +49,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     var mLastUpdated: Long = 0
 
     fun fakexLocationAPI() {
-        if (PreferencesUtil.getIsPlaying() != true) return
+       // if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
     }
@@ -182,6 +182,9 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                 String::class.java,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
                      //   super.beforeHookedMethod(param)
                     //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
                     //    XposedBridge.log("\t Original location: ${param.result as? Location}")

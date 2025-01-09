@@ -21,7 +21,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
     var mLastUpdated: Long = 0
 
     fun initHooks() {
-        if (PreferencesUtil.getIsPlaying() != true) return
+     //   if (PreferencesUtil.getIsPlaying() != true) return
         hookSystemServices(appLpparam.classLoader)
     //    XposedBridge.log("$tag Instantiated hooks successfully")
     }
@@ -31,6 +31,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
             mLastUpdated = System.currentTimeMillis()
             LocationUtil.latitude
             LocationUtil.longitude
+            LocationUtil.accuracy
 
         } catch (e: Exception) {
             //Timber.tag("GPS Setter").e(e, "Failed to get XposedSettings for %s", context.packageName)
