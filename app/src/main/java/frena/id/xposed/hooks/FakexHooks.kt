@@ -49,7 +49,7 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     var mLastUpdated: Long = 0
 
     fun fakexLocationAPI() {
-       // if (PreferencesUtil.getIsPlaying() != true) return
+      //  if (PreferencesUtil.getIsPlaying() != true) return
         hookGojekLocation(appLpparam.classLoader)
         hookGojekLocationManager(appLpparam.classLoader)
     }
@@ -68,16 +68,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
     }
 
 
-    private fun hookGojekLocation(classLoader: ClassLoader) {    
-
-      if (PreferencesUtil.getIsPlaying() == true) {
+    private fun hookGojekLocation(classLoader: ClassLoader) {          
       
         XposedBridge.log("$tag initializing service FX......")        
         
-        try {
-                       
+        try {                      
             XposedBridge.log("$tag starting FX location......")
-
             val gojeklocationClass = XposedHelpers.findClass("android.location.Location", classLoader)
             
             XposedHelpers.findAndHookMethod(
@@ -91,11 +87,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         if (System.currentTimeMillis() - mLastUpdated > 200) {
                             update()
                         }
-                        LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getLatitude()")
-                    //    XposedBridge.log("\t Original latitude: ${param.result as Double}")
-                        param.result = LocationUtil.latitude
-                    //    XposedBridge.log("\t Modified to: ${LocationUtil.latitude}")
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            LocationUtil.updateLocation()
+                            param.result = LocationUtil.latitude
+                        }
+                       // XposedBridge.log("\t $tag X-Location LAT : ${LocationUtil.latitude}")
                     }
                 })
 
@@ -110,11 +107,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         if (System.currentTimeMillis() - mLastUpdated > 200) {
                             update()
                         }
-                        LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getLongitude()")
-                    //    XposedBridge.log("\t Original longitude: ${param.result as Double}")
-                        param.result =  LocationUtil.longitude
-                    //    XposedBridge.log("\t Modified to: ${LocationUtil.longitude}")
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            LocationUtil.updateLocation()
+                            param.result =  LocationUtil.longitude
+                        }
+                        XposedBridge.log("\t $tag FX-Location LAT: ${LocationUtil.latitude} LON: ${LocationUtil.longitude}")
                     }
                 })
 
@@ -129,14 +127,14 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         if (System.currentTimeMillis() - mLastUpdated > 200) {
                             update()
                         }
-                        LocationUtil.updateLocation()
-                    //    XposedBridge.log("$tag Leaving method getAccuracy()")
-                    //    XposedBridge.log("\t Original accuracy: ${param.result as Float}")
-                        if (PreferencesUtil.getUseAccuracy() == true) {
-                            param.result =  LocationUtil.accuracy
-                    //        XposedBridge.log("\t Modified to: ${LocationUtil.accuracy}")
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            LocationUtil.updateLocation()
+                            if (PreferencesUtil.getUseAccuracy() == true) {
+                                param.result =  LocationUtil.accuracy
+                            }
                         }
-                    }
+                    }                
                 })
                 
             XposedHelpers.findAndHookMethod(
@@ -151,24 +149,22 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         if (System.currentTimeMillis() - mLastUpdated > 200) {
                             update()
                         }
-                        val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
-                        param.args[0] = fakeLocation
-                    //    XposedBridge.log("\t Fake location: $fakeLocation")
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
+                            param.args[0] = fakeLocation
+                        }
                     }
                 })
 
         } catch (e: Exception) {
             XposedBridge.log("$tag Error hooking Location class - ${e.message}")
-                }
-      
-      }
+                }      
 
     }
     
     
     private fun hookGojekLocationManager(classLoader: ClassLoader) {
-
-      if (PreferencesUtil.getIsPlaying() == true) {
 
         try {
                     
@@ -185,14 +181,12 @@ class FakexHooks(val appLpparam: LoadPackageParam) {
                         if (System.currentTimeMillis() - mLastUpdated > 200) {
                             update()
                         }
-                     //   super.beforeHookedMethod(param)
-                    //    XposedBridge.log("$tag Leaving method getLastKnownLocation(provider)")
-                    //    XposedBridge.log("\t Original location: ${param.result as? Location}")
-                        val provider = param.args[0] as String
-                    //    XposedBridge.log("\t Requested data from: $provider")
-                        val fakeLocation =  LocationUtil.createFakeLocation(provider = provider)
-                        param.result = fakeLocation
-                    //    XposedBridge.log("\t Fake location: $fakeLocation")
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            val provider = param.args[0] as String
+                            val fakeLocation =  LocationUtil.createFakeLocation(provider = provider)
+                            param.result = fakeLocation
+                        }
                     }
                 })            
 

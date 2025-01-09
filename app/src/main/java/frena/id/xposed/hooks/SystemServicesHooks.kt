@@ -57,11 +57,13 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                             if (System.currentTimeMillis() - mLastUpdated > 200) {
                                 update()
                             }
-                            XposedBridge.log("$tag System hook location")
-                        //  XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
-                            val fakeLocation = LocationUtil.createFakeLocation()
-                            param.result = fakeLocation
-                       //   XposedBridge.log("\t Fake location: $fakeLocation")
+                            
+                            if (PreferencesUtil.getIsPlaying() == true) {
+                                XposedBridge.log("$tag System hook location")
+                                XposedBridge.log("\t Request comes from: ${param.args[1] as String}")
+                                val fakeLocation = LocationUtil.createFakeLocation()
+                                param.result = fakeLocation
+                            }
                         }
                     })
             } else {
@@ -91,13 +93,13 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                         if (System.currentTimeMillis() - mLastUpdated > 200) {
                             update()
                         }
-                    //  XposedBridge.log("$tag: System hook callLocationChangedLocked")
-                        val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
-                        param.args[0] = fakeLocation
-                    //  XposedBridge.log("\t Fake location: $fakeLocation")
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
+                            param.args[0] = fakeLocation
+                        }
                     }
                 })
-
         } catch (e: Exception) {
             XposedBridge.log("$tag Error hooking system services")
             XposedBridge.log(e)

@@ -43,8 +43,22 @@ import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 
 class GojekApiHooks{
-    private val tag = "[FRina API.gp]"
+    private val tag = "[FRina gp.API]"
     var versiGopartner : Int = 4186
+    var mLastUpdated: Long = 0    
+    
+    private fun update() {
+        try {
+            mLastUpdated = System.currentTimeMillis()
+            LocationUtil.latitude
+            LocationUtil.longitude
+            LocationUtil.accuracy
+
+        } catch (e: Exception) {
+            //Timber.tag("GPS Setter").e(e, "Failed to get XposedSettings for %s", context.packageName)
+            XposedBridge.log("$tag error - ${e.message}")
+          }
+    }    
                    
     fun hookBypassReguler(lpparam: XC_LoadPackage.LoadPackageParam) {              
         
@@ -82,7 +96,6 @@ class GojekApiHooks{
             if (lpparam.packageName == "com.gojek.partner") {
             
             XposedBridge.log("$tag starting autokill service......")
-
             val gojekautokillClass = XposedHelpers.findClass("com.gojek.driver.models.booking.BookingDetailsModel", lpparam.classLoader)
             
             XposedBridge.hookAllConstructors(
@@ -90,42 +103,36 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
  
-                        val isPlaying = mutableStateOf(false)
-                        val autokilled = isPlaying.value
-                        //param.args[0] = false
-                        param.result = autokilled
-                        if (PreferencesUtil.getIsPlaying() != true) return
-                            //Toast.makeText(context, "FRina location stopped", Toast.LENGTH_SHORT).show()
-                        XposedBridge.log("$tag autokilled success......")
+                        val autokilled = PreferencesRepository.saveIsPlaying()                                    
+                        val die = false
+                        //param.args[0] = false                        
+                        autokilled.set(param.thisObject, die)                        
+                            Toast.makeText(context, "Fake location stopped", Toast.LENGTH_SHORT).show()
+                            XposedBridge.log("$tag autokilled success......")
                     }
                 })
             }
         } catch (e: Exception) {
             XposedBridge.log("$tag Error autokill service - ${e.message}")
                 }
-
     }
+
 
     fun hookGojekVirtual(lpparam: XC_LoadPackage.LoadPackageParam) {
 
-      if (PreferencesUtil.getIsPlaying() != true) return
-      
-      XposedBridge.log("$tag initializing service virtual......")
-        
-      if (PreferencesUtil.getIsPlaying() == true) {
+    //  if (PreferencesUtil.getIsPlaying() != true) return      
+      XposedBridge.log("$tag initializing service virtual......")              
         
         try {
             if (lpparam.packageName == "com.gojek.partner") {
             
+            val gojekvirtualClass = XposedHelpers.findClass("dark.sendResult;", lpparam.classLoader)
             XposedBridge.log("$tag starting virtual location......")
-            
-            val gojekvirtualClass = XposedHelpers.findClass("dark.MediaBrowserServiceCompat\$ServiceBinderImpl\$3", lpparam.classLoader)            
-                        
-            
+                                    
             val methodsToReplace = arrayOf(
                 "equals"
             )
-
+            
             for (methodName in methodsToReplace) {
                 XposedHelpers.findAndHookMethod(
                     gojekvirtualClass,
@@ -138,15 +145,19 @@ class GojekApiHooks{
             XposedBridge.hookAllConstructors(
                 gojekvirtualClass,
                 object : XC_MethodHook() {
-                    override fun afterHookedMethod(param: MethodHookParam) {
-    
-                        val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
-                        lat.isAccessible = true                       
-                        LocationUtil.updateLocation()
-                        val win = LocationUtil.latitude
-                        lat.set(param.thisObject, win)
-                                               
-                     //   XposedBridge.log("\t LAT : ${LocationUtil.latitude}")
+                    override fun afterHookedMethod(param: MethodHookParam) {                    
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
+                        
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            val lat = param.thisObject.javaClass.getDeclaredField("O0OO0oOo0")
+                            lat.isAccessible = true                       
+                            LocationUtil.updateLocation()
+                            val win = LocationUtil.latitude
+                            lat.set(param.thisObject, win)
+                        }                                               
+                        XposedBridge.log("\t $tag Virtual LAT: ${LocationUtil.latitude}")
                     }
                 })
 
@@ -154,14 +165,18 @@ class GojekApiHooks{
                 gojekvirtualClass,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
+                        if (System.currentTimeMillis() - mLastUpdated > 200) {
+                            update()
+                        }
                         
-                        val lon = param.thisObject.javaClass.getDeclaredField("O0o00")
-                        lon.isAccessible = true
-                        LocationUtil.updateLocation()
-                        val win = LocationUtil.longitude                        
-                        lon.set(param.thisObject, win)
-                                               
-                    //    XposedBridge.log("\t LON : ${LocationUtil.longitude}")
+                        if (PreferencesUtil.getIsPlaying() == true) {
+                            val lon = param.thisObject.javaClass.getDeclaredField("O0o0o0")
+                            lon.isAccessible = true
+                            LocationUtil.updateLocation()
+                            val win = LocationUtil.longitude                        
+                            lon.set(param.thisObject, win)
+                        }
+                        XposedBridge.log("\t $tag Virtual LON: ${LocationUtil.longitude}")
                     }
                 })                                                
             
@@ -169,9 +184,7 @@ class GojekApiHooks{
         } catch (e: Exception) {
             XposedBridge.log("$tag Error hooking virtual class - ${e.message}")
                 }
-                
-      }
-
+                     
     }
 
 
