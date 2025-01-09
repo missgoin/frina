@@ -13,6 +13,8 @@ const val key = "SPYSERVICE_STATE"
 const val KEY_USE_GOJEK_BYPASS_REG = "use_gobypassreg"
 const val KEY_GOJEK_BYPASS_REG = "gobypassreg"
 
+const val KEY_USE_FX_LOCATION = "use_fxlocation"
+
 const val KEY_USE_GOJEK_BYPASS_ACE = "use_gobypassace"
 //const val KEY_GOBYPASSACE  = "gobypassace"
 
@@ -54,8 +56,11 @@ const val KEY_SPEED_ACCURACY = "speed_accuracy"
 const val DEFAULT_FRINA_SERVICE = "ServiceState.STOPPED"
  
  // gojek
-const val DEFAULT_USE_GOJEK_BYPASS_REG = true
-const val DEFAULT_GOJEK_BYPASS_REG = true
+const val DEFAULT_USE_GOJEK_BYPASS_REG = false
+
+const val DEFAULT_GOJEK_BYPASS_REG = false
+
+const val DEFAULT_USE_FX_LOCATION = false
 
 const val DEFAULT_USE_GOJEK_BYPASS_ACE = false
 

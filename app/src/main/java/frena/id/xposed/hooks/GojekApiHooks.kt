@@ -7,7 +7,6 @@ import android.location.LocationRequest
 import frena.id.xposed.utils.LocationUtil
 import frena.id.xposed.utils.GojekUtil
 import frena.id.xposed.utils.PreferencesUtil
-import frena.id.data.repository.PreferencesRepository
 import frena.id.manager.ui.map.MapViewModel
 import frena.id.manager.ui.map.components.MapViewContainer
 import frena.id.xposed.hooks.LocationApiHooks
@@ -104,10 +103,7 @@ class GojekApiHooks{
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
  
-                        val autokilled = PreferencesRepository.saveIsPlaying()                                    
-                        val die = false
-                        //param.args[0] = false                        
-                        autokilled.set(param.thisObject, die)                        
+                                       
                            // Toast.makeText(context, "Fake location stopped", Toast.LENGTH_SHORT).show()
                             XposedBridge.log("$tag autokilled success......")
                     }

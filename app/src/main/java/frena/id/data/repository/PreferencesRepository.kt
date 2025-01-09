@@ -39,6 +39,17 @@ class PreferencesRepository(context: Context) {
     fun getUseGojekBypassReg(): Boolean {
         return sharedPrefs.getBoolean(KEY_USE_GOJEK_BYPASS_REG, DEFAULT_USE_GOJEK_BYPASS_REG)
     }
+    
+    fun saveUseFxLocation(useFxLocation: Boolean) {
+        sharedPrefs.edit()
+            .putBoolean(KEY_USE_FX_LOCATION, useFxLocation)
+            .apply()
+        Log.d(tag, "Saved UseFxLocation: $useFxLocation")
+    }
+    
+    fun getUseFxLocation(): Boolean {
+        return sharedPrefs.getBoolean(KEY_USE_FX_LOCATION, DEFAULT_USE_FX_LOCATION)
+    }    
 
     fun saveGoBypassReg(goBypassReg: Boolean) {
         sharedPrefs.edit()

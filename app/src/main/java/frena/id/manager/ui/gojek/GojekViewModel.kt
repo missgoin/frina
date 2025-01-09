@@ -20,12 +20,17 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
     private val _goBypassReg = MutableStateFlow(DEFAULT_GOJEK_BYPASS_REG)
     val goBypassReg: StateFlow<Boolean> get() = _goBypassReg
 
+    private val _useFxLocation = MutableStateFlow(DEFAULT_USE_FX_LOCATION)
+    val useFxLocation: StateFlow<Boolean> get() = _useFxLocation
+
+
 
 
     init {
         viewModelScope.launch {
             _useGojekBypassReg.value = preferencesRepository.getUseGojekBypassReg()
             _goBypassReg.value = preferencesRepository.getGoBypassReg()
+            _useFxLocation.value = preferencesRepository.getUseFxLocation()
             
         }
     }
@@ -40,6 +45,11 @@ class GojekViewModel(application: Application) : AndroidViewModel(application) {
         _goBypassReg.value = value
         preferencesRepository.saveGoBypassReg(value)
     }    
+
+    fun setUseFxLocation(value: Boolean) {
+        _useFxLocation.value = value
+        preferencesRepository.saveUseFxLocation(value)
+    }
 
 
 

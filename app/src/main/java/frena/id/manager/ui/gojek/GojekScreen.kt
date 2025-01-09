@@ -35,16 +35,14 @@ fun GojekScreen(
             useValueState = gojekViewModel.useGojekBypassReg.collectAsState(),
             valueState = gojekViewModel.goBypassReg.collectAsState(),
             setUseValue = true,
-            setValue = true
-            
+            setValue = true            
+        ),
+        // Gojek FX Location
+        GojekData(
+            title = "FX Location,
+            useValueState = gojekViewModel.useFxLocation.collectAsState(),
+            setUseValue = gojekViewModel::setUseFxLocation
         )
-        // Gojek bypass reguler
-//        FloatGojekData(
-//            title = "Gojek Bypass Reguler",
-//            useValueState = gojekViewModel.useSpeed.collectAsState(),
-//            valueState = gojekViewModel.speed.collectAsState(),
-//            setUseValue = gojekViewModel::setUseSpeed
-//        ),
         // Custom Speed Accuracy
 //        FloatGojekData(
 //            title = "Custom Speed Accuracy",
