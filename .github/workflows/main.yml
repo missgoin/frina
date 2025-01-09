@@ -101,7 +101,7 @@ jobs:
 
       # Upload Artifact Build
       - name: Upload APK Debug
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
            name: debug-artifacts
            path: ${{ steps.debugApk.outputs.apkfile }}
